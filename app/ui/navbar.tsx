@@ -8,32 +8,20 @@ import {
   ModalBody,
   ModalFooter,
 } from '@nextui-org/modal';
+import { UserGroupIcon } from '@heroicons/react/24/outline';
 
 export default function Navbar() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState('auto');
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 items-center bg-slate-600 py-2 rounded-t-3xl">
       <Button onPress={onOpen} className="max-w-fit">
-        Open Modal
+        <UserGroupIcon />
       </Button>
-      <RadioGroup
-        label="Select modal placement"
-        orientation="horizontal"
-        value={modalPlacement}
-        onValueChange={setModalPlacement}
-      >
-        <Radio value="auto">auto</Radio>
-        <Radio value="top">top</Radio>
-        <Radio value="bottom">bottom</Radio>
-        <Radio value="center">center</Radio>
-        <Radio value="top-center">top-center</Radio>
-        <Radio value="bottom-center">bottom-center</Radio>
-      </RadioGroup>
+
       <Modal
         isOpen={isOpen}
-        placement={modalPlacement as 'auto'}
+        placement={'bottom-center'}
         onOpenChange={onOpenChange}
       >
         <ModalContent>
