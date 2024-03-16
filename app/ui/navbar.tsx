@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <div className="flex flex-col gap-2 items-center bg-slate-600 py-2 rounded-t-3xl">
-      <Button onPress={onOpen} className="max-w-fit">
+      <Button onPress={onOpen}>
         <UserGroupIcon />
       </Button>
 
