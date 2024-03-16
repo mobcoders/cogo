@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { EllipsisHorizontalCircleIcon as OptionIcon } from "@heroicons/react/24/outline";
-import { Card, CardBody } from "@nextui-org/card";
-import { Button } from "@nextui-org/button";
-import { Image } from "@nextui-org/image";
-import { HeartIcon } from "@/app/ui/destination-card/heart-icon";
+import React from 'react';
+import { EllipsisHorizontalCircleIcon as OptionIcon } from '@heroicons/react/24/outline';
+import { Card, CardBody } from '@nextui-org/card';
+import { Button } from '@nextui-org/button';
+import { Image } from '@nextui-org/image';
+import { HeartIcon } from '@/app/ui/destination-card/heart-icon';
 
 export default function DestinationCard() {
   const [liked, setLiked] = React.useState(false);
@@ -50,8 +50,8 @@ export default function DestinationCard() {
                   onPress={() => setLiked((v) => !v)}
                 >
                   <HeartIcon
-                    className={liked ? "[&>path]:stroke-transparent" : ""}
-                    fill={liked ? "currentColor" : "none"}
+                    className={liked ? '[&>path]:stroke-transparent' : ''}
+                    fill={liked ? 'currentColor' : 'none'}
                   />
                 </Button>
               </div>

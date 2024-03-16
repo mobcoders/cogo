@@ -1,17 +1,17 @@
-"use client";
-import React from "react";
-import { Button, useDisclosure, RadioGroup, Radio } from "@nextui-org/react";
+'use client';
+import React from 'react';
+import { Button, useDisclosure, RadioGroup, Radio } from '@nextui-org/react';
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@nextui-org/modal";
+} from '@nextui-org/modal';
 
 export default function Navbar() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("auto");
+  const [modalPlacement, setModalPlacement] = React.useState('auto');
 
   return (
     <div className="flex flex-col gap-2">
@@ -33,7 +33,7 @@ export default function Navbar() {
       </RadioGroup>
       <Modal
         isOpen={isOpen}
-        placement={modalPlacement as "auto"}
+        placement={modalPlacement as 'auto'}
         onOpenChange={onOpenChange}
       >
         <ModalContent>

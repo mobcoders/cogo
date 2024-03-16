@@ -1,5 +1,5 @@
-import DestinationCard from "@/app/ui/destination-card/destination-card";
-import Navbar from "@/app/ui/navbar";
+import DestinationCard from '@/app/ui/destination-card/destination-card';
+import Navbar from '@/app/ui/navbar';
 
 export default async function Page() {
   return (

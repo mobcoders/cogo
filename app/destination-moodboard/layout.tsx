@@ -1,5 +1,5 @@
-import CogoLogo from "@/app/ui/cogo-logo";
-import Navbar from "@/app/ui/navbar";
+import CogoLogo from '@/app/ui/cogo-logo';
+import Navbar from '@/app/ui/navbar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

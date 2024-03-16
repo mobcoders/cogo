@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 export const HeartIcon = ({
   size = 24,
   width = 0,
   height = 0,
   strokeWidth = 1.5,
-  fill = "none",
+  fill = 'none',
   ...props
 }) => (
   <svg
