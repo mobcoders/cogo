@@ -5,8 +5,12 @@ export default async function Page() {
   return (
     <>
       <h1 className="text-3xl">MOBCODERS TRIP</h1>
-      <DestinationCard />
-      <PlusButton />
+      <div className="flex flex-col gap-10">
+        <DestinationCard />
+        <div className="self-center">
+          <PlusButton />
+        </div>
+      </div>
     </>
   );
 }
