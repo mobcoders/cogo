@@ -1,5 +1,4 @@
 import DestinationCard from '@/app/ui/destination-card/destination-card';
-import Navbar from '@/app/ui/navbar';
 import PlusButton from '@/app/ui/plus-button';
 
 export default async function Page() {
