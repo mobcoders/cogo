@@ -8,6 +8,7 @@ export default function CogoLogo() {
       width={218.8066}
       className="w-32"
       alt="Cogo Logo"
+      priority
     />
   );
 }
