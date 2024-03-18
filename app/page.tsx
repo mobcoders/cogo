@@ -18,7 +18,6 @@ export default async function Page() {
       </div>
       <Divider className="my-5 mb-10" />
       <h1 className="text-2xl">Need some inspiration?</h1>
-      <DestinationCard />
     </div>
   );
 }
