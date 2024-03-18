@@ -4,8 +4,8 @@ import PlusButton from '@/app/ui/plus-button';
 export default async function Page() {
   return (
     <>
-      <h1 className="text-3xl">MOBCODERS TRIP</h1>
-      <div className="flex flex-col gap-10">
+      <h1 className="text-3xl mb-10">MOBCODERS TRIP</h1>
+      <div className="flex flex-col gap-5">
         <DestinationCard />
         <div className="self-center">
           <PlusButton />
