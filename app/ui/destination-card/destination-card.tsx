@@ -29,7 +29,7 @@ export default function DestinationCard({
               className="object-cover"
               height={200}
               shadow="md"
-              src={destination.photoUrl}
+              src={destination.photoUrl || '/portugal-beach.jpg'}
               width="100%"
             />
           </div>
