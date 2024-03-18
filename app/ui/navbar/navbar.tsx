@@ -1,12 +1,12 @@
 'use client';
 
-import { Button, useDisclosure } from '@nextui-org/react';
-import { Modal, ModalContent, ModalHeader, ModalBody } from '@nextui-org/modal';
+import { useDisclosure, Button } from '@nextui-org/react';
+import { useParams } from 'next/navigation';
 import { UserGroupIcon } from '@heroicons/react/24/solid';
 import { Avatar } from '@nextui-org/avatar';
 import Link from 'next/link';
-import MembersModal from '@/app/ui/navbar/members';
-import { useParams } from 'next/navigation';
+import { Modal } from '@nextui-org/modal';
+import MembersModalBody from '@/app/ui/navbar/members';
 
 export default function Navbar() {
   const membersModal = useDisclosure();
@@ -36,7 +36,7 @@ export default function Navbar() {
         placement={'bottom-center'}
         onClose={membersModal.onClose}
       >
-        <MembersModal params={params} />
+        <MembersModalBody params={params} />
       </Modal>
     </div>
   );
