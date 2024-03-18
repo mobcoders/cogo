@@ -1,8 +1,10 @@
 import DestinationCard from '@/app/ui/destination-card/destination-card';
+import DestinationMoodboard from '@/app/ui/potential-destinations';
 import Navbar from '@/app/ui/navbar';
 import PlusButton from '@/app/ui/plus-button';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
+import PotentialDestinations from '@/app/ui/potential-destinations';
 
 export default async function Page({
   params,
@@ -19,16 +21,13 @@ export default async function Page({
 
   return (
     <div className="flex flex-col">
-      <div className="flex-grow flex flex-col gap-10">
+      <div className="flex-grow flex flex-col gap-5">
         <div>
           <h1 className="text-3xl">{trip.name}</h1>
           <p>{trip.dates}no date(dev)</p>
         </div>
         <div className="flex flex-col gap-5">
-          <DestinationCard />
-          <div className="self-center">
-            <PlusButton />
-          </div>
+          <PotentialDestinations tripId={tripId} />
         </div>
       </div>
       <Navbar />
