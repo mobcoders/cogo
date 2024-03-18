@@ -1,5 +1,4 @@
-import DestinationCard from '@/app/ui/destination-card/destination-card';
-import PlusButton from '@/app/ui/plus-button';
+import DestinationCard from '@/app/ui/destination-card/potential-dest';
 import { fetchPotentialDests } from '@/lib/data';
 import { Button } from '@nextui-org/react';
 
