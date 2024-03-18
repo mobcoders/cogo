@@ -1,5 +1,5 @@
 import DestinationCard from '@/app/ui/destination-card/destination-card';
-import DestinationMoodboard from '@/app/ui/destination-moodboard';
+import Navbar from '@/app/ui/navbar';
 import PlusButton from '@/app/ui/plus-button';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
@@ -18,12 +18,20 @@ export default async function Page({
   }
 
   return (
-    <>
-      {/* if trip destination not set, then show destination moodboard component */}
-      <DestinationMoodboard params={params} />
-      {/* if destination set, but accom not set, then show accom moodboard component */}
-
-      {/* if dest, accom and 'finalised' set, then show Trip summary component */}
-    </>
+    <div className="flex flex-col">
+      <div className="flex-grow flex flex-col gap-10">
+        <div>
+          <h1 className="text-3xl">{trip.name}</h1>
+          <p>{trip.dates}no date(dev)</p>
+        </div>
+        <div className="flex flex-col gap-5">
+          <DestinationCard />
+          <div className="self-center">
+            <PlusButton />
+          </div>
+        </div>
+      </div>
+      <Navbar />
+    </div>
   );
 }

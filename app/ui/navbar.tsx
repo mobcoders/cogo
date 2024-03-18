@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { Button, useDisclosure, RadioGroup, Radio } from '@nextui-org/react';
 import {
   Modal,
