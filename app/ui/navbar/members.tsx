@@ -26,12 +26,15 @@ export default function MembersModal({
           <ModalBody>
             <div className="flex flex-row flex-wrap justify-center gap-5 p-10">
               {members.map((member) => (
-                <Avatar
-                  key={member.id}
-                  showFallback
-                  name={member.firstName}
-                  src={member.image}
-                />
+                <div key={member.id} className="flex flex-col items-center">
+                  <Avatar
+                    showFallback
+                    name={member.firstName[0] + member.lastName[0]}
+                    src={member.image}
+                    className="w-20 h-20 bg-purple-600 text-white text-2xl"
+                  />
+                  <p>{member.firstName}</p>
+                </div>
               ))}
             </div>
           </ModalBody>
