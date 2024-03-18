@@ -1,14 +1,19 @@
 'use client';
 
-import React from 'react';
 import { EllipsisHorizontalCircleIcon as OptionIcon } from '@heroicons/react/24/outline';
 import { Card, CardBody } from '@nextui-org/card';
 import { Button } from '@nextui-org/button';
 import { Image } from '@nextui-org/image';
 import { HeartIcon } from '@/app/ui/destination-card/heart-icon';
+import { useState } from 'react';
+import type { PotentialDestination } from '@prisma/client';
 
-export default function DestinationCard() {
-  const [liked, setLiked] = React.useState(false);
+export default function DestinationCard({
+  destination,
+}: {
+  destination: PotentialDestination;
+}) {
+  const [liked, setLiked] = useState(false);
 
   return (
     <Card
@@ -24,7 +29,7 @@ export default function DestinationCard() {
               className="object-cover"
               height={200}
               shadow="md"
-              src="/portugal-beach.jpg"
+              src={destination.photoUrl}
               width="100%"
             />
           </div>
@@ -32,13 +37,17 @@ export default function DestinationCard() {
           <div className="flex flex-col col-span-6 md:col-span-8">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-0">
-                <h1 className="font-semibold text-lg">Algarve</h1>
-                <p className="text-small text-foreground/80">Portugal</p>
-                <ul className="text-sm font-medium mt-2">
-                  <li>Kayaking</li>
-                  <li>Golf</li>
-                  <li>Dolphin watching</li>
-                </ul>
+                <h1 className="font-semibold text-lg">{destination.city}</h1>
+                <p className="text-small text-foreground/80">
+                  {destination.country}
+                </p>
+                {destination.activities.length && (
+                  <ul className="text-sm font-medium mt-2">
+                    {destination.activities.map((activity, index) => (
+                      <li key={index}>{activity}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <div className="flex flex-col h-full gap-5 justify-center">
                 <OptionIcon />
