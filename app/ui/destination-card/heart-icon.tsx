@@ -1,4 +1,3 @@
-import React from 'react';
 export const HeartIcon = ({
   size = 24,
   width = 0,

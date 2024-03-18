@@ -1,14 +1,14 @@
 'use client';
 
-import React from 'react';
 import { EllipsisHorizontalCircleIcon as OptionIcon } from '@heroicons/react/24/outline';
 import { Card, CardBody } from '@nextui-org/card';
 import { Button } from '@nextui-org/button';
 import { Image } from '@nextui-org/image';
 import { HeartIcon } from '@/app/ui/destination-card/heart-icon';
+import { useState } from 'react';
 
 export default function DestinationCard() {
-  const [liked, setLiked] = React.useState(false);
+  const [liked, setLiked] = useState(false);
 
   return (
     <Card
