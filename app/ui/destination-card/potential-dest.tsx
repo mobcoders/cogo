@@ -1,6 +1,12 @@
 'use client';
 
-import { EllipsisHorizontalCircleIcon as OptionIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowDownIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  EllipsisHorizontalCircleIcon as OptionIcon,
+} from '@heroicons/react/24/outline';
 import { Card, CardBody } from '@nextui-org/card';
 import { Button } from '@nextui-org/button';
 import { Image } from '@nextui-org/image';
@@ -14,6 +20,11 @@ export default function DestinationCard({
   destination: PotentialDestination;
 }) {
   const [liked, setLiked] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  function handleClick() {
+    setOpen(!open);
+  }
 
   return (
     <Card
@@ -36,21 +47,20 @@ export default function DestinationCard({
 
           <div className="flex flex-col col-span-6 md:col-span-8">
             <div className="flex justify-between items-start">
-              <div className="flex flex-col gap-0">
-                <h1 className="font-semibold text-lg">{destination.city}</h1>
-                <p className="text-small text-foreground/80">
-                  {destination.country}
-                </p>
-                {destination.activities.length && (
-                  <ul className="text-sm font-medium mt-2">
-                    {destination.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
-                    ))}
-                  </ul>
+              <div className="flex">
+                <div className="flex flex-col gap-0">
+                  <h1 className="font-semibold text-lg">{destination.city}</h1>
+                  <p className="text-small text-foreground/80">
+                    {destination.country}
+                  </p>
+                </div>
+                {open ? (
+                  <ChevronDownIcon width={30} onClick={handleClick} />
+                ) : (
+                  <ChevronRightIcon width={30} onClick={handleClick} />
                 )}
               </div>
               <div className="flex flex-col h-full gap-5 justify-center">
-                <OptionIcon />
                 <Button
                   isIconOnly
                   className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
@@ -58,6 +68,7 @@ export default function DestinationCard({
                   variant="light"
                   onPress={() => setLiked((v) => !v)}
                 >
+                  <p>{destination.likedBy.length}</p>
                   <HeartIcon
                     className={liked ? '[&>path]:stroke-transparent' : ''}
                     fill={liked ? 'currentColor' : 'none'}
@@ -65,6 +76,13 @@ export default function DestinationCard({
                 </Button>
               </div>
             </div>
+            {destination.activities.length && open && (
+              <ul className="text-sm font-medium mt-2">
+                {destination.activities.map((activity, index) => (
+                  <li key={index}>{activity}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </CardBody>

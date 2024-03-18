@@ -1,5 +1,3 @@
-import CogoLogo from '@/app/ui/cogo-logo';
-import DestinationCard from '@/app/ui/destination-card/destination-card';
 import PlusButton from '@/app/ui/plus-button';
 import { Button, Divider } from '@nextui-org/react';
 import Link from 'next/link';
