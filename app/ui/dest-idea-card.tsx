@@ -13,11 +13,8 @@ import { Image } from '@nextui-org/image';
 import { HeartIcon } from '@/app/ui/destination-card/heart-icon';
 import { useState } from 'react';
 import type { PotentialDestination } from '@prisma/client';
-export default function DestinationCard({
-  destination,
-}: {
-  destination: PotentialDestination;
-}) {
+
+export default function DestinationIdeaCard() {
   const [liked, setLiked] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -39,7 +36,9 @@ export default function DestinationCard({
               className="object-cover"
               height={200}
               shadow="md"
-              src={destination.photoUrl || '/portugal-beach.jpg'}
+              src={
+                'https://www.portugal.net/en/wp-content/uploads/sites/107/algar-de-benagil.jpg'
+              }
               width="100%"
             />
           </div>
@@ -48,10 +47,8 @@ export default function DestinationCard({
             <div className="flex justify-between items-start">
               <div className="flex">
                 <div className="flex flex-col gap-0">
-                  <h1 className="font-semibold text-lg">{destination.city}</h1>
-                  <p className="text-small text-foreground/80">
-                    {destination.country}
-                  </p>
+                  <h1 className="font-semibold text-lg">The Algarve</h1>
+                  <p className="text-small text-foreground/80">Portugal</p>
                 </div>
                 {open ? (
                   <ChevronDownIcon width={30} onClick={handleClick} />
@@ -59,29 +56,7 @@ export default function DestinationCard({
                   <ChevronRightIcon width={30} onClick={handleClick} />
                 )}
               </div>
-              <div className="flex flex-col h-full gap-5 justify-center">
-                <Button
-                  isIconOnly
-                  className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
-                  radius="full"
-                  variant="light"
-                  onPress={() => setLiked((v) => !v)}
-                >
-                  <p>{destination.likedBy.length}</p>
-                  <HeartIcon
-                    className={liked ? '[&>path]:stroke-transparent' : ''}
-                    fill={liked ? 'currentColor' : 'none'}
-                  />
-                </Button>
-              </div>
             </div>
-            {destination.activities.length && open && (
-              <ul className="text-sm font-medium mt-2">
-                {destination.activities.map((activity, index) => (
-                  <li key={index}>{activity}</li>
-                ))}
-              </ul>
-            )}
           </div>
         </div>
       </CardBody>

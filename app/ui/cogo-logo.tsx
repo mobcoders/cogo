@@ -4,9 +4,9 @@ export default function CogoLogo() {
   return (
     <Image
       src="/cogo-logo.svg"
-      height={70.7041}
-      width={218.8066}
-      className="w-32 mb-10"
+      height={80}
+      width={250}
+      className="w-40 mb-10"
       alt="Cogo Logo"
       priority
     />
