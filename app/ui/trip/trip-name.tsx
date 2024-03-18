@@ -5,13 +5,17 @@ import { Button } from '@nextui-org/button';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { Trip } from '@prisma/client/wasm';
+import { updateTripNameDate } from '@/lib/action';
 
 export default function TripName({ trip }: { trip: Trip }) {
   const [isEditing, setIsEditing] = useState(false);
   const [tripNameVal, setTripNameVal] = useState(trip.name);
   const [tripDateVal, setTripDateVal] = useState(trip.dates);
 
-  async function handlePress() {
+  async function handlePress(formData: FormData) {
+    if (isEditing) {
+      updateTripNameDate(trip.id, formData);
+    }
     setIsEditing(!isEditing);
   }
 
@@ -22,12 +26,14 @@ export default function TripName({ trip }: { trip: Trip }) {
   function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTripDateVal(e.target.value);
   }
+
   return (
-    <>
+    <form action={handlePress}>
       <div className="flex justify-between items-center">
         {isEditing ? (
           <div className="">
             <Input
+              name="tripName"
               className={'w-full'}
               value={tripNameVal}
               defaultValue={tripNameVal}
@@ -39,7 +45,7 @@ export default function TripName({ trip }: { trip: Trip }) {
         )}
 
         <div className="">
-          <Button isIconOnly onPress={handlePress} className="bg-transparent">
+          <Button isIconOnly type="submit" className="bg-transparent">
             {isEditing ? (
               <CheckCircleIcon className="text-default-400 h-5 w-5 flex-shrink-0" />
             ) : (
@@ -51,6 +57,7 @@ export default function TripName({ trip }: { trip: Trip }) {
       <Spacer />
       {isEditing ? (
         <Input
+          name="tripDate"
           className={'w-fit'}
           value={tripDateVal as string}
           defaultValue={tripDateVal as string}
@@ -59,6 +66,6 @@ export default function TripName({ trip }: { trip: Trip }) {
       ) : (
         <h1>{tripDateVal}</h1>
       )}
-    </>
+    </form>
   );
 }

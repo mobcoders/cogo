@@ -19,3 +19,16 @@ export async function fetchMembers(
 
   return trip.members;
 }
+
+export async function updateTripNameDate(
+  tripId: string = 'cltuhc5xd0000843ykw32zdxe',
+  formData: FormData
+) {
+  // const updateTrip = await prisma.trip.update({
+  //   where: {
+  //     id: tripId,
+  //   },
+  //   data: {},
+  // });
+  console.log(formData);
+}
