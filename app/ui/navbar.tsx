@@ -14,7 +14,7 @@ export default function Navbar() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <div className="flex flex-col gap-2 items-center bg-slate-600 py-2 rounded-t-3xl">
+    <div className="flex flex-col gap-2 absolute bottom-0 left-0 w-full items-center bg-slate-600 py-2 rounded-t-3xl">
       <Button onPress={onOpen}>
         <UserGroupIcon />
       </Button>

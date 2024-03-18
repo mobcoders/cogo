@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/ui/globals.css';
 import { Providers } from '@/app/providers';
+import CogoLogo from './ui/cogo-logo';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased bg-[#FFE8E1]`}>
+      <body className={`${inter.className} antialiased bg-[#FFE8E1] min-h-screen p-10`}>
+        <CogoLogo/>
         <Providers>{children}</Providers>
       </body>
     </html>
