@@ -1,6 +1,6 @@
 import DestinationCard from '@/app/ui/destination-card/destination-card';
 import DestinationMoodboard from '@/app/ui/potential-destinations';
-import Navbar from '@/app/ui/navbar';
+import Navbar from '@/app/ui/navbar/navbar';
 import PlusButton from '@/app/ui/plus-button';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
