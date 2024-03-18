@@ -7,6 +7,9 @@ export async function fetchPotentialDests(
     where: {
       tripId: tripId,
     },
+    include: {
+      likedBy: true,
+    },
   });
   return destinations;
 }
