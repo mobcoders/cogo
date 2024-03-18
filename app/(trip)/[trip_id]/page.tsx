@@ -4,6 +4,7 @@ import PlusButton from '@/app/ui/plus-button';
 import TripName from '@/app/ui/trip/trip-name';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
+import type { Trip } from '@prisma/client/wasm';
 
 export default async function Page({
   params,
@@ -22,8 +23,9 @@ export default async function Page({
     <div className="flex flex-col">
       <div className="flex-grow flex flex-col gap-10">
         <div>
-          <h1 className="text-3xl">{trip.name}</h1>
-          <p>{trip.dates}no date(dev)</p>
+          <TripName trip={trip} />
+          {/* <h1 className="text-3xl">{trip.name}</h1>
+          <p>{trip.dates}no date(dev)</p> */}
         </div>
         <div className="flex flex-col gap-5">
           <DestinationCard />
