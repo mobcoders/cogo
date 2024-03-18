@@ -1,23 +1,54 @@
-import type { Config } from "tailwindcss";
-import { nextui } from "@nextui-org/react";
+import type { Config } from 'tailwindcss';
+import { nextui } from '@nextui-org/react';
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        purple: {
+          '50': '#ebefff',
+          '100': '#dbe1ff',
+          '200': '#bec7ff',
+          '300': '#97a1ff',
+          '400': '#6e6fff',
+          '500': '#5a4dff',
+          '600': '#5334fe',
+          '700': '#4321e1',
+          '800': '#361eb5',
+          '900': '#30218e',
+          '950': '#1d1353',
+        },
+        pink: {
+          '50': '#fef2f2',
+          '100': '#fde3e3',
+          '200': '#fdcbcb',
+          '300': '#faa8a7',
+          '400': '#f57574',
+          '500': '#ed5453',
+          '600': '#d92a29',
+          '700': '#b6201f',
+          '800': '#971e1d',
+          '900': '#7d201f',
+          '950': '#440b0b',
+        },
+
+        'dark-grey': '#2C2D32',
+        'light-grey': '#878787',
+        white: '#FFFFFF',
+        black: '#1E1E1E',
+      },
+      dropShadow: {
+        cogo: '0px 5px 10px rgba(0, 0, 0, 0.25)',
       },
     },
   },
-  darkMode: "class",
+  darkMode: 'class',
   plugins: [nextui()],
 };
 export default config;

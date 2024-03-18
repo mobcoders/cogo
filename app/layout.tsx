@@ -18,8 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased bg-[#FFE8E1] min-h-screen p-10`}>
-        <CogoLogo/>
+      <body
+        className={`${inter.className} antialiased bg-[#FFE8E1] min-h-screen p-10`}
+      >
+        <CogoLogo />
         <Providers>{children}</Providers>
       </body>
     </html>
