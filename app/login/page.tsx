@@ -6,6 +6,7 @@ export default async function Page() {
       <div className="mb-3">
         <CogoLogo />
       </div>
+      <h1>Welcome to the login page....</h1>
     </div>
   );
 }

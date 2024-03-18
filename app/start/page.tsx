@@ -13,7 +13,7 @@ export default async function Page() {
       <h1 className="text-2xl">Are you ready?</h1>
       <div className="flex flex-row gap-7">
         <Button>
-          <Link href={'/'}>
+          <Link href={'/login'}>
             <h3>Yes I know where I'm going...</h3>
           </Link>
         </Button>
