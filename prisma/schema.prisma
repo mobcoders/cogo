@@ -12,7 +12,7 @@ model User {
   id                         String                 @id @default(cuid())
   firstName                  String?
   lastName                   String?
-  email                      String?                 @unique
+  email                      String?                @unique
   password                   String?
   emailVerified              DateTime?
   image                      String?
@@ -41,10 +41,11 @@ model PotentialDestination {
   id          String   @id @default(cuid())
   trip        Trip     @relation(fields: [tripId], references: [id])
   tripId      String
-  destination String
+  city        String
+  country     String
   photoUrl    String
   description String
-  activities  String[] 
+  activities  String[]
   likedBy     User[]   @relation("LikesDest")
 }
 
