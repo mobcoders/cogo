@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Input, Spacer } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
@@ -12,7 +11,7 @@ export default function TripName({ trip }: { trip: Trip }) {
   const [tripNameVal, setTripNameVal] = useState(trip.name);
   const [tripDateVal, setTripDateVal] = useState(trip.dates);
 
-  function handlePress() {
+  async function handlePress() {
     setIsEditing(!isEditing);
   }
 
