@@ -39,17 +39,17 @@ export async function createPotentialDestination(
   tripId: string,
   formData: FormData
 ) {
-  console.log(formData);
-  // const rawFormData = {
-  //   name: formData.get('tripName') as string,
-  //   dates: formData.get('tripDate') as string,
-  // };
-  // const updateTrip = await prisma.trip.update({
-  //   where: {
-  //     id: tripId,
-  //   },
-  //   data: rawFormData,
-  // });
+  const rawFormData = {
+    city: formData.get('city') as string,
+    country: formData.get('country') as string,
+    photoUrl: formData.get('photoUrl') as string,
+    tripId: tripId,
+    description: 'no description yet',
+  };
+  const updatePotentialDestination = await prisma.potentialDestination.create({
+    data: rawFormData,
+  });
+  revalidatePath(`/${tripId}`);
 }
 //not currently in use
 export async function credAuth(formData: FormData) {
