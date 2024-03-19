@@ -4,7 +4,7 @@ import { fetchTrip, fetchVotingStage } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-destinations';
 import { auth } from '@/auth';
-import PotentialAccomodation from '@/app/ui/trip/potential-accomodation';
+import PotentialAccomodation from '@/app/ui/edit-trip-name/potential-accomodation';
 
 export default async function Page({
   params,
