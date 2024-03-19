@@ -20,8 +20,12 @@ export default async function Page({
     notFound();
   }
   let session = await auth();
+  let username = session?.user?.name;
+  let email = session?.user?.email;
+
   return (
     <div className="flex flex-col">
+      <p>Hi {username}!</p>
       <div className="flex-grow flex flex-col gap-5">
         <div>
           <TripName trip={trip} />
