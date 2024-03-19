@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 
 import PotentialDestinations from '@/app/ui/potential-destinations';
 import type { Trip } from '@prisma/client/wasm';
+import { auth } from '@/auth';
 
 export default async function Page({
   params,
@@ -18,7 +19,7 @@ export default async function Page({
   if (!trip) {
     notFound();
   }
-
+  let session = await auth();
   return (
     <div className="flex flex-col">
       <div className="flex-grow flex flex-col gap-5">

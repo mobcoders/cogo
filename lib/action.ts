@@ -1,4 +1,5 @@
 'use server';
+import { signIn } from '@/auth';
 import prisma from '@/lib/prisma';
 
 export async function fetchMembers(
@@ -48,4 +49,9 @@ export async function createPotentialDestination(
   //   },
   //   data: rawFormData,
   // });
+}
+
+export async function credAuth(formData: FormData) {
+  console.log('trying to log in');
+  await signIn('Credentials', formData);
 }

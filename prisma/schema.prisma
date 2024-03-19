@@ -4,8 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -17,46 +17,45 @@ model User {
   emailVerified              DateTime?
   image                      String?
   organisedTrips             Trip[]                 @relation("OrganiserToTrip")
-  memberOfTrips              Trip[]                 @relation("MembersToTrip")
-  likedPotentialDestinations PotentialDestination[] @relation("LikesDest")
   likedPotenialAccoms        PotentialAccom[]       @relation("LikesAccom")
+  likedPotentialDestinations PotentialDestination[] @relation("LikesDest")
+  memberOfTrips              Trip[]                 @relation("MembersToTrip")
 }
 
 model Trip {
   id              String                 @id @default(cuid())
   name            String
-  destination     String?
   airbnb          String?
   dates           String?
   finalised       Boolean                @default(false)
-  organiser       User?                  @relation("OrganiserToTrip", fields: [organiserId], references: [id])
   organiserId     String?
-  members         User[]                 @relation("MembersToTrip")
-  moodboardTrips  PotentialDestination[]
+  city            String?
+  country         String?
   moodboardAccoms PotentialAccom[]
+  moodboardTrips  PotentialDestination[]
+  organiser       User?                  @relation("OrganiserToTrip", fields: [organiserId], references: [id])
+  members         User[]                 @relation("MembersToTrip")
 }
 
-//Destination Moodboard
 model PotentialDestination {
   id          String   @id @default(cuid())
-  trip        Trip     @relation(fields: [tripId], references: [id])
   tripId      String
   city        String
   country     String
-  photoUrl    String
-  description String
+  photoUrl    String?
+  description String?
   activities  String[]
+  trip        Trip     @relation(fields: [tripId], references: [id])
   likedBy     User[]   @relation("LikesDest")
 }
 
-//Accomodation/Airbnb moodboard
 model PotentialAccom {
   id          String   @id @default(cuid())
-  trip        Trip     @relation(fields: [tripId], references: [id])
   tripId      String
   destination String
   photoUrl    String
   description String
   activities  String[]
+  trip        Trip     @relation(fields: [tripId], references: [id])
   likedBy     User[]   @relation("LikesAccom")
 }
