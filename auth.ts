@@ -24,6 +24,7 @@ export const {
       },
       async authorize(credentials) {
         console.log('handling Credentials auth ');
+        //hardcoded user for development purposes (exists on db too):
         const user = { id: '1', name: 'Arjun', email: 'test@testing.com' };
         return user;
         // if (parsedCredentials.success) {
