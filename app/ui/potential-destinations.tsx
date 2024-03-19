@@ -1,7 +1,6 @@
 import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
 import AddDestination from '@/app/ui/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
-import { Button } from '@nextui-org/react';
 
 export default async function PotentialDestinations({
   tripId,

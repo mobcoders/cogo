@@ -9,10 +9,14 @@ import { Badge } from '@nextui-org/badge';
 import { HeartIcon } from '@/app/ui/potential-dest-card/heart-icon';
 import type { PotentialDestination } from '@prisma/client';
 
+interface SingleEvent extends PotentialDestination {
+  likedBy: Array<string>;
+}
+
 export default function PotentialDestinationCard({
   destination,
 }: {
-  destination: PotentialDestination;
+  destination: SingleEvent;
 }) {
   const [liked, setLiked] = useState(false);
   const [open, setOpen] = useState(false);
@@ -28,7 +32,7 @@ export default function PotentialDestinationCard({
           <Image
             alt={`${destination.city} photo`}
             className="object-cover mb-5"
-            src={destination.photoUrl}
+            src={destination.photoUrl!}
             height={100}
             width={100}
           />
@@ -72,13 +76,13 @@ export default function PotentialDestinationCard({
           </div>
         </div>
 
-        {destination.activities.length && open && (
+        {destination.activities.length && open ? (
           <ul className="text-sm font-medium mt-2">
             {destination.activities.map((activity, index) => (
               <li key={index}>{activity}</li>
             ))}
           </ul>
-        )}
+        ) : null}
       </CardBody>
     </Card>
   );

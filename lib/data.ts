@@ -35,3 +35,21 @@ export async function fetchPotentialAccoms(
     },
   });
 }
+
+export async function fetchUser(email: string) {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+    include: {
+      organisedTrips: true,
+      memberOfTrips: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error(`User with id ${email} not found.`);
+  }
+
+  return user;
+}
