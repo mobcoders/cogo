@@ -22,10 +22,10 @@ export default async function Page({
     <div className="flex flex-col">
       <div className="flex-grow flex flex-col gap-5">
         <div>
-          <TripName trip={trip} />
+          <h1>Madrid</h1>
         </div>
         <div className="flex flex-col gap-5">
-          <PotentialDestinations tripId={tripId} />
+          <PotentialAccomodation tripId={tripId} />
         </div>
       </div>
       <Navbar />
