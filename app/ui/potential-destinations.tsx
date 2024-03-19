@@ -9,7 +9,6 @@ export default async function PotentialDestinations({
 }) {
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   console.log('PotentialDestinations tripID: ', tripId);
-  // console.log('theo pathname', usePathname());
   const destinations = await fetchPotentialDests();
   return (
     <>
