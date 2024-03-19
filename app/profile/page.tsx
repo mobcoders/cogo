@@ -2,6 +2,7 @@ import { useState, useEffect, use } from 'react';
 import { fetchUser } from '@/lib/action';
 import { Avatar } from '@nextui-org/avatar';
 import EditUserPhoto from '@/app/ui/edit-user-photo';
+import ProfileDestinationCard from '@/app/ui/profile-dest-card';
 
 export default async function Page() {
   const user = await fetchUser('clty968kp0000107unfnhi2sf');
@@ -16,9 +17,9 @@ export default async function Page() {
       />
       <EditUserPhoto />
       <h1 className="text-pink-500 mb-5">{`${user.firstName} ${user.lastName}`}</h1>
-      <h1 className="w-full text-start">My trips:</h1>
+      <h1 className="w-full text-start mb-5">My trips:</h1>
       {trips.map((trip) => (
-        <p key={trip.finalised}>{trip.name}</p>
+        <ProfileDestinationCard key={trip.id} trip={trip} />
       ))}
     </div>
   );
