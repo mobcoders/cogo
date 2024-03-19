@@ -15,7 +15,7 @@ export default async function Page() {
       <div className="mb-10 md:col-start-7 col-span-6">
         <h1>Ready to go?</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <Link href={'/login'}>
+        <Link href={'/newtrip'}>
           <Button className="w-full h-[50px] bg-pink-500 text-white mt-5">
             Create a Group Trip
           </Button>

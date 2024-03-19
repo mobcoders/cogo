@@ -2,6 +2,8 @@
 import { signIn } from '@/auth';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+const bcrypt = require('bcrypt');
 
 export async function fetchMembers(
   tripId: string = 'cltuhc5xd0000843ykw32zdxe'
@@ -51,9 +53,31 @@ export async function createPotentialDestination(
   });
   revalidatePath(`/${tripId}`);
 }
-//not currently in use
+
 export async function credAuth(formData: FormData) {
-  await signIn('Credentials', formData);
+  const creds = Object.fromEntries(formData.entries());
+  await signIn('credentials', creds);
+}
+
+export async function googleAuth() {
+  await signIn('google');
+}
+
+export async function createUser(formData: FormData) {
+  const user = Object.fromEntries(formData.entries());
+  try {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    // user.password = hashedPassword;
+    const exists = await prisma.user.findUnique({
+      where: { email: user.email as string },
+    });
+    if (exists) return 'Email already in use';
+
+    await prisma.user.create({ data: user });
+  } catch (error) {
+    return 'Something went wrong, please try again';
+  }
+  await signIn('credentials', user);
 }
 
 export async function updateUserPhoto(userId: string, photoUrl: string) {
