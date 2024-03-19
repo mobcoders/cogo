@@ -6,10 +6,8 @@ export async function fetchImgUrl_Description(listingUrl: string) {
     const response = await axios.get(listingUrl);
     const $ = cheerio.load(response.data);
     const mainPhotoUrl = $('meta[property="og:image"]').attr('content');
-    const titleText = $('title').text();
+    const titleText = $('meta[property="og:description"]').attr('content');
 
-    // console.log('Main photo URL:', mainPhotoUrl);
-    // console.log('Venue Title:', titleText);
     return { mainPhotoUrl, titleText };
   } catch (error) {
     console.error('Error:', error);

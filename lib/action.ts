@@ -74,7 +74,6 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
   const imgUrl_VenueDescription = await fetchImgUrl_Description(
     formData.get('airbnb-url') as string
   );
-  // console.log(imgUrl_VenueDescription);
 
   const rawFormData = {
     tripId: tripId,
@@ -87,6 +86,5 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
     data: rawFormData,
   });
 
-  // revalidatePath(`/${tripId}`);
-  revalidatePath('accomodation-test');
+  revalidatePath(`/${tripId}`);
 }
