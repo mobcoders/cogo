@@ -32,3 +32,20 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
     data: rawFormData,
   });
 }
+
+export async function createPotentialDestination(
+  tripId: string,
+  formData: FormData
+) {
+  console.log(formData);
+  // const rawFormData = {
+  //   name: formData.get('tripName') as string,
+  //   dates: formData.get('tripDate') as string,
+  // };
+  // const updateTrip = await prisma.trip.update({
+  //   where: {
+  //     id: tripId,
+  //   },
+  //   data: rawFormData,
+  // });
+}

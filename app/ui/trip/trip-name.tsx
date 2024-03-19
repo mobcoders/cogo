@@ -12,7 +12,7 @@ export default function TripName({ trip }: { trip: Trip }) {
   const [tripNameVal, setTripNameVal] = useState(trip.name);
   const [tripDateVal, setTripDateVal] = useState(trip.dates);
 
-  async function handlePress(formData: FormData) {
+  function handlePress(formData: FormData) {
     if (isEditing) {
       updateTripNameDate(trip.id, formData);
     }
@@ -64,7 +64,7 @@ export default function TripName({ trip }: { trip: Trip }) {
           onChange={handleDateChange}
         />
       ) : (
-        <h1>{tripDateVal}</h1>
+        <h2 className="text-light-grey">{tripDateVal}</h2>
       )}
     </form>
   );
