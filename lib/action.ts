@@ -1,5 +1,7 @@
 'use server';
 import prisma from '@/lib/prisma';
+import { Trip } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function fetchMembers(
   tripId: string = 'cltuhc5xd0000843ykw32zdxe'
@@ -25,6 +27,7 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
     name: formData.get('tripName') as string,
     dates: formData.get('tripDate') as string,
   };
+  console.log(rawFormData);
   const updateTrip = await prisma.trip.update({
     where: {
       id: tripId,
@@ -35,17 +38,19 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
 
 export async function createPotentialDestination(
   tripId: string,
-  formData: FormData
+  formData: FormData,
+  trip: Trip
 ) {
   console.log(formData);
-  // const rawFormData = {
-  //   name: formData.get('tripName') as string,
-  //   dates: formData.get('tripDate') as string,
-  // };
-  // const updateTrip = await prisma.trip.update({
-  //   where: {
-  //     id: tripId,
-  //   },
-  //   data: rawFormData,
-  // });
+  const rawFormData = {
+    city: formData.get('city') as string,
+    country: formData.get('country') as string,
+    photoUrl: formData.get('photoUrl') as string,
+    tripId: 'cltuhc5xd0000843ykw32zdxe',
+    description: 'no description yet',
+  };
+  const updatePotentialDestination = await prisma.potentialDestination.create({
+    data: rawFormData,
+  });
+  revalidatePath('/cltuhc5xd0000843ykw32zdxe');
 }
