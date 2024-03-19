@@ -1,5 +1,6 @@
 'use server';
 import prisma from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function fetchMembers(
   tripId: string = 'cltuhc5xd0000843ykw32zdxe'
@@ -18,6 +19,24 @@ export async function fetchMembers(
   }
 
   return trip.members;
+}
+
+export async function fetchUser(userId: string) {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    include: {
+      organisedTrips: true,
+      memberOfTrips: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error(`User with id ${userId} not found.`);
+  }
+
+  return user;
 }
 
 export async function updateTripNameDate(tripId: string, formData: FormData) {
@@ -48,4 +67,17 @@ export async function createPotentialDestination(
   //   },
   //   data: rawFormData,
   // });
+}
+
+export async function updateUserPhoto(userId: string) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      image:
+        'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg',
+    },
+  });
+  revalidatePath('/profile');
 }
