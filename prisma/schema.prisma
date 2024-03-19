@@ -20,6 +20,16 @@ model User {
   memberOfTrips              Trip[]                 @relation("MembersToTrip")
   likedPotentialDestinations PotentialDestination[] @relation("LikesDest")
   likedPotenialAccoms        PotentialAccom[]       @relation("LikesAccom")
+  sessions                   Session[]
+  google_id                  String                 @unique
+  username                   String
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model Trip {
