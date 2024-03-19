@@ -1,17 +1,34 @@
 'use client';
 
+import { CldUploadWidget } from 'next-cloudinary';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { updateUserPhoto } from '@/lib/action';
+import { auth } from '@/auth';
 
-export default function EditUserPhoto() {
-  function handleClick() {
-    updateUserPhoto('clty968kp0000107unfnhi2sf');
+export default function EditUserPhoto({ userId }: { userId: string }) {
+  function handleSuccess(url) {
+    updateUserPhoto(userId, url);
   }
 
   return (
-    <PencilIcon
-      className="h-5 w-5 fill-light-grey mb-5"
-      onClick={handleClick}
-    />
+    <CldUploadWidget
+      uploadPreset="cogo_cloudinary"
+      options={{ sources: ['local', 'url'] }}
+      onSuccess={(result, { widget }) => {
+        handleSuccess(result?.info?.secure_url);
+      }}
+    >
+      {({ open }) => {
+        function handleOnClick() {
+          open();
+        }
+        return (
+          <PencilIcon
+            onClick={handleOnClick}
+            className="h-5 w-5 fill-light-grey mb-5"
+          />
+        );
+      }}
+    </CldUploadWidget>
   );
 }
