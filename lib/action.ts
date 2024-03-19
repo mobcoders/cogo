@@ -26,7 +26,6 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
     name: formData.get('tripName') as string,
     dates: formData.get('tripDate') as string,
   };
-  console.log(rawFormData);
   const updateTrip = await prisma.trip.update({
     where: {
       id: tripId,

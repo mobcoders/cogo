@@ -25,8 +25,6 @@ export default function PotentialDestinationCard({
     setOpen(!open);
   }
 
-  console.log(destination);
-
   return (
     <Card className="drop-shadow-cogo h-32">
       <CardBody className="h-full">

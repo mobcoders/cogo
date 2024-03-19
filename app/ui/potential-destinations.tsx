@@ -8,7 +8,6 @@ export default async function PotentialDestinations({
   tripId: string;
 }) {
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
-  console.log('PotentialDestinations tripID: ', tripId);
   const destinations = await fetchPotentialDests();
   return (
     <>
