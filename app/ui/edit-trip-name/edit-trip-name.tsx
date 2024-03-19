@@ -1,13 +1,14 @@
 'use client';
+
+import { Trip } from '@prisma/client/wasm';
 import { useState } from 'react';
-import { Input, Spacer } from '@nextui-org/react';
+import { updateTripNameDate } from '@/lib/action';
+import { Input } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { Trip } from '@prisma/client/wasm';
-import { updateTripNameDate } from '@/lib/action';
 
-export default function TripName({ trip }: { trip: Trip }) {
+export default function EditTripName({ trip }: { trip: Trip }) {
   const [isEditing, setIsEditing] = useState(false);
   const [tripNameVal, setTripNameVal] = useState(trip.name);
   const [tripDateVal, setTripDateVal] = useState(trip.dates);
@@ -29,12 +30,12 @@ export default function TripName({ trip }: { trip: Trip }) {
 
   return (
     <form action={handlePress}>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between gap-5">
         {isEditing ? (
-          <div className="">
+          <div className="w-[85%]">
             <Input
               name="tripName"
-              className={'w-full'}
+              className="mb-2"
               value={tripNameVal}
               defaultValue={tripNameVal}
               onChange={handleChange}
@@ -47,18 +48,18 @@ export default function TripName({ trip }: { trip: Trip }) {
         <div className="">
           <Button isIconOnly type="submit" className="bg-transparent">
             {isEditing ? (
-              <CheckCircleIcon className="text-default-400 h-5 w-5 flex-shrink-0" />
+              <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
             ) : (
-              <PencilIcon className="text-default-400 h-5 w-5 flex-shrink-0" />
+              <PencilIcon className="h-5 w-5 fill-light-grey" />
             )}
           </Button>
         </div>
       </div>
-      <Spacer />
+
       {isEditing ? (
         <Input
           name="tripDate"
-          className={'w-fit'}
+          className="w-[85%]"
           value={tripDateVal as string}
           defaultValue={tripDateVal as string}
           onChange={handleDateChange}

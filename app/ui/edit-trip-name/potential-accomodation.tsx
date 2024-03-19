@@ -1,6 +1,6 @@
-import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
-import AddAccomodation from '@/app/ui/trip/add-accomodation';
-import PotentialAccomCard from '@/app/ui/trip/potential-accom-card';
+import PotentialAccomCard from '@/app/ui/edit-trip-name/potential-accom-card';
+import AddAccomodation from '@/app/ui/edit-trip-name/add-accomodation';
+
 import { fetchPotentialAccoms } from '@/lib/data';
 
 export default async function PotentialAccomodation({
