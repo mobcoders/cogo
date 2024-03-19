@@ -18,7 +18,11 @@ export default function AddDestination({ tripId }: { tripId: string }) {
   return (
     <>
       {!openForm && (
-        <Button type="button" onClick={() => setOpenForm(!openForm)}>
+        <Button
+          type="button"
+          onClick={() => setOpenForm(!openForm)}
+          className="bg-pink-500 text-white"
+        >
           Add a destination
         </Button>
       )}
