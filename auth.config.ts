@@ -8,7 +8,6 @@ export const authConfig = {
     jwt: async ({ token, user }) => {
       // user is defined when the user is first authenticated
       if (user) {
-        console.log(user);
         token.id = user.id; // Add the user ID to the JWT
       }
       return token;
@@ -24,6 +23,8 @@ export const authConfig = {
       if (isInApp) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
+      } else if (isLoggedIn) {
+        return Response.redirect(new URL('/profile', nextUrl));
       }
       return true;
     },

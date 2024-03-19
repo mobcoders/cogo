@@ -4,6 +4,17 @@ import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
 
+import prisma from '@/lib/prisma';
+
+async function getUser(email: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+  return user;
+}
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -23,10 +34,14 @@ export const {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        console.log('handling Credentials auth ');
         //hardcoded user for development purposes (exists on db too):
-        const user = { id: '1', name: 'Arjun', email: 'test@testing.com' };
+        const devUser = 'anna@anna.com';
+        const user = await getUser(devUser);
+        // const user = getUser(credentials.email as string);
+        if (!user) return null;
+
         return user;
+
         // if (parsedCredentials.success) {
         //   const { email, password } = parsedCredentials.data;
         //   const user = await getUser(email);

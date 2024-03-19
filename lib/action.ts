@@ -22,24 +22,6 @@ export async function fetchMembers(
   return trip.members;
 }
 
-export async function fetchUser(userId: string) {
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userId,
-    },
-    include: {
-      organisedTrips: true,
-      memberOfTrips: true,
-    },
-  });
-
-  if (!user) {
-    throw new Error(`User with id ${userId} not found.`);
-  }
-
-  return user;
-}
-
 export async function updateTripNameDate(tripId: string, formData: FormData) {
   const rawFormData = {
     name: formData.get('tripName') as string,
@@ -69,9 +51,8 @@ export async function createPotentialDestination(
   //   data: rawFormData,
   // });
 }
-
+//not currently in use
 export async function credAuth(formData: FormData) {
-  console.log('trying to log in');
   await signIn('Credentials', formData);
 }
 
