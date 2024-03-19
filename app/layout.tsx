@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} antialiased min-h-screen px-10 pt-20 pb-12`}
+        className={`${manrope.className} antialiased min-h-screen px-10 py-12`}
       >
         <CogoLogo />
 

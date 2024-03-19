@@ -1,5 +1,5 @@
+import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
 import AddDestination from '@/app/ui/add-destination';
-import DestinationCard from '@/app/ui/destination-card/potential-dest';
 import { fetchPotentialDests } from '@/lib/data';
 import { Button } from '@nextui-org/react';
 
@@ -17,7 +17,10 @@ export default async function PotentialDestinations({
       <AddDestination tripId={tripId} />
       <div className="flex flex-col gap-5">
         {destinations.map((destination) => (
-          <DestinationCard key={destination.id} destination={destination} />
+          <PotentialDestinationCard
+            key={destination.id}
+            destination={destination}
+          />
         ))}
       </div>
     </>
