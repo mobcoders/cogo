@@ -1,26 +1,17 @@
 'use client';
 import { useState } from 'react';
-import { Input, Spacer } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
-import { PencilIcon } from '@heroicons/react/24/solid';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { Trip } from '@prisma/client/wasm';
-import { createPotentialDestination, updateTripNameDate } from '@/lib/action';
+import { createPotentialDestination } from '@/lib/action';
 
-export default function AddDestination({
-  tripId,
-  trip,
-}: {
-  tripId: string;
-  trip: Trip;
-}) {
+export default function AddDestination({ tripId }: { tripId: string }) {
   const [openForm, setOpenForm] = useState(false);
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 
   async function handleAdd(formData: FormData) {
-    await createPotentialDestination(tripId, formData, trip);
+    await createPotentialDestination(tripId, formData);
     setOpenForm(false);
   }
 

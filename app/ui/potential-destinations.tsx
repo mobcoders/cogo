@@ -1,7 +1,6 @@
 import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
 import AddDestination from '@/app/ui/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
-import { Button } from '@nextui-org/react';
 
 export default async function PotentialDestinations({
   tripId,
@@ -10,6 +9,7 @@ export default async function PotentialDestinations({
 }) {
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   console.log('PotentialDestinations tripID: ', tripId);
+  // console.log('theo pathname', usePathname());
   const destinations = await fetchPotentialDests();
   return (
     <>

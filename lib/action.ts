@@ -1,6 +1,5 @@
 'use server';
 import prisma from '@/lib/prisma';
-import { Trip } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function fetchMembers(
@@ -38,19 +37,17 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
 
 export async function createPotentialDestination(
   tripId: string,
-  formData: FormData,
-  trip: Trip
+  formData: FormData
 ) {
-  console.log(formData);
   const rawFormData = {
     city: formData.get('city') as string,
     country: formData.get('country') as string,
     photoUrl: formData.get('photoUrl') as string,
-    tripId: 'cltuhc5xd0000843ykw32zdxe',
+    tripId: tripId,
     description: 'no description yet',
   };
   const updatePotentialDestination = await prisma.potentialDestination.create({
     data: rawFormData,
   });
-  revalidatePath('/cltuhc5xd0000843ykw32zdxe');
+  revalidatePath(`/${tripId}`);
 }
