@@ -1,4 +1,5 @@
 import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
+import AddDestination from '@/app/ui/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { Button } from '@nextui-org/react';
 
@@ -13,7 +14,7 @@ export default async function PotentialDestinations({
   return (
     <>
       <p>Add potential destinations and vote for where you want to go...</p>
-      <Button className="bg-pink-500 text-white">Add a destination</Button>
+      <AddDestination tripId={tripId} />
       <div className="flex flex-col gap-5">
         {destinations.map((destination) => (
           <PotentialDestinationCard

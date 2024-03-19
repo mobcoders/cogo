@@ -1,7 +1,10 @@
 import Navbar from '@/app/ui/navbar/navbar';
+import TripName from '@/app/ui/trip/trip-name';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
+
 import PotentialDestinations from '@/app/ui/potential-destinations';
+import type { Trip } from '@prisma/client/wasm';
 
 export default async function Page({
   params,
@@ -20,8 +23,7 @@ export default async function Page({
     <div className="flex flex-col">
       <div className="flex-grow flex flex-col gap-5">
         <div>
-          <h1 className="text-3xl">{trip.name}</h1>
-          <p>{trip.dates}</p>
+          <TripName trip={trip} />
         </div>
         <div className="flex flex-col gap-5">
           <PotentialDestinations tripId={tripId} />
