@@ -1,4 +1,5 @@
 'use server';
+import { signIn } from '@/auth';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
@@ -19,24 +20,6 @@ export async function fetchMembers(
   }
 
   return trip.members;
-}
-
-export async function fetchUser(userId: string) {
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userId,
-    },
-    include: {
-      organisedTrips: true,
-      memberOfTrips: true,
-    },
-  });
-
-  if (!user) {
-    throw new Error(`User with id ${userId} not found.`);
-  }
-
-  return user;
 }
 
 export async function updateTripNameDate(tripId: string, formData: FormData) {
@@ -67,6 +50,10 @@ export async function createPotentialDestination(
     data: rawFormData,
   });
   revalidatePath(`/${tripId}`);
+}
+//not currently in use
+export async function credAuth(formData: FormData) {
+  await signIn('Credentials', formData);
 }
 
 export async function updateUserPhoto(userId: string) {
