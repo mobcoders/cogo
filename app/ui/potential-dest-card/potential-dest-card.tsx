@@ -50,7 +50,7 @@ export default function PotentialDestinationCard({
                 <ChevronDownIcon
                   width={30}
                   onClick={handleClick}
-                  className="stroke-light-grey -translate-y-[-10px] -translate-x-[5px]"
+                  className="stroke-light-grey -translate-y-[-5px] -translate-x-[5px]"
                 />
               ) : (
                 <ChevronRightIcon
@@ -78,9 +78,11 @@ export default function PotentialDestinationCard({
         </div>
 
         {destination.activities.length && open ? (
-          <ul className="text-sm font-medium mt-2">
+          <ul className="text-sm font-medium mt-2 pl-3 marker:text-pink-500">
             {destination.activities.map((activity, index) => (
-              <li key={index}>{activity}</li>
+              <li key={index} className="list-disc">
+                {activity}
+              </li>
             ))}
           </ul>
         ) : null}
