@@ -12,7 +12,7 @@ export default async function Page({
 }) {
   const tripId = params.trip_id;
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
-  const trip = await fetchTrip();
+  const trip = await fetchTrip(tripId);
 
   if (!trip) {
     notFound();

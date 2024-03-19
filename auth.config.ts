@@ -1,9 +1,10 @@
+import next from 'next';
 import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
-  // pages: {
-  //   signIn: '/login',
-  // },
+  pages: {
+    signIn: '/auth',
+  },
   callbacks: {
     jwt: async ({ token, user }) => {
       // user is defined when the user is first authenticated
@@ -20,7 +21,17 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isInApp = nextUrl.pathname !== '/';
-      if (isInApp) {
+      const isOnAuthPage = nextUrl.pathname.startsWith('/auth');
+      if (isOnAuthPage) {
+        if (isLoggedIn) {
+          if (nextUrl.searchParams.get('callbackUrl')) {
+            return Response.redirect(
+              new URL(nextUrl.searchParams.get('callbackUrl')!, nextUrl.origin)
+            );
+          }
+          return Response.redirect(new URL('/profile', nextUrl));
+        }
+      } else if (isInApp) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {

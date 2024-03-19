@@ -46,7 +46,7 @@ export default async function RootLayout({
           {session ? (
             <SignOut />
           ) : (
-            <Link href="/api/auth/signin">
+            <Link href="/profile">
               <Button>Sign in</Button>
             </Link>
           )}
