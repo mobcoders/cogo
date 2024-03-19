@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@nextui-org/react';
-import DestinationCardIdea from '@/app/ui/dest-idea-card';
+import IdeaDestinationCard from '@/app/ui/idea-dest-card';
 
 export default async function Page() {
   return (
@@ -23,7 +23,7 @@ export default async function Page() {
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        <DestinationCardIdea />
+        <IdeaDestinationCard />
       </div>
     </div>
   );

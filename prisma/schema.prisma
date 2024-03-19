@@ -25,12 +25,12 @@ model User {
 model Trip {
   id              String                 @id @default(cuid())
   name            String
+  city            String?
+  country         String?
   airbnb          String?
   dates           String?
   finalised       Boolean                @default(false)
   organiserId     String?
-  city            String?
-  country         String?
   moodboardAccoms PotentialAccom[]
   moodboardTrips  PotentialDestination[]
   organiser       User?                  @relation("OrganiserToTrip", fields: [organiserId], references: [id])

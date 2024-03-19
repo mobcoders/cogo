@@ -5,7 +5,7 @@ import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
-export default function DestinationIdeaCard() {
+export default function IdeaDestinationCard() {
   const [open, setOpen] = useState(false);
 
   function handleClick() {
