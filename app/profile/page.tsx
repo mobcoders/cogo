@@ -15,7 +15,7 @@ export default async function Page() {
     <div className="flex flex-col items-center">
       <Avatar
         showFallback
-        src={user.image}
+        src={user.image!}
         className="w-[130px] h-[130px] bg-purple-600 text-white text-[48px] mb-5"
       />
       <EditUserPhoto />
