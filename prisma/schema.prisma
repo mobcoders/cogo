@@ -34,6 +34,7 @@ model Trip {
   moodboardTrips  PotentialDestination[]
   organiser       User?                  @relation("OrganiserToTrip", fields: [organiserId], references: [id])
   members         User[]                 @relation("MembersToTrip")
+  votingStage     String                 @default("none")               
 }
 
 model PotentialDestination {
@@ -51,10 +52,9 @@ model PotentialDestination {
 model PotentialAccom {
   id          String   @id @default(cuid())
   tripId      String
-  destination String
+  airBnbUrl   String
   photoUrl    String
   description String
-  activities  String[]
   trip        Trip     @relation(fields: [tripId], references: [id])
   likedBy     User[]   @relation("LikesAccom")
 }
