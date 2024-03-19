@@ -80,14 +80,13 @@ export async function createUser(formData: FormData) {
   await signIn('credentials', user);
 }
 
-export async function updateUserPhoto(userId: string) {
+export async function updateUserPhoto(userId: string, photoUrl: string) {
   await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
-      image:
-        'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg',
+      image: photoUrl,
     },
   });
   revalidatePath('/profile');

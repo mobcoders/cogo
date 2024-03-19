@@ -1,5 +1,5 @@
 import Navbar from '@/app/ui/navbar/navbar';
-import TripName from '@/app/ui/trip/trip-name';
+import EditTripName from '@/app/ui/edit-trip-name/edit-trip-name';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-destinations';
@@ -23,10 +23,9 @@ export default async function Page({
 
   return (
     <div className="flex flex-col">
-      <p>Hi {username}!</p>
       <div className="flex-grow flex flex-col gap-5">
         <div>
-          <TripName trip={trip} />
+          <EditTripName trip={trip} />
         </div>
         <div className="flex flex-col gap-5">
           <PotentialDestinations tripId={tripId} />
