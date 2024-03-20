@@ -20,7 +20,8 @@
     "next-auth": "^5.0.0-beta.4",
     "next-cloudinary": "^6.3.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-web-share": "^2.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

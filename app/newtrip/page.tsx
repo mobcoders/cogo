@@ -14,6 +14,7 @@ export default async function createTrip() {
     data: {
       name: tripName,
       organiserId: id,
+      votingStage: 'dest',
     },
   });
   redirect(`/${newTrip.id}`);
