@@ -41,11 +41,13 @@ export default function HeartButton({
     <>
       <Button
         isIconOnly
-        className="-translate-y-\[-10px\] -translate-x-\[-5px\]"
         radius="full"
         variant="light"
         onPress={handleLike}
         disabled={isPending}
+        size="sm"
+        className="-translate-y-[-8px] -translate-x-[-2px] bg-transparent"
+        disableRipple
       >
         <p className="mr-1">{optimisticLikes.length}</p>
         <HeartIcon

@@ -14,7 +14,6 @@ export default async function Page({
   const tripId = params.trip_id;
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   const trip = await fetchTrip(tripId);
-  const votingStage = await fetchVotingStage(tripId);
   // Voting stage holds string "none" by default. We will modify these to "dest" and "accom" to shift user journey.
 
   if (!trip) {
@@ -30,16 +29,13 @@ export default async function Page({
   return (
     <>
       <div className="flex flex-col">
-        <p>Hi {username}!</p>
         <div className="flex-grow flex flex-col gap-5">
           <div>
             <EditTripName trip={trip} />
           </div>
           <div className="flex flex-col gap-5">
             {(() => {
-              switch (votingStage!.votingStage) {
-                case 'none':
-                  return <PotentialDestinations tripId={tripId} user={user!} />;
+              switch (trip!.votingStage) {
                 case 'dest':
                   return <PotentialDestinations tripId={tripId} user={user!} />;
                 case 'accom':
