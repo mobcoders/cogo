@@ -4,6 +4,7 @@ import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import bcrypt from 'bcryptjs';
 
 export async function toggleLike(
   tripId: string,
@@ -113,18 +114,16 @@ export async function googleAuth() {
 export async function createUser(formData: FormData) {
   const user = Object.fromEntries(formData.entries());
   try {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    // user.password = hashedPassword;
     const exists = await prisma.user.findUnique({
       where: { email: user.email as string },
     });
     if (exists) return 'Email already in use';
-
+    const hashedPassword = await bcrypt.hash(user.password as string, 10);
+    user.password = hashedPassword;
     await prisma.user.create({ data: user });
   } catch (error) {
     return 'Something went wrong, please try again';
   }
-  await signIn('credentials', user);
 }
 
 export async function updateUserPhoto(userId: string, photoUrl: string) {
@@ -231,6 +230,6 @@ export async function addMemberToTrip(tripId: string, userId: string) {
 
     console.log(`User with ID ${userId} added to trip ${updatedTrip.name}`);
   } catch (error) {
-    console.error('Error adding member to trip:', error.message);
+    console.error('Error adding member to trip:', error);
   }
 }
