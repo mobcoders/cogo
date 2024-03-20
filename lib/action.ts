@@ -157,3 +157,80 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
 
   revalidatePath(`/${tripId}`);
 }
+
+export async function updateVotingStage(
+  tripId: string,
+  city: string,
+  country: string
+) {
+  const trip = await prisma.trip.findFirst({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  let newVotingStage;
+
+  if (trip.votingStage === 'dest') {
+    newVotingStage = 'accom';
+  } else if (trip.votingStage === 'accom') {
+    newVotingStage = 'itinerary';
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      city: city,
+      country: country,
+      votingStage: newVotingStage,
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
+export async function addMemberToTrip(tripId: string, userId: string) {
+  try {
+    // Find the trip by ID
+    const trip = await prisma.trip.findUnique({
+      where: {
+        id: tripId,
+      },
+      include: {
+        members: true, // Include existing members
+      },
+    });
+
+    if (!trip) {
+      throw new Error(`Trip with ID ${tripId} not found`);
+    }
+
+    // Check if the user is already a member of the trip
+    const isMember = trip.members.some((member) => member.id === userId);
+    if (isMember) {
+      throw new Error(
+        `User with ID ${userId} is already a member of this trip`
+      );
+    }
+
+    // Add the user to the trip's list of members
+    const updatedTrip = await prisma.trip.update({
+      where: {
+        id: tripId,
+      },
+      data: {
+        members: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    console.log(`User with ID ${userId} added to trip ${updatedTrip.name}`);
+  } catch (error) {
+    console.error('Error adding member to trip:', error.message);
+  }
+}

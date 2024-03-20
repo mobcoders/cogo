@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { PotentialDestination, User } from '@prisma/client';
 import HeartButton from '@/app/ui/heart-button';
 import { useState } from 'react';
+import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
 
 export interface SingleEvent extends PotentialDestination {
   likedBy: Array<string>;
@@ -38,11 +39,18 @@ export default function PotentialDestinationCard({
           />
 
           <div className="flex flex-col flex-1 justify-between">
-            <div className="flex flex-col">
-              <h1 className="font-semibold text-lg">{destination.city}</h1>
-              <p className="text-small text-foreground/80">
-                {destination.country}
-              </p>
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col flex-1">
+                <h1 className="font-semibold text-lg">{destination.city}</h1>
+                <p className="text-small text-foreground/80">
+                  {destination.country}
+                </p>
+              </div>
+
+              <LockInEditDropdown
+                city={destination.city}
+                country={destination.country}
+              />
             </div>
 
             <div className="flex justify-between items-end">
