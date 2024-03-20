@@ -30,11 +30,11 @@ model Trip {
   organiserId     String?
   city            String?
   country         String?
+  votingStage     String                 @default("none")
   moodboardAccoms PotentialAccom[]
   moodboardTrips  PotentialDestination[]
   organiser       User?                  @relation("OrganiserToTrip", fields: [organiserId], references: [id])
   members         User[]                 @relation("MembersToTrip")
-  votingStage     String                 @default("none")               
 }
 
 model PotentialDestination {
@@ -50,11 +50,11 @@ model PotentialDestination {
 }
 
 model PotentialAccom {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   tripId      String
-  airBnbUrl   String
   photoUrl    String
   description String
-  trip        Trip     @relation(fields: [tripId], references: [id])
-  likedBy     User[]   @relation("LikesAccom")
+  airBnbUrl   String
+  trip        Trip   @relation(fields: [tripId], references: [id])
+  likedBy     User[] @relation("LikesAccom")
 }
