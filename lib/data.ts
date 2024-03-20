@@ -23,6 +23,18 @@ export async function fetchTrip(tripId: string = 'cltuhc5xd0000843ykw32zdxe') {
   return trip;
 }
 
+export async function fetchPotentialAccoms(tripId: string) {
+  const accoms = await prisma.potentialAccom.findMany({
+    where: {
+      tripId: tripId,
+    },
+    include: {
+      likedBy: true,
+    },
+  });
+  return accoms;
+}
+
 export async function fetchUser(email: string) {
   const user = await prisma.user.findFirst({
     where: {
@@ -39,4 +51,15 @@ export async function fetchUser(email: string) {
   }
 
   return user;
+}
+
+export async function fetchVotingStage(tripId: string) {
+  return await prisma.trip.findUnique({
+    where: {
+      id: tripId,
+    },
+    select: {
+      votingStage: true,
+    },
+  });
 }

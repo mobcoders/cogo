@@ -1,5 +1,6 @@
 'use server';
 import { signIn } from '@/auth';
+import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -90,4 +91,23 @@ export async function updateUserPhoto(userId: string, photoUrl: string) {
     },
   });
   revalidatePath('/profile');
+}
+
+export async function createPotentialAccom(tripId: string, formData: FormData) {
+  const imgUrl_VenueDescription = await fetchImgUrl_Description(
+    formData.get('airbnb-url') as string
+  );
+
+  const rawFormData = {
+    tripId: tripId,
+    airBnbUrl: formData.get('airbnb-url') as string,
+    photoUrl: imgUrl_VenueDescription?.mainPhotoUrl as string,
+    description: imgUrl_VenueDescription?.titleText as string,
+  };
+
+  await prisma.potentialAccom.create({
+    data: rawFormData,
+  });
+
+  revalidatePath(`/${tripId}`);
 }
