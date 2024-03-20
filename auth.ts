@@ -7,7 +7,7 @@ import prisma from '@/lib/prisma';
 // import bcrypt from 'bcrypt';
 // const bcrypt = require('bcrypt');
 
-async function getUser(email: string) {
+export async function getUser(email: string) {
   const user = await prisma.user.findUnique({
     where: {
       email: email,
