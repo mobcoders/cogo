@@ -7,7 +7,7 @@ import HeartButton from '@/app/ui/heart-button';
 import { useState } from 'react';
 import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
 
-export interface SingleEvent extends PotentialDestination {
+export interface SingleDest extends PotentialDestination {
   likedBy: Array<string>;
 }
 
@@ -16,7 +16,7 @@ export default function PotentialDestinationCard({
   user,
   tripId,
 }: {
-  destination: SingleEvent;
+  destination: SingleDest;
   user: User;
   tripId: string;
 }) {

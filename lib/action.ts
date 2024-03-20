@@ -11,6 +11,18 @@ export async function toggleLike(
   userEmail: string,
   parentCard: string
 ) {
+  let potentialX;
+  switch (parentCard) {
+    case 'dest':
+      potentialX = 'potentialDestination';
+      break;
+    case 'accom':
+      potentialX = 'potentialAccom';
+      break;
+    default:
+      return;
+  }
+
   console.log(parentCard);
   const destination = await prisma.potentialDestination.findFirst({
     where: {
