@@ -143,6 +143,8 @@ export async function updateVotingStage(
   });
 
   revalidatePath(`/${tripId}`);
+}
+
 export async function addMemberToTrip(tripId: string, userId: string) {
   try {
     // Find the trip by ID
