@@ -4,7 +4,53 @@ import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-const bcrypt = require('bcrypt');
+
+export async function toggleLike(
+  tripId: string,
+  destId: string,
+  userEmail: string,
+  parentCard: string
+) {
+  console.log(parentCard);
+  const destination = await prisma.potentialDestination.findFirst({
+    where: {
+      id: destId,
+      likedBy: {
+        some: {
+          email: userEmail,
+        },
+      },
+    },
+  });
+
+  if (destination) {
+    await prisma.potentialDestination.update({
+      where: {
+        id: destId,
+      },
+      data: {
+        likedBy: {
+          disconnect: {
+            email: userEmail,
+          },
+        },
+      },
+    });
+  } else {
+    await prisma.potentialDestination.update({
+      where: {
+        id: destId,
+      },
+      data: {
+        likedBy: {
+          connect: {
+            email: userEmail,
+          },
+        },
+      },
+    });
+  }
+}
 
 export async function fetchMembers(
   tripId: string = 'cltuhc5xd0000843ykw32zdxe'

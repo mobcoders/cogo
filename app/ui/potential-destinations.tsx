@@ -1,14 +1,18 @@
 import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
 import AddDestination from '@/app/ui/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
+import { User } from '@prisma/client';
 
 export default async function PotentialDestinations({
   tripId,
+  user,
 }: {
   tripId: string;
+  user: User;
 }) {
   //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   const destinations = await fetchPotentialDests(tripId);
+
   return (
     <>
       <p>Add potential destinations and vote for where you want to go...</p>
@@ -18,6 +22,8 @@ export default async function PotentialDestinations({
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
+            user={user}
+            tripId={tripId}
           />
         ))}
       </div>

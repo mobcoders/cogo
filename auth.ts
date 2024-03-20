@@ -4,10 +4,9 @@ import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
 import prisma from '@/lib/prisma';
-// import bcrypt from 'bcrypt';
 // const bcrypt = require('bcrypt');
 
-async function getUser(email: string) {
+export async function getUser(email: string) {
   const user = await prisma.user.findUnique({
     where: {
       email: email,

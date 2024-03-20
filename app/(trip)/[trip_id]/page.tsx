@@ -3,7 +3,7 @@ import EditTripName from '@/app/ui/edit-trip-name/edit-trip-name';
 import { fetchTrip, fetchVotingStage } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-destinations';
-import { auth } from '@/auth';
+import { auth, getUser } from '@/auth';
 import PotentialAccomodation from '@/app/ui/edit-trip-name/potential-accomodation';
 
 export default async function Page({
@@ -23,6 +23,9 @@ export default async function Page({
   let username = session?.user?.name;
   let email = session?.user?.email;
 
+  let user = await getUser(email!);
+  // console.log(user?.email);
+
   return (
     <>
       <div className="flex flex-col">
@@ -34,7 +37,7 @@ export default async function Page({
             {(() => {
               switch (trip!.votingStage) {
                 case 'dest':
-                  return <PotentialDestinations tripId={tripId} />;
+                  return <PotentialDestinations tripId={tripId} user={user!} />;
                 case 'accom':
                   return <PotentialAccomodation tripId={tripId} />;
                 default:

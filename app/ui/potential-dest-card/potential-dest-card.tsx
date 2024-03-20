@@ -1,24 +1,25 @@
 'use client';
-
-import { useState } from 'react';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { Button } from '@nextui-org/button';
-import { HeartIcon } from '@/app/ui/potential-dest-card/heart-icon';
-import type { PotentialDestination } from '@prisma/client';
+import type { PotentialDestination, User } from '@prisma/client';
+import HeartButton from '@/app/ui/heart-button';
+import { useState } from 'react';
 import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
 
-interface SingleEvent extends PotentialDestination {
+export interface SingleEvent extends PotentialDestination {
   likedBy: Array<string>;
 }
 
 export default function PotentialDestinationCard({
   destination,
+  user,
+  tripId,
 }: {
   destination: SingleEvent;
+  user: User;
+  tripId: string;
 }) {
-  const [liked, setLiked] = useState(false);
   const [open, setOpen] = useState(false);
 
   function handleClick() {
@@ -66,20 +67,11 @@ export default function PotentialDestinationCard({
                   className="stroke-light-grey -translate-y-[-5px] -translate-x-[10px]"
                 />
               )}
-              <Button
-                isIconOnly
-                size="sm"
-                className="-translate-y-[-8px] -translate-x-[-2px] bg-transparent"
-                onPress={() => setLiked((v) => !v)}
-                disableRipple
-              >
-                <p className="mr-1">{destination.likedBy.length}</p>
-                <HeartIcon
-                  className={liked ? '[&>path]:stroke-transparent' : ''}
-                  fill={liked ? '#ED5453' : '#878787'}
-                  strokeWidth={0}
-                />
-              </Button>
+              <HeartButton
+                destination={destination}
+                user={user}
+                tripId={tripId}
+              />
             </div>
           </div>
         </div>
