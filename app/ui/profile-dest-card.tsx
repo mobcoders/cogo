@@ -8,8 +8,10 @@ export default function ProfileDestinationCard({ trip }: { trip: Trip }) {
       <Card className="drop-shadow-cogo mb-5" shadow="none">
         <CardBody>
           <h2>{trip.name}</h2>
-          <h3>{trip.country}</h3>
-          <p>{trip.dates}</p>
+          <h3 className="text-light-grey">
+            {trip.city && trip.country ? `${trip.city}, ${trip.country}` : ''}
+          </h3>
+          <p className="text-light-grey">{trip.dates}</p>
         </CardBody>
       </Card>
     </Link>

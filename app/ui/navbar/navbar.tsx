@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
 
-export default function Navbar() {
+export default function Navbar({ user }: { user: string }) {
   const membersModal = useDisclosure();
   const params = useParams() as { trip_id: string };
 
@@ -25,8 +25,8 @@ export default function Navbar() {
       <Link href={'/profile'}>
         <Avatar
           showFallback
-          name="AE"
-          src="https://images.unsplash.com/broken"
+          name={user.name.split(' ')[0][0] + user.name.split(' ')[1][0]}
+          src={user.image}
           className="bg-white text-base"
         />
       </Link>
