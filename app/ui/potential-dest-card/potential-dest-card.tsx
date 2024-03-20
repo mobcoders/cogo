@@ -5,9 +5,9 @@ import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { Button } from '@nextui-org/button';
-import { Badge } from '@nextui-org/badge';
 import { HeartIcon } from '@/app/ui/potential-dest-card/heart-icon';
 import type { PotentialDestination } from '@prisma/client';
+import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
 
 interface SingleEvent extends PotentialDestination {
   likedBy: Array<string>;
@@ -38,11 +38,18 @@ export default function PotentialDestinationCard({
           />
 
           <div className="flex flex-col flex-1 justify-between">
-            <div className="flex flex-col">
-              <h1 className="font-semibold text-lg">{destination.city}</h1>
-              <p className="text-small text-foreground/80">
-                {destination.country}
-              </p>
+            <div className="flex justify-between items-start">
+              <div className="flex flex-col flex-1">
+                <h1 className="font-semibold text-lg">{destination.city}</h1>
+                <p className="text-small text-foreground/80">
+                  {destination.country}
+                </p>
+              </div>
+
+              <LockInEditDropdown
+                city={destination.city}
+                country={destination.country}
+              />
             </div>
 
             <div className="flex justify-between items-end">
@@ -61,10 +68,10 @@ export default function PotentialDestinationCard({
               )}
               <Button
                 isIconOnly
-                className="-translate-y-[-10px] -translate-x-[-5px]"
-                radius="full"
-                variant="light"
+                size="sm"
+                className="-translate-y-[-8px] -translate-x-[-2px] bg-transparent"
                 onPress={() => setLiked((v) => !v)}
+                disableRipple
               >
                 <p className="mr-1">{destination.likedBy.length}</p>
                 <HeartIcon

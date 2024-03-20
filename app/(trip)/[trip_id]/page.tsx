@@ -27,7 +27,6 @@ export default async function Page({
   return (
     <>
       <div className="flex flex-col">
-        <p>Hi {username}!</p>
         <div className="flex-grow flex flex-col gap-5">
           <div>
             <EditTripName trip={trip} />
