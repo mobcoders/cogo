@@ -42,19 +42,23 @@ export default function EditTripName({ trip }: { trip: Trip }) {
             />
           </div>
         ) : (
-          <h1>{tripNameVal}</h1>
+          <h1>{trip.votingStage === 'dest' ? tripNameVal : trip.city}</h1>
         )}
 
         <div className="">
-          <Button isIconOnly type="submit" className="bg-transparent">
-            {isEditing ? (
-              <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
-            ) : (
-              <PencilIcon className="h-5 w-5 fill-light-grey" />
-            )}
-          </Button>
+          {trip.votingStage === 'dest' && (
+            <Button isIconOnly type="submit" className="bg-transparent">
+              {isEditing ? (
+                <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
+              ) : (
+                <PencilIcon className="h-5 w-5 fill-light-grey" />
+              )}
+            </Button>
+          )}
         </div>
       </div>
+
+      <h2 className="text-light-grey">{trip.country}</h2>
 
       {isEditing ? (
         <Input
@@ -65,7 +69,7 @@ export default function EditTripName({ trip }: { trip: Trip }) {
           onChange={handleDateChange}
         />
       ) : (
-        <h2 className="text-light-grey">{tripDateVal}</h2>
+        <h3 className="text-[16px]">{tripDateVal}</h3>
       )}
     </form>
   );

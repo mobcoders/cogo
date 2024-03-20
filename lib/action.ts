@@ -112,6 +112,39 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
   revalidatePath(`/${tripId}`);
 }
 
+export async function updateVotingStage(
+  tripId: string,
+  city: string,
+  country: string
+) {
+  const trip = await prisma.trip.findFirst({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  let newVotingStage;
+
+  if (trip.votingStage === 'dest') {
+    newVotingStage = 'accom';
+  } else if (trip.votingStage === 'accom') {
+    newVotingStage = 'itinerary';
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      city: city,
+      country: country,
+      votingStage: newVotingStage,
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
 export async function addMemberToTrip(tripId: string, userId: string) {
   try {
     // Find the trip by ID
