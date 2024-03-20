@@ -34,8 +34,6 @@ export default async function Page({
           <div className="flex flex-col gap-5">
             {(() => {
               switch (trip!.votingStage) {
-                case 'none':
-                  return <PotentialDestinations tripId={tripId} />;
                 case 'dest':
                   return <PotentialDestinations tripId={tripId} />;
                 case 'accom':
