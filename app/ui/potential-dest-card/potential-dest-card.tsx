@@ -4,6 +4,7 @@ import { Image } from '@nextui-org/image';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { PotentialDestination, User } from '@prisma/client';
 import HeartButton from '@/app/ui/heart-button';
+import { useState } from 'react';
 
 export interface SingleEvent extends PotentialDestination {
   likedBy: Array<string>;
@@ -18,10 +19,10 @@ export default function PotentialDestinationCard({
   user: User;
   tripId: string;
 }) {
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   function handleClick() {
-    // setOpen(!open);
+    setOpen(!open);
   }
 
   return (
@@ -45,7 +46,7 @@ export default function PotentialDestinationCard({
             </div>
 
             <div className="flex justify-between items-end">
-              {/* {open ? (
+              {open ? (
                 <ChevronDownIcon
                   width={30}
                   onClick={handleClick}
@@ -57,7 +58,7 @@ export default function PotentialDestinationCard({
                   onClick={handleClick}
                   className="stroke-light-grey -translate-y-[-5px] -translate-x-[10px]"
                 />
-              )} */}
+              )}
               <HeartButton
                 destination={destination}
                 user={user}
@@ -67,7 +68,7 @@ export default function PotentialDestinationCard({
           </div>
         </div>
 
-        {/* {destination.activities.length && open ? (
+        {destination.activities.length && open ? (
           <ul className="text-sm font-medium mt-2 pl-3 marker:text-pink-500">
             {destination.activities.map((activity, index) => (
               <li key={index} className="list-disc">
@@ -75,25 +76,8 @@ export default function PotentialDestinationCard({
               </li>
             ))}
           </ul>
-        ) : null} */}
+        ) : null}
       </CardBody>
     </Card>
   );
-}
-
-{
-  /* <Button
-  isIconOnly
-  className="-translate-y-[-10px] -translate-x-[-5px]"
-  radius="full"
-  variant="light"
-  onPress={() => setLiked((v) => !v)}
->
-  <p className="mr-1">{destination.likedBy.length}</p>
-  <HeartIcon
-    className={liked ? '[&>path]:stroke-transparent' : ''}
-    fill={liked ? '#ED5453' : '#878787'}
-    strokeWidth={0}
-  />
-</Button>; */
 }
