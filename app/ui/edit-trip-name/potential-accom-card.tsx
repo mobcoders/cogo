@@ -37,7 +37,7 @@ export default function PotentialAccomCard({ accom }: { accom: SingleAccom }) {
       </a>
       <Button
         isIconOnly
-        className="bg-transparent absolute bottom-1 right-2"
+        className="bg-transparent absolute bottom-1 right-2 h-12 px-6"
         onPress={() => setLiked((v) => !v)}
       >
         <Badge content={accom.likedBy.length} color="primary">
