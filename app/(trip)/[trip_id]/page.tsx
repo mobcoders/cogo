@@ -39,7 +39,7 @@ export default async function Page({
                 case 'dest':
                   return <PotentialDestinations tripId={tripId} user={user!} />;
                 case 'accom':
-                  return <PotentialAccomodation tripId={tripId} />;
+                  return <PotentialAccomodation tripId={tripId} user={user!} />;
                 default:
                   return <></>;
               }

@@ -3,50 +3,51 @@ import type { PotentialAccom } from '@prisma/client';
 import { useState } from 'react';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
-import { Button } from '@nextui-org/button';
-import { Badge } from '@nextui-org/badge';
-import { HeartIcon } from '@/app/ui/potential-dest-card/heart-icon';
+import HeartButton from '@/app/ui/heart-button';
+import { User } from 'next-auth';
 
-interface SingleAccom extends PotentialAccom {
+export interface SingleAccom extends PotentialAccom {
   likedBy: Array<string>;
 }
 
-export default function PotentialAccomCard({ accom }: { accom: SingleAccom }) {
+export default function PotentialAccomCard({
+  accom,
+  user,
+  tripId,
+}: {
+  accom: SingleAccom;
+  user: User;
+  tripId: string;
+}) {
   const [liked, setLiked] = useState(false);
 
   return (
-    <Card className="drop-shadow-cogo h-32">
-      <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
-        <CardBody className="h-full">
-          <div className="flex gap-5">
+    <Card className="drop-shadow-cogo h-fit">
+      <CardBody className="mb-5">
+        <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
+          <div className="flex gap-3 h-full">
             <Image
               alt={'photo url'}
-              className="object-cover mb-5"
+              className="object-cover h-24"
               src={accom.photoUrl!}
               height={100}
               width={100}
             />
 
             <div className="flex flex-col flex-1">
-              <div className="flex flex-col">
-                <h1 className="font-semibold text-lg">{accom.description}</h1>
-              </div>
+              <h1 className="font-semibold text-lg">{accom.description}</h1>
             </div>
           </div>
-        </CardBody>
-      </a>
-      <Button
-        isIconOnly
-        className="bg-transparent absolute bottom-1 right-2"
-        onPress={() => setLiked((v) => !v)}
-      >
-        <Badge content={accom.likedBy.length} color="primary">
-          <HeartIcon
-            className={liked ? '[&>path]:stroke-transparent' : ''}
-            fill={liked ? 'currentColor' : 'none'}
-          />
-        </Badge>
-      </Button>
+        </a>
+      </CardBody>
+      <div className="absolute bottom-2 right-2">
+        <HeartButton
+          votingTopic={accom}
+          user={user}
+          tripId={tripId}
+          parentCard="accom"
+        />
+      </div>
     </Card>
   );
 }

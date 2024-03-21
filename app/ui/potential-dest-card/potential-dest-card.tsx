@@ -8,7 +8,7 @@ import { useState } from 'react';
 import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
 import EditForm from '@/app/ui/edit-form';
 
-export interface SingleEvent extends PotentialDestination {
+export interface SingleDest extends PotentialDestination {
   likedBy: Array<string>;
 }
 
@@ -17,7 +17,7 @@ export default function PotentialDestinationCard({
   user,
   tripId,
 }: {
-  destination: SingleEvent;
+  destination: SingleDest;
   user: User;
   tripId: string;
 }) {
@@ -70,9 +70,10 @@ export default function PotentialDestinationCard({
                 />
               )}
               <HeartButton
-                destination={destination}
+                votingTopic={destination}
                 user={user}
                 tripId={tripId}
+                parentCard="dest"
               />
             </div>
           </div>

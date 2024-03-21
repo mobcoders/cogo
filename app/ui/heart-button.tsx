@@ -1,21 +1,24 @@
-import type { SingleEvent } from '@/app/ui/potential-dest-card/potential-dest-card';
+import type { SingleAccom } from '@/app/ui/edit-trip-name/potential-accom-card';
+import type { SingleDest } from '@/app/ui/potential-dest-card/potential-dest-card';
 import { toggleLike } from '@/lib/action';
 import { HeartIcon } from '@heroicons/react/24/solid';
-import { Button } from '@nextui-org/react';
+import { Badge, Button } from '@nextui-org/react';
 import { User } from '@prisma/client';
 import { useState, useTransition } from 'react';
 
 export default function HeartButton({
-  destination,
+  votingTopic,
   user,
   tripId,
+  parentCard,
 }: {
-  destination: SingleEvent;
+  votingTopic: SingleDest | SingleAccom;
   user: User;
   tripId: string;
+  parentCard: string;
 }) {
   const [isPending, startTransition] = useTransition();
-  const [optimisticLikes, setOptimisticLikes] = useState(destination.likedBy);
+  const [optimisticLikes, setOptimisticLikes] = useState(votingTopic.likedBy);
 
   const isLiked: boolean = optimisticLikes.some(
     (obj) => obj.email === user.email
@@ -30,32 +33,34 @@ export default function HeartButton({
 
     startTransition(async () => {
       try {
-        await toggleLike(tripId, destination.id, user.email!, 'dest');
+        await toggleLike(votingTopic.id, user.email!, parentCard);
       } catch (error) {
-        setOptimisticLikes(destination.likedBy);
+        setOptimisticLikes(votingTopic.likedBy);
       }
     });
   }
 
   return (
-    <>
-      <Button
-        isIconOnly
-        radius="full"
-        variant="light"
-        onPress={handleLike}
-        disabled={isPending}
-        size="sm"
-        className="-translate-y-[-8px] -translate-x-[-2px] bg-transparent"
-        disableRipple
-      >
-        <p className="mr-1">{optimisticLikes.length}</p>
-        <HeartIcon
-          className={isLiked ? '[&>path]:stroke-transparent' : ''}
-          fill={isLiked ? '#ED5453' : '#878787'}
-          strokeWidth={0}
-        />
-      </Button>
-    </>
+    <div className="mr-2 translate-y-[10px]">
+      <Badge content={optimisticLikes.length} color="primary">
+        <Button
+          isIconOnly
+          radius="full"
+          variant="light"
+          onPress={handleLike}
+          disabled={isPending}
+          size="sm"
+          className="bg-transparent"
+          disableRipple
+        >
+          <HeartIcon
+            className={isLiked ? '[&>path]:stroke-transparent' : ''}
+            fill={isLiked ? '#ED5453' : '#878787'}
+            strokeWidth={0}
+            width={25}
+          />
+        </Button>
+      </Badge>
+    </div>
   );
 }
