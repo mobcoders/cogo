@@ -13,7 +13,7 @@ export async function toggleLike(
   parentCard: string
 ) {
   console.log(parentCard);
-  const destination = await prisma.potentialDestination.findFirst({
+  const destination = await prisma.potentialDestination.findUnique({
     where: {
       id: destId,
       likedBy: {
@@ -53,10 +53,8 @@ export async function toggleLike(
   }
 }
 
-export async function fetchMembers(
-  tripId: string = 'cltuhc5xd0000843ykw32zdxe'
-) {
-  const trip = await prisma.trip.findFirst({
+export async function fetchMembers(tripId: string) {
+  const trip = await prisma.trip.findUnique({
     where: {
       id: tripId,
     },
@@ -72,10 +70,8 @@ export async function fetchMembers(
   return trip.members;
 }
 
-export async function fetchOrganiser(
-  tripId: string = 'cltuhc5xd0000843ykw32zdxe'
-) {
-  const trip = await prisma.trip.findFirst({
+export async function fetchOrganiser(tripId: string) {
+  const trip = await prisma.trip.findUnique({
     where: {
       id: tripId,
     },
@@ -181,7 +177,7 @@ export async function updateVotingStage(
   city: string,
   country: string
 ) {
-  const trip = await prisma.trip.findFirst({
+  const trip = await prisma.trip.findUnique({
     where: { id: tripId },
   });
 

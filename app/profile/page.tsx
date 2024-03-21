@@ -6,7 +6,7 @@ import ProfileDestinationCard from '@/app/ui/profile-dest-card';
 
 export default async function Page() {
   const session = await auth();
-  const user = await fetchUser(session!.user!.email as string);
+  const user = await fetchUser(session!.user!.email!);
   const trips = [...user.memberOfTrips, ...user.organisedTrips];
 
   return (

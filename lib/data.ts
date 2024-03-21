@@ -1,8 +1,6 @@
 import prisma from '@/lib/prisma';
 
-export async function fetchPotentialDests(
-  tripId: string = 'cltuhc5xd0000843ykw32zdxe'
-) {
+export async function fetchPotentialDests(tripId: string) {
   const destinations = await prisma.potentialDestination.findMany({
     where: {
       tripId: tripId,
@@ -14,8 +12,8 @@ export async function fetchPotentialDests(
   return destinations;
 }
 
-export async function fetchTrip(tripId: string = 'cltuhc5xd0000843ykw32zdxe') {
-  const trip = await prisma.trip.findFirst({
+export async function fetchTrip(tripId: string) {
+  const trip = await prisma.trip.findUnique({
     where: {
       id: tripId,
     },
@@ -36,7 +34,7 @@ export async function fetchPotentialAccoms(tripId: string) {
 }
 
 export async function fetchUser(email: string) {
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
       email: email,
     },
