@@ -2,6 +2,7 @@ import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potentia
 import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
+import AutocompleteRequired from '@/app/ui/autocomplete-required';
 
 export default async function PotentialDestinations({
   tripId,
@@ -20,6 +21,7 @@ export default async function PotentialDestinations({
       <p>Add potential destinations and vote for where you want to go...</p>
       <AddDestination tripId={tripId} />
       <div className="flex flex-col gap-5">
+        <AutocompleteRequired />
         {sortedDestinations.map((destination) => (
           <PotentialDestinationCard
             key={destination.id}
