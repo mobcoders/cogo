@@ -1,10 +1,10 @@
 import Navbar from '@/app/ui/navbar/navbar';
-import EditTripName from '@/app/ui/edit-trip-name/edit-trip-name';
+import EditTripName from '@/app/ui/edit-trip-name';
 import { fetchTrip, fetchVotingStage } from '@/lib/data';
 import { notFound } from 'next/navigation';
-import PotentialDestinations from '@/app/ui/potential-destinations';
+import PotentialDestinations from '@/app/ui/potential-dest-and-accom/potential-destinations';
 import { auth, getUser } from '@/auth';
-import PotentialAccomodation from '@/app/ui/edit-trip-name/potential-accomodation';
+import PotentialAccomodation from '@/app/ui/potential-dest-and-accom/potential-accomodation';
 
 export default async function Page({
   params,
@@ -12,9 +12,7 @@ export default async function Page({
   params: { trip_id: string };
 }) {
   const tripId = params.trip_id;
-  //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   const trip = await fetchTrip(tripId);
-  // Voting stage holds string "none" by default. We will modify these to "dest" and "accom" to shift user journey.
 
   if (!trip) {
     notFound();
@@ -24,7 +22,6 @@ export default async function Page({
   let email = session?.user?.email;
 
   let user = await getUser(email!);
-  // console.log(user?.email);
 
   return (
     <>

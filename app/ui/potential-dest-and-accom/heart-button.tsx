@@ -1,5 +1,5 @@
-import type { SingleAccom } from '@/app/ui/edit-trip-name/potential-accom-card';
-import type { SingleDest } from '@/app/ui/potential-dest-card/potential-dest-card';
+import type { SingleAccom } from '@/app/ui/potential-dest-and-accom/potential-accom-card';
+import type { SingleDest } from '@/app/ui/potential-dest-and-accom/potential-dest-card';
 import { toggleLike } from '@/lib/action';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { Badge, Button } from '@nextui-org/react';
@@ -33,7 +33,7 @@ export default function HeartButton({
 
     startTransition(async () => {
       try {
-        await toggleLike(votingTopic.id, user.email!, parentCard);
+        await toggleLike(votingTopic.id, user.email!, parentCard, tripId);
       } catch (error) {
         setOptimisticLikes(votingTopic.likedBy);
       }

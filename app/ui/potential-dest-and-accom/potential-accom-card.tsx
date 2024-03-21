@@ -3,7 +3,7 @@ import type { PotentialAccom } from '@prisma/client';
 import { useState } from 'react';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
-import HeartButton from '@/app/ui/heart-button';
+import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { User } from 'next-auth';
 
 export interface SingleAccom extends PotentialAccom {

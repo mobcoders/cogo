@@ -3,10 +3,10 @@ import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { PotentialDestination, User } from '@prisma/client';
-import HeartButton from '@/app/ui/heart-button';
+import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { useState } from 'react';
-import LockInEditDropdown from '@/app/ui/lock-in-edit-dropdown';
-import EditForm from '@/app/ui/edit-form';
+import LockInEditDropdown from '@/app/ui/potential-dest-and-accom/lock-in-edit-dropdown';
+import EditForm from '@/app/ui/potential-dest-and-accom/edit-form';
 
 export interface SingleDest extends PotentialDestination {
   likedBy: Array<string>;

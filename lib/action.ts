@@ -10,9 +10,9 @@ import bcrypt from 'bcryptjs';
 export async function toggleLike(
   dest_or_accom_id: string,
   userEmail: string,
-  parentCard: string
+  parentCard: string,
+  tripId: string
 ) {
-
   let potentialModel:
     | Prisma.PotentialDestinationDelegate<
         Prisma.RejectOnNotFound | Prisma.RejectPerOperation
@@ -74,6 +74,7 @@ export async function toggleLike(
       },
     });
   }
+  revalidatePath(`/${tripId}`);
 }
 
 export async function fetchMembers(tripId: string) {

@@ -1,5 +1,5 @@
-import PotentialAccomCard from '@/app/ui/edit-trip-name/potential-accom-card';
-import AddAccomodation from '@/app/ui/edit-trip-name/add-accomodation';
+import PotentialAccomCard from '@/app/ui/potential-dest-and-accom/potential-accom-card';
+import AddAccomodation from '@/app/ui/potential-dest-and-accom/add-accomodation';
 
 import { fetchPotentialAccoms } from '@/lib/data';
 import { User } from 'next-auth';
