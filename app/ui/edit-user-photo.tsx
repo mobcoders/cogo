@@ -15,7 +15,9 @@ export default function EditUserPhoto({ userId }: { userId: string }) {
       uploadPreset="cogo_cloudinary"
       options={{ sources: ['local', 'url'] }}
       onSuccess={(result, { widget }) => {
-        handleSuccess(result?.info?.secure_url);
+        if (typeof result.info === 'object') {
+          handleSuccess(result!.info!.secure_url);
+        }
       }}
     >
       {({ open }) => {
