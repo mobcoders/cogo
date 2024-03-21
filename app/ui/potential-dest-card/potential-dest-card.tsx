@@ -15,10 +15,12 @@ export default function PotentialDestinationCard({
   destination,
   user,
   tripId,
+  parentCard,
 }: {
   destination: SingleDest;
   user: User;
   tripId: string;
+  parentCard: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -68,9 +70,10 @@ export default function PotentialDestinationCard({
                 />
               )}
               <HeartButton
-                destination={destination}
+                votingTopic={destination}
                 user={user}
                 tripId={tripId}
+                parentCard="dest"
               />
             </div>
           </div>

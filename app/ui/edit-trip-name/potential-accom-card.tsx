@@ -21,7 +21,6 @@ export default function PotentialAccomCard({
 }) {
   const [liked, setLiked] = useState(false);
 
-  const votingTopic = accom;
   // console.log(votingTopic);
 
   return (
@@ -45,7 +44,12 @@ export default function PotentialAccomCard({
           </div>
         </CardBody>
       </a>
-      <HeartButton accom={votingTopic} user={user} tripId={tripId} />
+      <HeartButton
+        votingTopic={accom}
+        user={user}
+        tripId={tripId}
+        parentCard="accom"
+      />
     </Card>
   );
 }

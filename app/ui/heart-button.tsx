@@ -10,10 +10,12 @@ export default function HeartButton({
   votingTopic,
   user,
   tripId,
+  parentCard,
 }: {
-  destination: SingleDest | SingleAccom;
+  votingTopic: SingleDest | SingleAccom;
   user: User;
   tripId: string;
+  parentCard: string;
 }) {
   const [isPending, startTransition] = useTransition();
   const [optimisticLikes, setOptimisticLikes] = useState(votingTopic.likedBy);
@@ -31,7 +33,7 @@ export default function HeartButton({
 
     startTransition(async () => {
       try {
-        await toggleLike(tripId, votingTopic.id, user.email!, 'dest');
+        await toggleLike(votingTopic.id, user.email!, parentCard);
       } catch (error) {
         setOptimisticLikes(votingTopic.likedBy);
       }

@@ -2,31 +2,41 @@
 import { signIn } from '@/auth';
 import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export async function toggleLike(
-  tripId: string,
-  destId: string,
+  dest_or_accom_id: string,
   userEmail: string,
   parentCard: string
 ) {
-  let potentialX;
+  let potentialModel:
+    | Prisma.PotentialDestinationDelegate<
+        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+      >
+    | Prisma.PotentialAccomDelegate<
+        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+      >;
   switch (parentCard) {
     case 'dest':
-      potentialX = 'potentialDestination';
+      potentialModel =
+        prisma.potentialDestination as Prisma.PotentialDestinationDelegate<
+          Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+        >;
       break;
     case 'accom':
-      potentialX = 'potentialAccom';
+      potentialModel = prisma.potentialAccom as Prisma.PotentialAccomDelegate<
+        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+      >;
       break;
     default:
       return;
   }
 
-  console.log(parentCard);
-  const destination = await prisma.potentialDestination.findFirst({
+  const record = await potentialModel.findFirst({
     where: {
-      id: destId,
+      id: dest_or_accom_id,
       likedBy: {
         some: {
           email: userEmail,
@@ -35,10 +45,10 @@ export async function toggleLike(
     },
   });
 
-  if (destination) {
-    await prisma.potentialDestination.update({
+  if (record) {
+    await potentialModel.update({
       where: {
-        id: destId,
+        id: dest_or_accom_id,
       },
       data: {
         likedBy: {
@@ -49,9 +59,9 @@ export async function toggleLike(
       },
     });
   } else {
-    await prisma.potentialDestination.update({
+    await potentialModel.update({
       where: {
-        id: destId,
+        id: dest_or_accom_id,
       },
       data: {
         likedBy: {
