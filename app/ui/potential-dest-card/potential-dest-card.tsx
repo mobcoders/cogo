@@ -15,12 +15,10 @@ export default function PotentialDestinationCard({
   destination,
   user,
   tripId,
-  parentCard,
 }: {
   destination: SingleDest;
   user: User;
   tripId: string;
-  parentCard: string;
 }) {
   const [open, setOpen] = useState(false);
 

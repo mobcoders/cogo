@@ -21,35 +21,33 @@ export default function PotentialAccomCard({
 }) {
   const [liked, setLiked] = useState(false);
 
-  // console.log(votingTopic);
-
   return (
-    <Card className="drop-shadow-cogo h-32">
-      <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
-        <CardBody className="h-full">
-          <div className="flex gap-5">
+    <Card className="drop-shadow-cogo h-fit">
+      <CardBody className="mb-5">
+        <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
+          <div className="flex gap-3 h-full">
             <Image
               alt={'photo url'}
-              className="object-cover mb-5"
+              className="object-cover h-24"
               src={accom.photoUrl!}
               height={100}
               width={100}
             />
 
             <div className="flex flex-col flex-1">
-              <div className="flex flex-col">
-                <h1 className="font-semibold text-lg">{accom.description}</h1>
-              </div>
+              <h1 className="font-semibold text-lg">{accom.description}</h1>
             </div>
           </div>
-        </CardBody>
-      </a>
-      <HeartButton
-        votingTopic={accom}
-        user={user}
-        tripId={tripId}
-        parentCard="accom"
-      />
+        </a>
+      </CardBody>
+      <div className="absolute bottom-2 right-2">
+        <HeartButton
+          votingTopic={accom}
+          user={user}
+          tripId={tripId}
+          parentCard="accom"
+        />
+      </div>
     </Card>
   );
 }
