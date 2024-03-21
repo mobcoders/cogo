@@ -24,7 +24,6 @@ export default async function PotentialDestinations({
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
-            mostPopular={sortedDestinations[0].city}
             user={user}
             tripId={tripId}
           />

@@ -1,20 +1,20 @@
+import { useDisclosure } from '@nextui-org/react';
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+} from '@nextui-org/dropdown';
+import { Button } from '@nextui-org/button';
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
-  useDisclosure,
-  Checkbox,
-  Input,
-  Link,
-  DropdownItem,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-} from '@nextui-org/react';
+} from '@nextui-org/modal';
+import { Input } from '@nextui-org/input';
 import {
   EllipsisHorizontalCircleIcon as OptionsIcon,
   PencilIcon,
@@ -28,7 +28,7 @@ import {
   deletePotentialDestination,
 } from '@/lib/action';
 
-export default function EditForm({
+export default function PotentialDestOptions({
   city,
   country,
   id,

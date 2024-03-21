@@ -15,7 +15,7 @@ import {
   LockClosedIcon,
 } from '@heroicons/react/24/solid';
 import { useParams } from 'next/navigation';
-import EditForm from '@/app/ui/potential-dest-and-accom/edit-form';
+import EditForm from '@/app/ui/potential-dest-and-accom/potential-dest-options';
 import { useState } from 'react';
 
 export default function LockInEditDropdown({
