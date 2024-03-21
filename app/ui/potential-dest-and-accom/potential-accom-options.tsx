@@ -27,8 +27,8 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
   }
 
   return (
-    <Dropdown>
-      <DropdownTrigger>
+    <Dropdown className="w-fit p-0">
+      <DropdownTrigger className="w-fit">
         <Button
           isIconOnly
           size="sm"
@@ -45,22 +45,23 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
       <DropdownMenu
         aria-label="Accommodation Actions"
         onAction={(key) => handleClick(key as string)}
+        className="w-fit"
       >
-        <DropdownItem
-          key="lock-in"
-          startContent={
-            <LockClosedIcon height={15} className="fill-light-grey" />
-          }
-          textValue="Lock In"
-        >
-          <Button>Lock In</Button>
+        <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
+          <Button
+            className="bg-pink-500 text-white w-24"
+            startContent={<LockClosedIcon height={15} className="fill-white" />}
+          >
+            Lock In
+          </Button>
         </DropdownItem>
-        <DropdownItem
-          key="delete"
-          startContent={<TrashIcon height={15} className="fill-light-grey" />}
-          textValue="Delete"
-        >
-          <Button>Delete</Button>
+        <DropdownItem key="delete" textValue="Delete" className="w-fit">
+          <Button
+            className="bg-pink-500 text-white w-24"
+            startContent={<TrashIcon height={15} className="fill-white" />}
+          >
+            Delete
+          </Button>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

@@ -69,8 +69,8 @@ export default function PotentialDestOptions({
 
   return (
     <>
-      <Dropdown>
-        <DropdownTrigger>
+      <Dropdown className="w-fit p-0">
+        <DropdownTrigger className="w-fit">
           <Button
             isIconOnly
             size="sm"
@@ -87,25 +87,30 @@ export default function PotentialDestOptions({
         <DropdownMenu
           aria-label="Trip Actions"
           onAction={(key) => handleClick(key as string)}
+          className="w-fit"
         >
-          <DropdownSection title={`${city}, ${country}`}>
-            <DropdownItem
-              key="edit"
-              startContent={
-                <PencilIcon height={15} className="fill-light-grey" />
-              }
-              textValue="Edit"
-            >
-              <Button onPress={onOpen}>Edit</Button>
+          <DropdownSection
+            title={`${city}, ${country}`}
+            className="text-center pt-3"
+          >
+            <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
+              <Button
+                className="bg-pink-500 text-white w-24"
+                startContent={
+                  <LockClosedIcon height={15} className="fill-white" />
+                }
+              >
+                Lock In
+              </Button>
             </DropdownItem>
-            <DropdownItem
-              key="lock-in"
-              startContent={
-                <LockClosedIcon height={15} className="fill-light-grey" />
-              }
-              textValue="Lock In"
-            >
-              <Button>Lock In</Button>
+            <DropdownItem key="edit" textValue="Edit" className="w-fit">
+              <Button
+                onPress={onOpen}
+                className="bg-pink-500 text-white w-24"
+                startContent={<PencilIcon height={15} className="fill-white" />}
+              >
+                Edit
+              </Button>
             </DropdownItem>
           </DropdownSection>
         </DropdownMenu>
