@@ -26,7 +26,7 @@ export default function SettingsModal({
       navigateVotingStage(tripId, selected);
     }
     fetch();
-  }, [selected]);
+  }, [selected, tripId]);
 
   return (
     <ModalContent>

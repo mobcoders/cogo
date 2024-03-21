@@ -42,12 +42,12 @@ export default function PotentialDestOptions({
   const tripId = params.trip_id;
 
   const [cityVal, setCityVal] = useState(city);
-  function handleCityChange(e) {
+  function handleCityChange(e: any) {
     setCityVal(e.target.value);
   }
 
   const [countryVal, setCountryVal] = useState(country);
-  function handleCountryChange(e) {
+  function handleCountryChange(e: any) {
     setCountryVal(e.target.value);
   }
 
