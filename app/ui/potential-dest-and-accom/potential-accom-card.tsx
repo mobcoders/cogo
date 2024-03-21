@@ -5,6 +5,7 @@ import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { User } from 'next-auth';
+import PotentialAccomOptions from '@/app/ui/potential-dest-and-accom/potential-accom-options';
 
 export interface SingleAccom extends PotentialAccom {
   likedBy: Array<string>;
@@ -34,7 +35,7 @@ export default function PotentialAccomCard({
               width={100}
             />
 
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-1 mr-5">
               <h1 className="font-semibold text-lg">{accom.description}</h1>
             </div>
           </div>
@@ -47,6 +48,9 @@ export default function PotentialAccomCard({
           tripId={tripId}
           parentCard="accom"
         />
+      </div>
+      <div className="absolute top-2 right-2">
+        <PotentialAccomOptions />
       </div>
     </Card>
   );
