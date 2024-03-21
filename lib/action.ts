@@ -96,7 +96,7 @@ export async function createPotentialDestination(
     tripId: tripId,
     description: 'no description yet',
   };
-  const updatePotentialDestination = await prisma.potentialDestination.create({
+  await prisma.potentialDestination.create({
     data: rawFormData,
   });
   revalidatePath(`/${tripId}`);
@@ -232,4 +232,42 @@ export async function addMemberToTrip(tripId: string, userId: string) {
   } catch (error) {
     console.error('Error adding member to trip:', error);
   }
+}
+
+export async function updatePotentialDestination(
+  formData: FormData,
+  id: string,
+  tripId: string
+) {
+  const rawFormData = {
+    city: formData.get('city') as string,
+    country: formData.get('country') as string,
+  };
+
+  let photoUrlCheck = formData.get('url');
+
+  switch (photoUrlCheck) {
+    case '':
+      break;
+    default:
+      rawFormData.photoUrl = photoUrlCheck;
+      break;
+  }
+
+  await prisma.potentialDestination.update({
+    where: {
+      id: id,
+    },
+    data: rawFormData,
+  });
+  revalidatePath(`/${tripId}`);
+}
+
+export async function deletePotentialDestination(id: string, tripId: string) {
+  await prisma.potentialDestination.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath(`/${tripId}`);
 }
