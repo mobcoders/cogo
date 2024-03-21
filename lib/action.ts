@@ -196,7 +196,7 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
   revalidatePath(`/${tripId}`);
 }
 
-export async function updateVotingStage(
+export async function lockInDestination(
   tripId: string,
   city: string,
   country: string
@@ -209,20 +209,31 @@ export async function updateVotingStage(
     throw new Error('Trip not found');
   }
 
-  let newVotingStage;
-
-  if (trip.votingStage === 'dest') {
-    newVotingStage = 'accom';
-  } else if (trip.votingStage === 'accom') {
-    newVotingStage = 'itinerary';
-  }
-
   await prisma.trip.update({
     where: { id: tripId },
     data: {
       city: city,
       country: country,
-      votingStage: newVotingStage,
+      votingStage: 'accom',
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
+export async function lockInAccommodation(tripId: string) {
+  const trip = await prisma.trip.findUnique({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      votingStage: 'itinery',
     },
   });
 
@@ -323,6 +334,15 @@ export async function updatePotentialDestination(
 
 export async function deletePotentialDestination(id: string, tripId: string) {
   await prisma.potentialDestination.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath(`/${tripId}`);
+}
+
+export async function deletePotentialAccom(id: string, tripId: string) {
+  await prisma.potentialAccom.delete({
     where: {
       id: id,
     },
