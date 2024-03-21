@@ -1,5 +1,5 @@
-import PotentialDestinationCard from '@/app/ui/potential-dest-card/potential-dest-card';
-import AddDestination from '@/app/ui/add-destination';
+import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potential-dest-card';
+import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 
