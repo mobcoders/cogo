@@ -42,23 +42,23 @@ export default function EditTripName({ trip }: { trip: Trip }) {
             />
           </div>
         ) : (
-          <h1>{trip.votingStage === 'dest' ? tripNameVal : trip.city}</h1>
+          <div>
+            <h1>{tripNameVal}</h1>
+            <h2>{trip.city}</h2>
+            <h2 className="text-light-grey">{trip.country}</h2>
+          </div>
         )}
 
         <div className="">
-          {trip.votingStage === 'dest' && (
-            <Button isIconOnly type="submit" className="bg-transparent">
-              {isEditing ? (
-                <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
-              ) : (
-                <PencilIcon className="h-5 w-5 fill-light-grey" />
-              )}
-            </Button>
-          )}
+          <Button isIconOnly type="submit" className="bg-transparent">
+            {isEditing ? (
+              <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
+            ) : (
+              <PencilIcon className="h-5 w-5 fill-light-grey" />
+            )}
+          </Button>
         </div>
       </div>
-
-      <h2 className="text-light-grey">{trip.country}</h2>
 
       {isEditing ? (
         <Input

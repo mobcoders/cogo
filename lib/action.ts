@@ -229,6 +229,25 @@ export async function updateVotingStage(
   revalidatePath(`/${tripId}`);
 }
 
+export async function navigateVotingStage(tripId: string, selectStage: string) {
+  const trip = await prisma.trip.findUnique({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      votingStage: selectStage,
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
 export async function addMemberToTrip(tripId: string, userId: string) {
   try {
     // Find the trip by ID

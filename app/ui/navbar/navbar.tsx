@@ -2,14 +2,19 @@
 
 import { useDisclosure, Button } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
-import { UserGroupIcon } from '@heroicons/react/24/solid';
+import { Cog6ToothIcon, UserGroupIcon } from '@heroicons/react/24/solid';
 import { Avatar } from '@nextui-org/avatar';
 import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
+import SettingsModal from '@/app/ui/navbar/settings';
+import { useEffect, useState } from 'react';
+import { fetchTrip } from '@/lib/data';
+import { User } from '@prisma/client';
 
-export default function Navbar({ user }: { user: string }) {
+export default function Navbar({ user }: { user: User }) {
   const membersModal = useDisclosure();
+  const settingsModal = useDisclosure();
   const params = useParams() as { trip_id: string };
 
   return (
@@ -21,12 +26,19 @@ export default function Navbar({ user }: { user: string }) {
       >
         <UserGroupIcon className="h-8 w-8 fill-white" />
       </Button>
+      <Button
+        onPress={settingsModal.onOpen}
+        isIconOnly
+        className="bg-transparent"
+      >
+        <Cog6ToothIcon className="h-8 w-8 fill-white" />
+      </Button>
 
       <Link href={'/profile'}>
         <Avatar
           showFallback
-          name={user.name.split(' ')[0][0] + user.name.split(' ')[1][0]}
-          src={user.image}
+          name={user.name!.split(' ')[0][0] + user.name!.split(' ')[1][0]}
+          src={user.image!}
           className="bg-white text-base"
         />
       </Link>
@@ -37,6 +49,13 @@ export default function Navbar({ user }: { user: string }) {
         onClose={membersModal.onClose}
       >
         <MembersModalBody params={params} />
+      </Modal>
+      <Modal
+        isOpen={settingsModal.isOpen}
+        placement={'bottom-center'}
+        onClose={settingsModal.onClose}
+      >
+        <SettingsModal params={params} />
       </Modal>
     </div>
   );
