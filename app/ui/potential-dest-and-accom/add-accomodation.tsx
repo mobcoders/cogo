@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from '@nextui-org/react';
+import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { createPotentialAccom } from '@/lib/action';
 import { useState } from 'react';
