@@ -33,8 +33,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let session = await auth();
-  let username = session?.user?.name;
-  let email = session?.user?.email;
 
   return (
     <html lang="en">
