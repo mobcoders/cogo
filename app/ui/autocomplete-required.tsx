@@ -33,7 +33,7 @@ export default function AutocompleteRequired() {
         isRequired
         label="City"
         defaultItems={
-          country !== ''
+          country && country.length > 0
             ? airbnbLocations.find((obj) => obj.value === country)?.cities
             : airbnbLocations
         }
@@ -47,9 +47,3 @@ export default function AutocompleteRequired() {
     </div>
   );
 }
-
-// defaultItems={
-//           country !== ''
-//             ? airbnbLocations.find((obj) => obj.value === country)
-//             : airbnbLocations
-//         }
