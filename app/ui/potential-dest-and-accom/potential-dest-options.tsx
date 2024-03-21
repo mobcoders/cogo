@@ -20,7 +20,7 @@ import {
   PencilIcon,
   LockClosedIcon,
 } from '@heroicons/react/24/solid';
-import { updateVotingStage } from '@/lib/action';
+import { lockInDestination } from '@/lib/action';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import {
@@ -53,7 +53,7 @@ export default function PotentialDestOptions({
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      updateVotingStage(tripId, city, country);
+      lockInDestination(tripId, city, country);
     }
   }
 

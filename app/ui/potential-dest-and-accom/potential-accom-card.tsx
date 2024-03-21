@@ -50,7 +50,7 @@ export default function PotentialAccomCard({
         />
       </div>
       <div className="absolute top-2 right-2">
-        <PotentialAccomOptions />
+        <PotentialAccomOptions id={accom.id} />
       </div>
     </Card>
   );

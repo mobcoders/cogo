@@ -10,12 +10,9 @@ import {
   TrashIcon,
   LockClosedIcon,
 } from '@heroicons/react/24/solid';
-import { updateVotingStage } from '@/lib/action';
+import { lockInAccommodation } from '@/lib/action';
 import { useParams } from 'next/navigation';
-import {
-  updatePotentialDestination,
-  deletePotentialDestination,
-} from '@/lib/action';
+import { deletePotentialAccom } from '@/lib/action';
 
 export default function PotentialAccomOptions({ id }: { id: string }) {
   const params = useParams<{ trip_id: string }>();
@@ -23,9 +20,9 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      // updateVotingStage(tripId, city, country);
+      lockInAccommodation(tripId);
     } else if (dropdownItemKey === 'delete') {
-      console.log('Deleted!!!');
+      deletePotentialAccom(id, tripId);
     }
   }
 
@@ -50,13 +47,6 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
         onAction={(key) => handleClick(key as string)}
       >
         <DropdownItem
-          key="delete"
-          startContent={<TrashIcon height={15} className="fill-light-grey" />}
-          textValue="Delete"
-        >
-          <Button>Delete</Button>
-        </DropdownItem>
-        <DropdownItem
           key="lock-in"
           startContent={
             <LockClosedIcon height={15} className="fill-light-grey" />
@@ -64,6 +54,13 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
           textValue="Lock In"
         >
           <Button>Lock In</Button>
+        </DropdownItem>
+        <DropdownItem
+          key="delete"
+          startContent={<TrashIcon height={15} className="fill-light-grey" />}
+          textValue="Delete"
+        >
+          <Button>Delete</Button>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
