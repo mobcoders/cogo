@@ -11,15 +11,21 @@ import {
   CardBody,
 } from '@nextui-org/react';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function LoginForm() {
   const [selected, setSelected] = useState('login');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  function handleRegister(formData: FormData) {
+    createUser(formData);
+    credAuth(formData);
+  }
 
   return (
     <div className="flex flex-col w-full">
-      <Card className="max-w-full w-[340px] h-[400px]">
-        <CardBody className="overflow-hidden">
+      <Card className="max-w-full w-[340px] max-h-full">
+        <CardBody>
           <Tabs
             fullWidth
             size="md"
@@ -63,7 +69,7 @@ export default function LoginForm() {
             </Tab>
             <Tab key="sign-up" title="Sign up">
               <form
-                action={createUser}
+                action={handleRegister}
                 className="flex flex-col gap-4 h-[300px]"
               >
                 <Input
@@ -98,6 +104,11 @@ export default function LoginForm() {
                     Sign up
                   </Button>
                 </div>
+              </form>
+              <form className="my-5" action={googleAuth}>
+                <Button type="submit" fullWidth color="primary">
+                  Sign up with Google
+                </Button>
               </form>
             </Tab>
           </Tabs>

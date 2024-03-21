@@ -1,4 +1,4 @@
-import next from 'next';
+import { createOAuthUser, getUser } from '@/auth';
 import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
@@ -6,6 +6,19 @@ export const authConfig = {
     signIn: '/auth',
   },
   callbacks: {
+    //deal with oAuth signins
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
+        //check the user on your database and return true if is allowed to signIn
+        let googleUser = await getUser(user.email as string);
+        if (!googleUser) {
+          googleUser = await createOAuthUser(user.id!, user.email!, user.name!);
+        }
+        return googleUser ? true : false;
+      }
+      return true;
+    },
+
     jwt: async ({ token, user }) => {
       // user is defined when the user is first authenticated
       if (user) {

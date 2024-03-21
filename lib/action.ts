@@ -5,12 +5,14 @@ import prisma from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import bcrypt from 'bcryptjs';
 
 export async function toggleLike(
   dest_or_accom_id: string,
   userEmail: string,
   parentCard: string
 ) {
+
   let potentialModel:
     | Prisma.PotentialDestinationDelegate<
         Prisma.RejectOnNotFound | Prisma.RejectPerOperation
@@ -74,10 +76,8 @@ export async function toggleLike(
   }
 }
 
-export async function fetchMembers(
-  tripId: string = 'cltuhc5xd0000843ykw32zdxe'
-) {
-  const trip = await prisma.trip.findFirst({
+export async function fetchMembers(tripId: string) {
+  const trip = await prisma.trip.findUnique({
     where: {
       id: tripId,
     },
@@ -91,6 +91,23 @@ export async function fetchMembers(
   }
 
   return trip.members;
+}
+
+export async function fetchOrganiser(tripId: string) {
+  const trip = await prisma.trip.findUnique({
+    where: {
+      id: tripId,
+    },
+    include: {
+      organiser: true, // Include the members of the trip
+    },
+  });
+
+  if (!trip) {
+    throw new Error(`Trip with id ${tripId} not found.`);
+  }
+
+  return trip.organiser;
 }
 
 export async function updateTripNameDate(tripId: string, formData: FormData) {
@@ -117,7 +134,7 @@ export async function createPotentialDestination(
     tripId: tripId,
     description: 'no description yet',
   };
-  const updatePotentialDestination = await prisma.potentialDestination.create({
+  await prisma.potentialDestination.create({
     data: rawFormData,
   });
   revalidatePath(`/${tripId}`);
@@ -135,18 +152,16 @@ export async function googleAuth() {
 export async function createUser(formData: FormData) {
   const user = Object.fromEntries(formData.entries());
   try {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    // user.password = hashedPassword;
     const exists = await prisma.user.findUnique({
       where: { email: user.email as string },
     });
     if (exists) return 'Email already in use';
-
+    const hashedPassword = await bcrypt.hash(user.password as string, 10);
+    user.password = hashedPassword;
     await prisma.user.create({ data: user });
   } catch (error) {
     return 'Something went wrong, please try again';
   }
-  await signIn('credentials', user);
 }
 
 export async function updateUserPhoto(userId: string, photoUrl: string) {
@@ -185,7 +200,7 @@ export async function updateVotingStage(
   city: string,
   country: string
 ) {
-  const trip = await prisma.trip.findFirst({
+  const trip = await prisma.trip.findUnique({
     where: { id: tripId },
   });
 
@@ -253,6 +268,44 @@ export async function addMemberToTrip(tripId: string, userId: string) {
 
     console.log(`User with ID ${userId} added to trip ${updatedTrip.name}`);
   } catch (error) {
-    console.error('Error adding member to trip:', error.message);
+    console.error('Error adding member to trip:', error);
   }
+}
+
+export async function updatePotentialDestination(
+  formData: FormData,
+  id: string,
+  tripId: string
+) {
+  const rawFormData = {
+    city: formData.get('city') as string,
+    country: formData.get('country') as string,
+  };
+
+  let photoUrlCheck = formData.get('url');
+
+  switch (photoUrlCheck) {
+    case '':
+      break;
+    default:
+      rawFormData.photoUrl = photoUrlCheck;
+      break;
+  }
+
+  await prisma.potentialDestination.update({
+    where: {
+      id: id,
+    },
+    data: rawFormData,
+  });
+  revalidatePath(`/${tripId}`);
+}
+
+export async function deletePotentialDestination(id: string, tripId: string) {
+  await prisma.potentialDestination.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath(`/${tripId}`);
 }
