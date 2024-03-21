@@ -24,7 +24,7 @@ export default async function Page({
 
   let user = await getUser(email!);
 
-  // console.log(await pexelsSearch());
+  // console.log(await pexelsSearch('New York'));
 
   return (
     <>

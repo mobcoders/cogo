@@ -1,9 +1,17 @@
 'use client';
 import React, { Key, useState } from 'react';
-import { Autocomplete, AutocompleteItem } from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, Button } from '@nextui-org/react';
 import { airbnbLocations } from '@/lib/airbnb-data';
+import { pexelsSearch } from '@/lib/pexels';
+import { createPotentialDestinationV2 } from '@/lib/action';
 
-export default function AutocompleteRequired() {
+export default function AutocompleteRequired({
+  callPexelsSearch,
+  tripId,
+}: {
+  callPexelsSearch: (city: string) => Promise<string>;
+  tripId: string;
+}) {
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
 
@@ -13,8 +21,25 @@ export default function AutocompleteRequired() {
     console.log(city);
   }
 
+  async function handleClick() {
+    console.log(country);
+    console.log(city);
+    const photoUrl = await callPexelsSearch(city);
+    console.log(photoUrl);
+    await createPotentialDestinationV2(tripId, city, country, photoUrl);
+    // console.log(pexelsSearch('New York'));
+  }
+
   return (
     <div>
+      <Button
+        type="button"
+        onClick={handleClick}
+        className="bg-pink-500 text-white"
+      >
+        Add a destination
+      </Button>
+
       <Autocomplete
         isRequired
         label="Country"

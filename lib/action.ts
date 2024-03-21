@@ -141,6 +141,24 @@ export async function createPotentialDestination(
   revalidatePath(`/${tripId}`);
 }
 
+export async function createPotentialDestinationV2(
+  tripId: string,
+  city: string,
+  country: string,
+  photoUrl: string
+) {
+  await prisma.potentialDestination.create({
+    data: {
+      tripId: tripId,
+      city: city,
+      country: country,
+      photoUrl: photoUrl,
+      description: 'no description yet',
+    },
+  });
+  revalidatePath(`/${tripId}`);
+}
+
 export async function credAuth(formData: FormData) {
   const creds = Object.fromEntries(formData.entries());
   await signIn('credentials', creds);

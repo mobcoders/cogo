@@ -3,6 +3,7 @@ import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 import AutocompleteRequired from '@/app/ui/autocomplete-required';
+import { pexelsSearch } from '@/lib/pexels';
 
 export default async function PotentialDestinations({
   tripId,
@@ -16,12 +17,20 @@ export default async function PotentialDestinations({
     (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
   );
 
+  async function callPexelsSearch(query: string) {
+    'use server';
+    return await pexelsSearch(query);
+  }
+
   return (
     <>
       <p>Add potential destinations and vote for where you want to go...</p>
-      <AddDestination tripId={tripId} />
+      {/* <AddDestination tripId={tripId} /> */}
       <div className="flex flex-col gap-5">
-        <AutocompleteRequired />
+        <AutocompleteRequired
+          callPexelsSearch={callPexelsSearch}
+          tripId={tripId}
+        />
         {sortedDestinations.map((destination) => (
           <PotentialDestinationCard
             key={destination.id}

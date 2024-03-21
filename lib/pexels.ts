@@ -4,12 +4,10 @@ const client = createClient(process.env.PEXELS_API_KEY);
 
 export async function pexelsSearch(query: string) {
   const orientation = 'square';
-  const size = 'medium';
+  // const size = 'medium';
 
   const photoRes = await client.photos.search({
     query,
-    orientation,
-    size,
     per_page: 1,
   });
 
