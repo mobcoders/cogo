@@ -1,11 +1,16 @@
 'use client';
-import { Input } from '@nextui-org/react';
+
+import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { createPotentialAccom } from '@/lib/action';
+import { useState } from 'react';
 
 export default function AddAccomodation({ tripId }: { tripId: string }) {
+  const [inputValue, setInputValue] = useState('');
+
   async function handleAdd(formData: FormData) {
     await createPotentialAccom(tripId, formData);
+    setInputValue('');
   }
 
   return (
@@ -14,7 +19,9 @@ export default function AddAccomodation({ tripId }: { tripId: string }) {
         <Input
           name="airbnb-url"
           id="airbnb-url"
-          placeholder="Paste an airbnb url..."
+          placeholder="Paste an Airbnb URL..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
 
         <div className="flex justify-end gap-5">
