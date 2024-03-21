@@ -24,7 +24,7 @@ export default function MembersModal({
       setOrganiser(await fetchOrganiser(tripId));
     }
     fetch();
-  }, []);
+  }, [tripId]);
 
   return (
     <ModalContent>
