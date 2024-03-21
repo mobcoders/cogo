@@ -10,18 +10,21 @@ export default async function PotentialDestinations({
   tripId: string;
   user: User;
 }) {
-  //for now the trip MobCoders2024 is hardcoded for development in the data.ts, else this works
   const destinations = await fetchPotentialDests(tripId);
+  const sortedDestinations = destinations.sort(
+    (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
+  );
 
   return (
     <>
       <p>Add potential destinations and vote for where you want to go...</p>
       <AddDestination tripId={tripId} />
       <div className="flex flex-col gap-5">
-        {destinations.map((destination) => (
+        {sortedDestinations.map((destination) => (
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
+            mostPopular={sortedDestinations[0].city}
             user={user}
             tripId={tripId}
           />
