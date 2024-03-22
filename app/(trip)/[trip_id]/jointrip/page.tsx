@@ -8,8 +8,8 @@ export default async function JoinTrip({
 }: {
   params: { trip_id: string };
 }) {
-  const tripId = params.trip_id;
   let session = await auth();
+  const tripId = params.trip_id;
   let user_id = session?.user?.id!;
 
   // Usage
