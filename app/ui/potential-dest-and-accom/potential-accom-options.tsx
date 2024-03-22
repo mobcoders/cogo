@@ -20,7 +20,7 @@ export default function PotentialAccomOptions({ id }: { id: string }) {
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      lockInAccommodation(tripId);
+      lockInAccommodation(tripId, id);
     } else if (dropdownItemKey === 'delete') {
       deletePotentialAccom(id, tripId);
     }
