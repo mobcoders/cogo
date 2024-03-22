@@ -42,8 +42,10 @@ export default function PotentialDestinationCard({
           <div className="flex flex-col flex-1 justify-between">
             <div className="flex justify-between items-start">
               <div className="flex flex-col flex-1">
-                <h1 className="font-semibold text-lg">{destination.city}</h1>
-                <p className="text-small text-foreground/80">
+                <h1 className="font-semibold text-lg capitalize">
+                  {destination.city}
+                </h1>
+                <p className="text-small text-foreground/80 capitalize">
                   {destination.country}
                 </p>
               </div>

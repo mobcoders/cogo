@@ -1,6 +1,11 @@
 'use client';
 import React, { Key, useState } from 'react';
-import { Autocomplete, AutocompleteItem, Button } from '@nextui-org/react';
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  Input,
+} from '@nextui-org/react';
 import { airbnbLocations } from '@/lib/airbnb-data';
 import { pexelsSearch } from '@/lib/pexels';
 import { createPotentialDestinationV2 } from '@/lib/action';
@@ -14,6 +19,7 @@ export default function AutocompleteRequired({
 }) {
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
+  const [activities, setActivities] = useState('');
 
   function handleSelect() {
     console.log('hello');
@@ -26,7 +32,13 @@ export default function AutocompleteRequired({
     console.log(city);
     const photoUrl = await callPexelsSearch(city);
     console.log(photoUrl);
-    await createPotentialDestinationV2(tripId, city, country, photoUrl);
+    await createPotentialDestinationV2(
+      tripId,
+      city,
+      country,
+      photoUrl,
+      activities
+    );
     // console.log(pexelsSearch('New York'));
   }
 
@@ -75,6 +87,14 @@ export default function AutocompleteRequired({
           <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
         )}
       </Autocomplete>
+      <Input
+        type="activities"
+        label="Activities"
+        placeholder="Add some activities (comma separated!)"
+        className="max-w-xs"
+        value={activities}
+        onValueChange={setActivities}
+      />
     </div>
   );
 }

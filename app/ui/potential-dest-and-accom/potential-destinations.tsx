@@ -4,6 +4,7 @@ import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 import AutocompleteRequired from '@/app/ui/autocomplete-required';
 import { pexelsSearch } from '@/lib/pexels';
+import { Input } from '@nextui-org/react';
 
 export default async function PotentialDestinations({
   tripId,
@@ -31,6 +32,7 @@ export default async function PotentialDestinations({
           callPexelsSearch={callPexelsSearch}
           tripId={tripId}
         />
+
         {sortedDestinations.map((destination) => (
           <PotentialDestinationCard
             key={destination.id}

@@ -145,16 +145,36 @@ export async function createPotentialDestinationV2(
   tripId: string,
   city: string,
   country: string,
-  photoUrl: string
+  photoUrl: string,
+  activities: string
 ) {
+  // console.log(tripId);
+  // console.log(city);
+  // console.log(country);
+  // console.log(photoUrl);
+  // console.log('activities', activities.split(','));
+  // console.log('activities', activities.length);
+  let activitiesArr = activities.split(',');
+
+  interface prismaData {
+    tripId: string;
+    city: string;
+    country: string;
+    photoUrl: string;
+    description: string;
+    activities?: Array<string>;
+  }
+  let prismaData: prismaData = {
+    tripId: tripId,
+    city: city,
+    country: country,
+    photoUrl: photoUrl,
+    description: 'no description yet',
+  };
+
+  activities.length > 0 ? (prismaData.activities = activitiesArr) : null;
   await prisma.potentialDestination.create({
-    data: {
-      tripId: tripId,
-      city: city,
-      country: country,
-      photoUrl: photoUrl,
-      description: 'no description yet',
-    },
+    data: prismaData,
   });
   revalidatePath(`/${tripId}`);
 }
