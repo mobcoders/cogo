@@ -2,10 +2,9 @@
 import { signIn } from '@/auth';
 import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
+import { Prisma } from '@prisma/client';
 
 export async function toggleLike(
   dest_or_accom_id: string,
@@ -13,24 +12,13 @@ export async function toggleLike(
   parentCard: string,
   tripId: string
 ) {
-  let potentialModel:
-    | Prisma.PotentialDestinationDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >
-    | Prisma.PotentialAccomDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >;
+  let potentialModel: any;
   switch (parentCard) {
     case 'dest':
-      potentialModel =
-        prisma.potentialDestination as Prisma.PotentialDestinationDelegate<
-          Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-        >;
+      potentialModel = prisma.potentialDestination;
       break;
     case 'accom':
-      potentialModel = prisma.potentialAccom as Prisma.PotentialAccomDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >;
+      potentialModel = prisma.potentialAccom;
       break;
     default:
       return;
@@ -234,7 +222,7 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
   revalidatePath(`/${tripId}`);
 }
 
-export async function updateVotingStage(
+export async function lockInDestination(
   tripId: string,
   city: string,
   country: string
@@ -247,20 +235,51 @@ export async function updateVotingStage(
     throw new Error('Trip not found');
   }
 
-  let newVotingStage;
-
-  if (trip.votingStage === 'dest') {
-    newVotingStage = 'accom';
-  } else if (trip.votingStage === 'accom') {
-    newVotingStage = 'itinerary';
-  }
-
   await prisma.trip.update({
     where: { id: tripId },
     data: {
       city: city,
       country: country,
-      votingStage: newVotingStage,
+      votingStage: 'accom',
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
+export async function lockInAccommodation(tripId: string, id: string) {
+  const trip = await prisma.trip.findUnique({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      airbnb: id,
+      votingStage: 'itinery',
+    },
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
+export async function navigateVotingStage(tripId: string, selectStage: string) {
+  const trip = await prisma.trip.findUnique({
+    where: { id: tripId },
+  });
+
+  if (!trip) {
+    throw new Error('Trip not found');
+  }
+
+  await prisma.trip.update({
+    where: { id: tripId },
+    data: {
+      votingStage: selectStage,
     },
   });
 
@@ -316,12 +335,17 @@ export async function updatePotentialDestination(
   id: string,
   tripId: string
 ) {
-  const rawFormData = {
+  interface RawFormData {
+    city?: string;
+    country?: string;
+    photoUrl?: string;
+  }
+  const rawFormData: RawFormData = {
     city: formData.get('city') as string,
     country: formData.get('country') as string,
   };
 
-  let photoUrlCheck = formData.get('url');
+  let photoUrlCheck = formData.get('url') as string;
 
   switch (photoUrlCheck) {
     case '':
@@ -342,6 +366,15 @@ export async function updatePotentialDestination(
 
 export async function deletePotentialDestination(id: string, tripId: string) {
   await prisma.potentialDestination.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath(`/${tripId}`);
+}
+
+export async function deletePotentialAccom(id: string, tripId: string) {
+  await prisma.potentialAccom.delete({
     where: {
       id: id,
     },

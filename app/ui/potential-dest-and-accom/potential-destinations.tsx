@@ -25,8 +25,12 @@ export default async function PotentialDestinations({
 
   return (
     <>
-      <p>Add potential destinations and vote for where you want to go...</p>
+      <p>
+        Add potential destinations, vote for where you want to go and when ready
+        lock-in the final choice.
+      </p>
       {/* <AddDestination tripId={tripId} /> */}
+
       <div className="flex flex-col gap-5">
         <AutocompleteRequired
           callPexelsSearch={callPexelsSearch}
@@ -37,7 +41,6 @@ export default async function PotentialDestinations({
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
-            mostPopular={sortedDestinations[0].city}
             user={user}
             tripId={tripId}
           />

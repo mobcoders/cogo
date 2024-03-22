@@ -1,26 +1,26 @@
+import { useDisclosure } from '@nextui-org/react';
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+} from '@nextui-org/dropdown';
+import { Button } from '@nextui-org/button';
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
-  useDisclosure,
-  Checkbox,
-  Input,
-  Link,
-  DropdownItem,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-} from '@nextui-org/react';
+} from '@nextui-org/modal';
+import { Input } from '@nextui-org/input';
 import {
   EllipsisHorizontalCircleIcon as OptionsIcon,
   PencilIcon,
   LockClosedIcon,
 } from '@heroicons/react/24/solid';
-import { updateVotingStage } from '@/lib/action';
+import { lockInDestination } from '@/lib/action';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import {
@@ -28,7 +28,7 @@ import {
   deletePotentialDestination,
 } from '@/lib/action';
 
-export default function EditForm({
+export default function PotentialDestOptions({
   city,
   country,
   id,
@@ -42,18 +42,18 @@ export default function EditForm({
   const tripId = params.trip_id;
 
   const [cityVal, setCityVal] = useState(city);
-  function handleCityChange(e) {
+  function handleCityChange(e: any) {
     setCityVal(e.target.value);
   }
 
   const [countryVal, setCountryVal] = useState(country);
-  function handleCountryChange(e) {
+  function handleCountryChange(e: any) {
     setCountryVal(e.target.value);
   }
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      updateVotingStage(tripId, city, country);
+      lockInDestination(tripId, city, country);
     }
   }
 
@@ -69,8 +69,8 @@ export default function EditForm({
 
   return (
     <>
-      <Dropdown>
-        <DropdownTrigger>
+      <Dropdown className="w-fit p-0">
+        <DropdownTrigger className="w-fit">
           <Button
             isIconOnly
             size="sm"
@@ -87,25 +87,30 @@ export default function EditForm({
         <DropdownMenu
           aria-label="Trip Actions"
           onAction={(key) => handleClick(key as string)}
+          className="w-fit"
         >
-          <DropdownSection title={`${city}, ${country}`}>
-            <DropdownItem
-              key="edit"
-              startContent={
-                <PencilIcon height={15} className="fill-light-grey" />
-              }
-              textValue="Edit"
-            >
-              <Button onPress={onOpen}>Edit</Button>
+          <DropdownSection
+            title={`${city}, ${country}`}
+            className="text-center pt-3"
+          >
+            <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
+              <Button
+                className="bg-pink-500 text-white w-24"
+                startContent={
+                  <LockClosedIcon height={15} className="fill-white" />
+                }
+              >
+                Lock In
+              </Button>
             </DropdownItem>
-            <DropdownItem
-              key="lock-in"
-              startContent={
-                <LockClosedIcon height={15} className="fill-light-grey" />
-              }
-              textValue="Lock In"
-            >
-              <Button>Lock In</Button>
+            <DropdownItem key="edit" textValue="Edit" className="w-fit">
+              <Button
+                onPress={onOpen}
+                className="bg-pink-500 text-white w-24"
+                startContent={<PencilIcon height={15} className="fill-white" />}
+              >
+                Edit
+              </Button>
             </DropdownItem>
           </DropdownSection>
         </DropdownMenu>

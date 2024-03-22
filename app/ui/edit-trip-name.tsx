@@ -32,44 +32,46 @@ export default function EditTripName({ trip }: { trip: Trip }) {
     <form action={handlePress}>
       <div className="flex justify-between gap-5">
         {isEditing ? (
-          <div className="w-[85%]">
+          <div className="w-[80%]">
             <Input
               name="tripName"
               className="mb-2"
               value={tripNameVal}
               defaultValue={tripNameVal}
               onChange={handleChange}
+              placeholder="Add trip name"
             />
           </div>
         ) : (
-          <h1>{trip.votingStage === 'dest' ? tripNameVal : trip.city}</h1>
+          <div>
+            <h1>{tripNameVal}</h1>
+            <h1 className="text-pink-500">{trip.city}</h1>
+            <h3>{trip.country}</h3>
+          </div>
         )}
 
         <div className="">
-          {trip.votingStage === 'dest' && (
-            <Button isIconOnly type="submit" className="bg-transparent">
-              {isEditing ? (
-                <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
-              ) : (
-                <PencilIcon className="h-5 w-5 fill-light-grey" />
-              )}
-            </Button>
-          )}
+          <Button isIconOnly type="submit" className="bg-transparent">
+            {isEditing ? (
+              <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
+            ) : (
+              <PencilIcon className="h-5 w-5 fill-light-grey" />
+            )}
+          </Button>
         </div>
       </div>
-
-      <h2 className="text-light-grey">{trip.country}</h2>
 
       {isEditing ? (
         <Input
           name="tripDate"
-          className="w-[85%]"
+          className="w-[80%]"
           value={tripDateVal as string}
           defaultValue={tripDateVal as string}
           onChange={handleDateChange}
+          placeholder="Add trip dates"
         />
       ) : (
-        <h3 className="text-[16px]">{tripDateVal}</h3>
+        <h3 className="text-light-grey">{tripDateVal}</h3>
       )}
     </form>
   );

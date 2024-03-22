@@ -6,10 +6,10 @@ import type { PotentialDestination, User } from '@prisma/client';
 import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { useState } from 'react';
 import LockInEditDropdown from '@/app/ui/potential-dest-and-accom/lock-in-edit-dropdown';
-import EditForm from '@/app/ui/potential-dest-and-accom/edit-form';
+import PotentialDestOptions from '@/app/ui/potential-dest-and-accom/potential-dest-options';
 
 export interface SingleDest extends PotentialDestination {
-  likedBy: Array<string>;
+  likedBy: Array<User>;
 }
 
 export default function PotentialDestinationCard({
@@ -50,7 +50,7 @@ export default function PotentialDestinationCard({
                 </p>
               </div>
 
-              <EditForm
+              <PotentialDestOptions
                 city={destination.city}
                 country={destination.country}
                 id={destination.id}

@@ -1,6 +1,5 @@
 'use client';
 
-import { updateVotingStage } from '@/lib/action';
 import {
   Dropdown,
   DropdownTrigger,
@@ -15,8 +14,6 @@ import {
   LockClosedIcon,
 } from '@heroicons/react/24/solid';
 import { useParams } from 'next/navigation';
-import EditForm from '@/app/ui/potential-dest-and-accom/edit-form';
-import { useState } from 'react';
 
 export default function LockInEditDropdown({
   city,
@@ -28,14 +25,6 @@ export default function LockInEditDropdown({
   const params = useParams<{ trip_id: string }>();
   const tripId = params.trip_id;
   // const [isOpen, setIsOpen] = useState(false);
-
-  function handleClick(dropdownItemKey: string) {
-    if (dropdownItemKey === 'lock-in') {
-      updateVotingStage(tripId, city, country);
-    } else if (dropdownItemKey === 'edit') {
-      // setIsOpen(true);
-    }
-  }
 
   return (
     <div className="flex items-center gap-4">
