@@ -129,6 +129,46 @@ export async function createPotentialDestination(
   revalidatePath(`/${tripId}`);
 }
 
+export async function createPotentialDestinationV2(
+  tripId: string,
+  city: string,
+  country: string,
+  photoUrl: string | null,
+  activities: string
+) {
+  // console.log(tripId);
+  // console.log(city);
+  // console.log(country);
+  // console.log(photoUrl);
+  // console.log('activities', activities.split(','));
+  // console.log('activities', activities.length);
+  let activitiesArr = activities.split(',');
+
+  interface prismaData {
+    tripId: string;
+    city: string;
+    country: string;
+    photoUrl?: string;
+    description: string;
+    activities?: Array<string>;
+  }
+  let prismaData: prismaData = {
+    tripId: tripId,
+    city: city,
+    country: country,
+    description: 'no description yet',
+  };
+
+  photoUrl ? (prismaData.photoUrl = photoUrl) : null;
+
+  activities.length > 0 ? (prismaData.activities = activitiesArr) : null;
+  await prisma.potentialDestination.create({
+    data: prismaData,
+  });
+
+  revalidatePath(`/${tripId}`);
+}
+
 export async function credAuth(formData: FormData) {
   const creds = Object.fromEntries(formData.entries());
   await signIn('credentials', creds);
