@@ -15,7 +15,7 @@ export default function MembersModal({
   params: { trip_id: string };
 }) {
   const [members, setMembers] = useState<User[]>([]);
-  const [organiser, setOrganiser] = useState<User | null>(null);
+  const [organiser, setOrganiser] = useState<User | undefined>(undefined);
   const tripId = params.trip_id;
 
   useEffect(() => {
@@ -36,10 +36,10 @@ export default function MembersModal({
               <div className="flex flex-col items-center">
                 <Avatar
                   showFallback
-                  src={organiser!.image!}
+                  src={organiser?.image as string}
                   className="w-20 h-20 bg-purple-600 text-white text-2xl"
                 />
-                {organiser!.name && <p>{organiser!.name.split(' ')[0]}</p>}
+                {organiser?.name && <p>{organiser?.name.split(' ')[0]}</p>}
               </div>
               <RWebShare
                 data={{

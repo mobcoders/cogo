@@ -96,7 +96,7 @@ export async function fetchOrganiser(tripId: string) {
     throw new Error(`Trip with id ${tripId} not found.`);
   }
 
-  return trip.organiser;
+  return trip.organiser ? trip.organiser : undefined;
 }
 
 export async function updateTripNameDate(tripId: string, formData: FormData) {
