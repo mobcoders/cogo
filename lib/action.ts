@@ -133,7 +133,7 @@ export async function createPotentialDestinationV2(
   tripId: string,
   city: string,
   country: string,
-  photoUrl: string,
+  photoUrl: string | null,
   activities: string
 ) {
   // console.log(tripId);
@@ -148,7 +148,7 @@ export async function createPotentialDestinationV2(
     tripId: string;
     city: string;
     country: string;
-    photoUrl: string;
+    photoUrl?: string;
     description: string;
     activities?: Array<string>;
   }
@@ -156,14 +156,16 @@ export async function createPotentialDestinationV2(
     tripId: tripId,
     city: city,
     country: country,
-    photoUrl: photoUrl,
     description: 'no description yet',
   };
+
+  photoUrl ? (prismaData.photoUrl = photoUrl) : null;
 
   activities.length > 0 ? (prismaData.activities = activitiesArr) : null;
   await prisma.potentialDestination.create({
     data: prismaData,
   });
+
   revalidatePath(`/${tripId}`);
 }
 

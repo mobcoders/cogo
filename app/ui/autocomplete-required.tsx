@@ -14,7 +14,7 @@ export default function AutocompleteRequired({
   callPexelsSearch,
   tripId,
 }: {
-  callPexelsSearch: (city: string) => Promise<string>;
+  callPexelsSearch: (query: string) => Promise<string | null>;
   tripId: string;
 }) {
   const [country, setCountry] = useState('');
