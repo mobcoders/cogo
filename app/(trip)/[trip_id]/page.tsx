@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-dest-and-accom/potential-destinations';
 import { auth, getUser } from '@/auth';
 import PotentialAccomodation from '@/app/ui/potential-dest-and-accom/potential-accomodation';
+import { pexelsSearch } from '@/lib/pexels';
 import TripSummary from '@/app/ui/trip-summary';
 
 export default async function Page({
@@ -22,6 +23,8 @@ export default async function Page({
   let email = session?.user?.email;
 
   let user = await getUser(email!);
+
+  // console.log(await pexelsSearch('New York'));
 
   return (
     <>
