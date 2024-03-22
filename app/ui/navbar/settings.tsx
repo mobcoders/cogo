@@ -36,6 +36,11 @@ export default function SettingsModal({
             <ModalHeader>Trip Settings</ModalHeader>
             <div className="flex justify-center items-center gap-5">
               <div className="flex flex-col items-center">
+                <p className="px-6 pb-10">
+                  Navigate between the three trip planning stages with the
+                  buttons below. We recommend doing this to go back to a
+                  previous stage when needed.
+                </p>
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
@@ -43,7 +48,7 @@ export default function SettingsModal({
                   onSelectionChange={(key) => setSelected(key as string)}
                 >
                   <Tab key="dest" title="Destination"></Tab>
-                  <Tab key="accom" title="Accomodation"></Tab>
+                  <Tab key="accom" title="Accommodation"></Tab>
                   <Tab key="itinerary" title="Itinerary"></Tab>
                 </Tabs>
               </div>
