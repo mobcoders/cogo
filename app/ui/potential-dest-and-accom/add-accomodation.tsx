@@ -25,7 +25,9 @@ export default function AddAccomodation({ tripId }: { tripId: string }) {
         />
 
         <div className="flex justify-end gap-5">
-          <Button type="submit">Add</Button>
+          <Button type="submit" className="bg-pink-500 text-white mb-5">
+            Add
+          </Button>
         </div>
       </form>
     </>

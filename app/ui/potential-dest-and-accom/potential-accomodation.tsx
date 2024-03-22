@@ -18,7 +18,10 @@ export default async function PotentialAccomodation({
 
   return (
     <>
-      <p>Add potential accomodations and vote on them here</p>
+      <p className="mb-5">
+        Add potential Airbnb options, vote for where you want to stay and when
+        ready lock-in the final choice.
+      </p>
       <AddAccomodation tripId={tripId} />
       <div className="flex flex-col gap-5">
         {sortedAccom.map((accom) => (
