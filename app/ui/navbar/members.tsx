@@ -44,7 +44,7 @@ export default function MembersModal({
               <RWebShare
                 data={{
                   text: `Join the trip on Cogo: `,
-                  url: `http://localhost:3000/${tripId}/jointrip`,
+                  url: `https://cogo-omega.vercel.app/${tripId}/jointrip`,
                   title: 'Share the link to invite members',
                 }}
                 sites={['whatsapp', 'facebook', 'mail', 'copy']}
