@@ -2,10 +2,9 @@
 import { signIn } from '@/auth';
 import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
+import { Prisma } from '@prisma/client';
 
 export async function toggleLike(
   dest_or_accom_id: string,
@@ -13,24 +12,13 @@ export async function toggleLike(
   parentCard: string,
   tripId: string
 ) {
-  let potentialModel:
-    | Prisma.PotentialDestinationDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >
-    | Prisma.PotentialAccomDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >;
+  let potentialModel: any;
   switch (parentCard) {
     case 'dest':
-      potentialModel =
-        prisma.potentialDestination as Prisma.PotentialDestinationDelegate<
-          Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-        >;
+      potentialModel = prisma.potentialDestination;
       break;
     case 'accom':
-      potentialModel = prisma.potentialAccom as Prisma.PotentialAccomDelegate<
-        Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      >;
+      potentialModel = prisma.potentialAccom;
       break;
     default:
       return;
@@ -308,12 +296,17 @@ export async function updatePotentialDestination(
   id: string,
   tripId: string
 ) {
-  const rawFormData = {
+  interface RawFormData {
+    city?: string;
+    country?: string;
+    photoUrl?: string;
+  }
+  const rawFormData: RawFormData = {
     city: formData.get('city') as string,
     country: formData.get('country') as string,
   };
 
-  let photoUrlCheck = formData.get('url');
+  let photoUrlCheck = formData.get('url') as string;
 
   switch (photoUrlCheck) {
     case '':

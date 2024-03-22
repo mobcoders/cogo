@@ -8,13 +8,14 @@ import {
 } from '@nextui-org/react';
 import { Avatar } from '@nextui-org/avatar';
 import { RWebShare } from 'react-web-share';
+import { User } from '@prisma/client';
 export default function MembersModal({
   params,
 }: {
   params: { trip_id: string };
 }) {
-  const [members, setMembers] = useState([]);
-  const [organiser, setOrganiser] = useState({});
+  const [members, setMembers] = useState<User[]>([]);
+  const [organiser, setOrganiser] = useState<User | null>(null);
   const tripId = params.trip_id;
 
   useEffect(() => {
@@ -36,10 +37,10 @@ export default function MembersModal({
               <div className="flex flex-col items-center">
                 <Avatar
                   showFallback
-                  src={organiser.image}
+                  src={organiser!.image!}
                   className="w-20 h-20 bg-purple-600 text-white text-2xl"
                 />
-                {organiser.name && <p>{organiser.name.split(' ')[0]}</p>}
+                {organiser!.name && <p>{organiser!.name.split(' ')[0]}</p>}
               </div>
               <RWebShare
                 data={{
@@ -61,7 +62,7 @@ export default function MembersModal({
                 <div key={member.id} className="flex flex-col items-center">
                   <Avatar
                     showFallback
-                    src={member.image}
+                    src={member.image!}
                     className="w-20 h-20 bg-purple-600 text-white text-2xl"
                   />
                   {member.name && <p>{member.name.split(' ')[0]}</p>}

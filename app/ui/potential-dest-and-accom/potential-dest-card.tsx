@@ -9,7 +9,7 @@ import LockInEditDropdown from '@/app/ui/potential-dest-and-accom/lock-in-edit-d
 import PotentialDestOptions from '@/app/ui/potential-dest-and-accom/potential-dest-options';
 
 export interface SingleDest extends PotentialDestination {
-  likedBy: Array<string>;
+  likedBy: Array<User>;
 }
 
 export default function PotentialDestinationCard({
