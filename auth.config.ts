@@ -12,17 +12,23 @@ export const authConfig = {
         //check the user on your database and return true if is allowed to signIn
         let googleUser = await getUser(user.email as string);
         if (!googleUser) {
-          googleUser = await createOAuthUser(user.id!, user.email!, user.name!);
+          googleUser = await createOAuthUser(user.email!, user.name!);
         }
         return googleUser ? true : false;
       }
       return true;
     },
 
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, account }) => {
       // user is defined when the user is first authenticated
       if (user) {
-        token.id = user.id; // Add the user ID to the JWT
+        if (account?.provider === 'google') {
+          //check the user on your database and return true if is allowed to signIn
+          let googleUser = await getUser(user.email as string);
+          token.id = googleUser?.id;
+        } else {
+          token.id = user.id; // Add the user ID to the JWT
+        }
       }
       return token;
     },
