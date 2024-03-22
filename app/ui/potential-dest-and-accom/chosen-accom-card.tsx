@@ -10,18 +10,18 @@ export default function ChosenAccomCard({
   return (
     <Card className="drop-shadow-cogo h-fit mt-1 mb-5 cursor-pointer">
       <CardBody>
-        <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
+        <a href={accom?.airBnbUrl} target="_blank" rel="noopener noreferrer">
           <div className="flex gap-3 h-full">
             <Image
               alt={'photo url'}
               className="object-cover h-24"
-              src={accom.photoUrl!}
+              src={accom?.photoUrl}
               height={100}
               width={100}
             />
 
             <div className="flex flex-1">
-              <h1 className="font-semibold text-lg">{accom.description}</h1>
+              <h1 className="font-semibold text-lg">{accom?.description}</h1>
             </div>
           </div>
         </a>
