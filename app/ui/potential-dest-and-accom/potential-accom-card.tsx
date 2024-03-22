@@ -1,14 +1,13 @@
 'use client';
-import type { PotentialAccom } from '@prisma/client';
+import type { PotentialAccom, User } from '@prisma/client';
 import { useState } from 'react';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
-import { User } from 'next-auth';
 import PotentialAccomOptions from '@/app/ui/potential-dest-and-accom/potential-accom-options';
 
 export interface SingleAccom extends PotentialAccom {
-  likedBy: Array<string>;
+  likedBy: Array<User>;
 }
 
 export default function PotentialAccomCard({

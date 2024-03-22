@@ -2,7 +2,7 @@ import PotentialAccomCard from '@/app/ui/potential-dest-and-accom/potential-acco
 import AddAccomodation from '@/app/ui/potential-dest-and-accom/add-accomodation';
 
 import { fetchPotentialAccoms } from '@/lib/data';
-import { User } from 'next-auth';
+import { User } from '@prisma/client';
 
 export default async function PotentialAccomodation({
   tripId,
