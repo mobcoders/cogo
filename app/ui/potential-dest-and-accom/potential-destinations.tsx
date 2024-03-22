@@ -17,7 +17,7 @@ export default async function PotentialDestinations({
 
   return (
     <>
-      <p>
+      <p className="mb-5">
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>

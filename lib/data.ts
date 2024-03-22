@@ -61,3 +61,12 @@ export async function fetchVotingStage(tripId: string) {
     },
   });
 }
+
+export async function fetchChosenAccom(airbnbId: string) {
+  const chosenAccom = await prisma.potentialAccom.findUnique({
+    where: {
+      id: airbnbId,
+    },
+  });
+  return chosenAccom;
+}
