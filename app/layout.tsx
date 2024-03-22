@@ -6,6 +6,8 @@ import CogoLogo from './ui/cogo-logo';
 import { auth, signOut } from '@/auth';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -51,6 +53,7 @@ export default async function RootLayout({
         </div>
 
         <Providers>{children}</Providers>
+        <ToastContainer />
 
         <footer className="text-center text-xs mt-10 text-light-grey">
           <p>A MOBCODERS Creation.</p>
