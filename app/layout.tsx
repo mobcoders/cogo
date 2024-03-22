@@ -45,7 +45,7 @@ export default async function RootLayout({
             <SignOut />
           ) : (
             <Link href="/profile">
-              <Button>Sign in</Button>
+              <Button data-cy="login-button">Sign in</Button>
             </Link>
           )}
         </div>
