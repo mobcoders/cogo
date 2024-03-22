@@ -52,8 +52,10 @@ export default async function RootLayout({
           )}
         </div>
 
-        <Providers>{children}</Providers>
-        <ToastContainer />
+        <Providers>
+          {children}
+          <ToastContainer />
+        </Providers>
 
         <footer className="text-center text-xs mt-10 text-light-grey">
           <p>A MOBCODERS Creation.</p>

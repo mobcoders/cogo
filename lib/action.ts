@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
+import { AuthError } from 'next-auth';
 
 export async function toggleLike(
   dest_or_accom_id: string,
@@ -129,9 +130,23 @@ export async function createPotentialDestination(
   revalidatePath(`/${tripId}`);
 }
 
-export async function credAuth(formData: FormData) {
-  const creds = Object.fromEntries(formData.entries());
-  await signIn('credentials', creds);
+export async function credAuth(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
 }
 
 export async function googleAuth() {

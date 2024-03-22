@@ -1,5 +1,6 @@
 'use client';
 import { createUser, credAuth, googleAuth } from '@/lib/action';
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import {
   Tabs,
   Tab,
@@ -10,14 +11,17 @@ import {
   CardBody,
 } from '@nextui-org/react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useFormState } from 'react-dom';
+import { toast } from 'react-toastify';
 
 function CredentialLoginForm({
   setSelected,
 }: {
   setSelected: Dispatch<SetStateAction<string>>;
 }) {
+  const [errorMessage, dispatch] = useFormState(credAuth, undefined);
   return (
-    <form action={credAuth} className="flex flex-col gap-4">
+    <form action={dispatch} className="flex flex-col gap-4">
       <Input
         isRequired
         label="Email"
@@ -32,6 +36,12 @@ function CredentialLoginForm({
         placeholder="Enter your password"
         type="password"
       />
+      {errorMessage && (
+        <div className="flex">
+          <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+          <p className="text-sm text-red-500">{errorMessage}</p>
+        </div>
+      )}
       <p className="text-center text-small">
         Need to create an account?{' '}
         <Link size="sm" onPress={() => setSelected('sign-up')}>
@@ -52,6 +62,8 @@ function CredentialRegisterForm({
 }: {
   setSelected: Dispatch<SetStateAction<string>>;
 }) {
+  const [errorMessage, dispatch] = useFormState(credAuth, undefined);
+
   function handleRegister(formData: FormData) {
     createUser(formData);
     credAuth(formData);
