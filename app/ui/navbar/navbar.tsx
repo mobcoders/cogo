@@ -16,6 +16,7 @@ export default function Navbar({ user }: { user: User }) {
   const membersModal = useDisclosure();
   const settingsModal = useDisclosure();
   const params = useParams() as { trip_id: string };
+  const userName = user.name;
 
   return (
     <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-purple-600 drop-shadow-cogo">
@@ -37,7 +38,11 @@ export default function Navbar({ user }: { user: User }) {
       <Link href={'/profile'}>
         <Avatar
           showFallback
-          name={user.name!.split(' ')[0][0] + user.name!.split(' ')[1][0]}
+          name={
+            userName && userName.length > 0
+              ? userName.split(' ')[0][0] + userName.split(' ')[1][0]
+              : ''
+          }
           src={user.image!}
           className="bg-white text-base"
         />

@@ -19,7 +19,6 @@ export default function MembersModal({
 
   useEffect(() => {
     async function fetch() {
-      //Write a set organiser bit to show who the organiser is
       setMembers(await fetchMembers(tripId));
       setOrganiser(await fetchOrganiser(tripId));
     }
