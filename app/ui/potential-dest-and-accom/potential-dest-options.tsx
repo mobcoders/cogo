@@ -3,7 +3,6 @@ import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
-  DropdownSection,
   DropdownItem,
 } from '@nextui-org/dropdown';
 import { Button } from '@nextui-org/button';
@@ -89,30 +88,25 @@ export default function PotentialDestOptions({
           onAction={(key) => handleClick(key as string)}
           className="w-fit"
         >
-          <DropdownSection
-            title={`${city}, ${country}`}
-            className="text-center pt-3"
-          >
-            <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
-              <Button
-                className="bg-pink-500 text-white w-24"
-                startContent={
-                  <LockClosedIcon height={15} className="fill-white" />
-                }
-              >
-                Lock In
-              </Button>
-            </DropdownItem>
-            <DropdownItem key="edit" textValue="Edit" className="w-fit">
-              <Button
-                onPress={onOpen}
-                className="bg-pink-500 text-white w-24"
-                startContent={<PencilIcon height={15} className="fill-white" />}
-              >
-                Edit
-              </Button>
-            </DropdownItem>
-          </DropdownSection>
+          <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
+            <Button
+              className="bg-pink-500 text-white w-24"
+              startContent={
+                <LockClosedIcon height={15} className="fill-white" />
+              }
+            >
+              Lock In
+            </Button>
+          </DropdownItem>
+          <DropdownItem key="edit" textValue="Edit" className="w-fit">
+            <Button
+              onPress={onOpen}
+              className="bg-pink-500 text-white w-24"
+              startContent={<PencilIcon height={15} className="fill-white" />}
+            >
+              Edit
+            </Button>
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
