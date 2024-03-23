@@ -6,23 +6,15 @@ import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
-export async function deleteUser(userId: string) {
-  const deletedUser = await prisma.user.delete({
+export async function deleteUser(email: string) {
+  await prisma.user.delete({
     where: {
-      id: userId,
+      email: email,
     },
   });
-
-  // await prisma.trip.updateMany({
-  //   // where: { organiser:  },
-  //   data: {
-  //     members: {
-  //       disconnect: { id: userId },
-  //     },
-  //     organiserId: null,
-  //   },
-  // });
+  redirect('/');
 }
 
 export async function toggleLike(
