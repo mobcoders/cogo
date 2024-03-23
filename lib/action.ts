@@ -7,6 +7,24 @@ import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
 import { AuthError } from 'next-auth';
 
+export async function deleteUser(userId: string) {
+  const deletedUser = await prisma.user.delete({
+    where: {
+      id: userId,
+    },
+  });
+
+  // await prisma.trip.updateMany({
+  //   // where: { organiser:  },
+  //   data: {
+  //     members: {
+  //       disconnect: { id: userId },
+  //     },
+  //     organiserId: null,
+  //   },
+  // });
+}
+
 export async function toggleLike(
   dest_or_accom_id: string,
   userEmail: string,
