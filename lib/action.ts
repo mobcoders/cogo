@@ -254,6 +254,14 @@ export async function updateUserPhoto(userId: string, photoUrl: string) {
 }
 
 export async function createPotentialAccom(tripId: string, formData: FormData) {
+  if (
+    !formData
+      .get('airbnb-url')
+      ?.toString()
+      .startsWith('https://www.airbnb.co.uk/rooms/')
+  ) {
+    return 'Please enter a valid airbnb url';
+  }
   const imgUrl_VenueDescription = await fetchImgUrl_Description(
     formData.get('airbnb-url') as string
   );
@@ -462,4 +470,18 @@ export async function deletePotentialAccom(id: string, tripId: string) {
     return 'Something went wrong, please try again';
   }
   revalidatePath(`/${tripId}`);
+}
+
+export async function deleteGroupTrip(tripId: string) {
+  try {
+    await prisma.trip.delete({
+      where: {
+        id: tripId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
+  revalidatePath(`/profile`);
 }

@@ -5,7 +5,6 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { PotentialDestination, User } from '@prisma/client';
 import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { useState } from 'react';
-import LockInEditDropdown from '@/app/ui/potential-dest-and-accom/lock-in-edit-dropdown';
 import PotentialDestOptions from '@/app/ui/potential-dest-and-accom/potential-dest-options';
 
 export interface SingleDest extends PotentialDestination {
