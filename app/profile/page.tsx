@@ -3,10 +3,6 @@ import { fetchUser } from '@/lib/data';
 import { Avatar } from '@nextui-org/avatar';
 import EditUserPhoto from '@/app/ui/edit-user-photo';
 import ProfileDestinationCard from '@/app/ui/profile-dest-card';
-import { Button } from '@nextui-org/react';
-import { deleteUser } from '@/lib/action';
-import { redirect } from 'next/navigation';
-import { User } from '@prisma/client';
 import DeleteButton from '@/app/ui/delete-user-button';
 
 export default async function Page() {
