@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open --config watchForFileChanges=false"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",

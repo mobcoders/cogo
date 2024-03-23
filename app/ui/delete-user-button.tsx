@@ -8,6 +8,7 @@ export default function DeleteButton({ email }: { email: string }) {
       onClick={async () => {
         await deleteUser(email);
       }}
+      data-cy="delete account button"
     >
       Delete account
     </Button>

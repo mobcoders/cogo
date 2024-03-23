@@ -7,7 +7,7 @@ const login = () => {
     cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
     cy.get(SELECTORS.SIGN_IN_EMAIL).type(`${'cypress@cypress.com'}`);
     cy.get(SELECTORS.SIGN_IN_PASSWORD).type(`${'pass'}`);
-    cy.get(SELECTORS.AUTH_SIGN_IN_BTN).click();
+    cy.get(SELECTORS.SIGN_IN_BTN).click();
     cy.url().should('include', '/profile');
     cy.url().should('not.include', 'auth');
   });
@@ -20,12 +20,24 @@ describe('Logging in and registering', () => {
     cy.url().should('include', '/auth');
   });
 
-  it("should register a new user and navigate to profile from the homepage's 'Sign In' button", () => {
+  it("should register the new user and navigate to profile from the homepage's 'Sign In' button", () => {
+    cy.visit('http://localhost:3000/');
+    cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
+    cy.get(SELECTORS.SIGN_UP_TAB).click();
+    cy.get(SELECTORS.SIGN_UP_NAME).type('Simon Press');
+    cy.get(SELECTORS.SIGN_UP_EMAIL).type(`${'cypress@cypress.com'}`);
+    cy.get(SELECTORS.SIGN_UP_PASSWORD).type(`${'pass'}`);
+    cy.get(SELECTORS.SIGN_UP_BTN).click();
+    cy.url().should('include', '/profile');
+    cy.url().should('not.include', 'auth');
+  });
+
+  it("should sign in the user and navigate to profile from the homepage's 'Sign In' button", () => {
     cy.visit('http://localhost:3000/');
     cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
     cy.get(SELECTORS.SIGN_IN_EMAIL).type(`${'cypress@cypress.com'}`);
     cy.get(SELECTORS.SIGN_IN_PASSWORD).type(`${'pass'}`);
-    cy.get(SELECTORS.AUTH_SIGN_IN_BTN).click();
+    cy.get(SELECTORS.SIGN_IN_BTN).click();
     cy.url().should('include', '/profile');
     cy.url().should('not.include', 'auth');
   });
@@ -57,7 +69,6 @@ describe('Create a group trip from the homepage', () => {
 describe('Profile', () => {
   beforeEach(() => {
     login('user');
-
     cy.visit('http://localhost:3000/profile');
   });
 
@@ -103,9 +114,14 @@ describe('Profile', () => {
 //   it("should navigate to the user's profile when the user's avatar is clicked", () => {});
 // });
 
-// describe('Clean up', () => {
-//   it('should allow the user to delete the group trip if the options button on the group trip card on their profile is clicked', () => {});
-//   it('should allow the user to delete their account if the settings button on their profile is clicked', () => {});
-// });
+describe('Clean up', () => {
+  // it('should allow the user to delete the group trip if the options button on the group trip card on their profile is clicked', () => {});
+  it('should allow the user to delete their account if the settings button on their profile is clicked', () => {
+    login('user');
+    cy.visit('http://localhost:3000/profile');
+    cy.get(SELECTORS.PROFILE_DELETE_ACCOUNT_BTN).click();
+    cy.url().should('include', 'auth');
+  });
+});
 
 // TEST ERROR HANDLING OF ALL ACTIONS

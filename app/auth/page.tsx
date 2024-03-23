@@ -85,6 +85,7 @@ function CredentialRegisterForm({
         name="name"
         placeholder="Enter your name"
         type="text"
+        data-cy="sign up name"
       />
       <Input
         isRequired
@@ -92,6 +93,7 @@ function CredentialRegisterForm({
         name="email"
         placeholder="Enter your email"
         type="email"
+        data-cy="sign up email"
       />
       <Input
         isRequired
@@ -99,6 +101,7 @@ function CredentialRegisterForm({
         name="password"
         placeholder="Enter your password"
         type="password"
+        data-cy="sign up password"
       />
       <p className="text-center text-small">
         Already have an account?{' '}
@@ -107,7 +110,12 @@ function CredentialRegisterForm({
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button type="submit" fullWidth color="primary">
+        <Button
+          type="submit"
+          fullWidth
+          color="primary"
+          data-cy="sign up button"
+        >
           Sign up
         </Button>
       </div>
@@ -151,7 +159,7 @@ export default function LoginForm() {
               <CredentialLoginForm setSelected={setSelected} />
               <GoogleForm>Sign in with Google</GoogleForm>
             </Tab>
-            <Tab key="sign-up" title="Sign up">
+            <Tab key="sign-up" title="Sign up" data-cy="sign up tab">
               <CredentialRegisterForm setSelected={setSelected} />
               <GoogleForm>Sign up with Google</GoogleForm>
             </Tab>
