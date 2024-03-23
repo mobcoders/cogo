@@ -39,7 +39,7 @@ export default function Navbar({ user }: { user: User }) {
         <Avatar
           showFallback
           name={
-            userName && userName.length > 0
+            userName && userName.includes(' ')
               ? userName.split(' ')[0][0] + userName.split(' ')[1][0]
               : ''
           }

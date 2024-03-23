@@ -1,11 +1,19 @@
 'use server';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
-import { Prisma } from '@prisma/client';
 import { AuthError } from 'next-auth';
+
+export async function deleteUser(email: string) {
+  await prisma.user.delete({
+    where: {
+      email: email,
+    },
+  });
+  await signOut();
+}
 
 export async function toggleLike(
   dest_or_accom_id: string,
