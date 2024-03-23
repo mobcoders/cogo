@@ -1,148 +1,111 @@
-/// <reference types="cypress" />
+import { SELECTORS } from './selectors';
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
-
-describe('cogo app', () => {
-  beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
-    cy.visit('https://cogo-omega.vercel.app/');
+// Save the user's session to reuse in tests
+const login = () => {
+  cy.session('user', () => {
+    cy.visit('http://localhost:3000/');
+    cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
+    cy.get(SELECTORS.SIGN_IN_EMAIL).type(`${'cypress@cypress.com'}`);
+    cy.get(SELECTORS.SIGN_IN_PASSWORD).type(`${'pass'}`);
+    cy.get(SELECTORS.AUTH_SIGN_IN_BTN).click();
+    cy.url().should('include', '/profile');
+    cy.url().should('not.include', 'auth');
   });
+};
 
-  it('should display a login button which navigates to the login', () => {
-    cy.get('[data-cy=login-button]').click();
+describe('Logging in and registering', () => {
+  it('should navigate to the auth page', () => {
+    cy.visit('http://localhost:3000/');
+    cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
     cy.url().should('include', '/auth');
   });
 
-  // it('displays two todo items by default', () => {
-  //   // We use the `cy.get()` command to get all elements that match the selector.
-  //   // Then, we use `should` to assert that there are two matched items,
-  //   // which are the two default items.
-  //   cy.get('.todo-list li').should('have.length', 2);
+  it("should register a new user and navigate to profile from the homepage's 'Sign In' button", () => {
+    cy.visit('http://localhost:3000/');
+    cy.get(SELECTORS.HOME_SIGN_IN_BTN).click();
+    cy.get(SELECTORS.SIGN_IN_EMAIL).type(`${'cypress@cypress.com'}`);
+    cy.get(SELECTORS.SIGN_IN_PASSWORD).type(`${'pass'}`);
+    cy.get(SELECTORS.AUTH_SIGN_IN_BTN).click();
+    cy.url().should('include', '/profile');
+    cy.url().should('not.include', 'auth');
+  });
 
-  //   // We can go even further and check that the default todos each contain
-  //   // the correct text. We use the `first` and `last` functions
-  //   // to get just the first and last matched elements individually,
-  //   // and then perform an assertion with `should`.
-  //   cy.get('.todo-list li').first().should('have.text', 'Pay electric bill');
-  //   cy.get('.todo-list li').last().should('have.text', 'Walk the dog');
-  // });
+  it("should sign in and navigate to profile from the homepage's 'Sign In' button", () => {
+    login('user');
+  });
 
-  // it('can add new todo items', () => {
-  //   // We'll store our item text in a variable so we can reuse it
-  //   const newItem = 'Feed the cat';
+  it('should sign out and not allow visit to restricted route after', () => {
+    login('user');
+    cy.visit('http://localhost:3000/profile');
+    cy.get(SELECTORS.PROFILE_SIGN_OUT_BTN).should('be.visible').submit();
+    cy.url().should('include', '/auth');
+    cy.visit('http://localhost:3000/profile');
+    cy.url().should('include', '/auth');
+  });
+});
 
-  //   // Let's get the input element and use the `type` command to
-  //   // input our new list item. After typing the content of our item,
-  //   // we need to type the enter key as well in order to submit the input.
-  //   // This input has a data-test attribute so we'll use that to select the
-  //   // element in accordance with best practices:
-  //   // https://on.cypress.io/selecting-elements
-  //   cy.get('[data-test=new-todo]').type(`${newItem}{enter}`);
+describe('Create a group trip from the homepage', () => {
+  it("should create a new group trip under the user's name from the homepage's 'Create a Group Trip' button", () => {
+    login('user');
 
-  //   // Now that we've typed our new item, let's check that it actually was added to the list.
-  //   // Since it's the newest item, it should exist as the last element in the list.
-  //   // In addition, with the two default items, we should have a total of 3 elements in the list.
-  //   // Since assertions yield the element that was asserted on,
-  //   // we can chain both of these assertions together into a single statement.
-  //   cy.get('.todo-list li')
-  //     .should('have.length', 3)
-  //     .last()
-  //     .should('have.text', newItem);
-  // });
+    cy.visit('http://localhost:3000/');
+    cy.get(SELECTORS.CREATE_GROUP_TRIP_BTN).click();
+    cy.get(SELECTORS.GROUP_TRIP_NAME).should('be.visible');
+  });
+});
 
-  // it('can check off an item as completed', () => {
-  //   // In addition to using the `get` command to get an element by selector,
-  //   // we can also use the `contains` command to get an element by its contents.
-  //   // However, this will yield the <label>, which is lowest-level element that contains the text.
-  //   // In order to check the item, we'll find the <input> element for this <label>
-  //   // by traversing up the dom to the parent element. From there, we can `find`
-  //   // the child checkbox <input> element and use the `check` command to check it.
-  //   cy.contains('Pay electric bill')
-  //     .parent()
-  //     .find('input[type=checkbox]')
-  //     .check();
+describe('Profile', () => {
+  beforeEach(() => {
+    login('user');
 
-  //   // Now that we've checked the button, we can go ahead and make sure
-  //   // that the list element is now marked as completed.
-  //   // Again we'll use `contains` to find the <label> element and then use the `parents` command
-  //   // to traverse multiple levels up the dom until we find the corresponding <li> element.
-  //   // Once we get that element, we can assert that it has the completed class.
-  //   cy.contains('Pay electric bill')
-  //     .parents('li')
-  //     .should('have.class', 'completed');
-  // });
+    cy.visit('http://localhost:3000/profile');
+  });
 
-  // context('with a checked task', () => {
-  //   beforeEach(() => {
-  //     // We'll take the command we used above to check off an element
-  //     // Since we want to perform multiple tests that start with checking
-  //     // one element, we put it in the beforeEach hook
-  //     // so that it runs at the start of every test.
-  //     cy.contains('Pay electric bill')
-  //       .parent()
-  //       .find('input[type=checkbox]')
-  //       .check();
-  //   });
+  it("should list the user's group trips as trip cards on their profile", () => {
+    cy.get(SELECTORS.GROUP_TRIP_CARD).should('be.visible');
+  });
 
-  //   it('can filter for uncompleted tasks', () => {
-  //     // We'll click on the "active" button in order to
-  //     // display only incomplete items
-  //     cy.contains('Active').click();
-
-  //     // After filtering, we can assert that there is only the one
-  //     // incomplete item in the list.
-  //     cy.get('.todo-list li')
-  //       .should('have.length', 1)
-  //       .first()
-  //       .should('have.text', 'Walk the dog');
-
-  //     // For good measure, let's also assert that the task we checked off
-  //     // does not exist on the page.
-  //     cy.contains('Pay electric bill').should('not.exist');
-  //   });
-
-  //   it('can filter for completed tasks', () => {
-  //     // We can perform similar steps as the test above to ensure
-  //     // that only completed tasks are shown
-  //     cy.contains('Completed').click();
-
-  //     cy.get('.todo-list li')
-  //       .should('have.length', 1)
-  //       .first()
-  //       .should('have.text', 'Pay electric bill');
-
-  //     cy.contains('Walk the dog').should('not.exist');
-  //   });
-
-  //   it('can delete all completed tasks', () => {
-  //     // First, let's click the "Clear completed" button
-  //     // `contains` is actually serving two purposes here.
-  //     // First, it's ensuring that the button exists within the dom.
-  //     // This button only appears when at least one task is checked
-  //     // so this command is implicitly verifying that it does exist.
-  //     // Second, it selects the button so we can click it.
-  //     cy.contains('Clear completed').click();
-
-  //     // Then we can make sure that there is only one element
-  //     // in the list and our element does not exist
-  //     cy.get('.todo-list li')
-  //       .should('have.length', 1)
-  //       .should('not.have.text', 'Pay electric bill');
-
-  //     // Finally, make sure that the clear button no longer exists.
-  //     cy.contains('Clear completed').should('not.exist');
-  //   });
+  // it('should link to the group trip from the trip card on their profile', () => {
+  //   cy.get(SELECTORS.GROUP_TRIP_CARD).click();
+  //   cy.get(SELECTORS.GROUP_TRIP_NAME).should('be.visible');
   // });
 });
+
+// describe('Group trip - potential destinations', () => {
+//   it("should add a new potential destination card when the 'Add a Destination' button is clicked and the form is filled out", () => {});
+//   it('should show an image, city and country on each potential destination card', () => {});
+//   it('should expand to show activities when the arrow icon on the potential destination card is clicked', () => {});
+//   it('should increase the vote count when the heart icon on the potential destination card is clicked', () => {});
+//   it('should allow the user to edit the potential destination when the options button on the potential destination card is clicked', () => {});
+//   it('should show the updated potential destination card after the edit form is filled out', () => {});
+//   it('should allow the user to lock-in the potential destination when the options button on the potential destination card is clicked', () => {});
+// });
+
+// describe('Group trip - potential accommodation', () => {
+//   it('should add a new potential accommodation card when an Airbnb link is submitted', () => {});
+//   it('should show an image and Airbnb title on each potential accommodation card', () => {});
+//   it('should link to the Airbnb when the potential accommodation card is clicked', () => {});
+//   it('should increase the vote count when the heart icon on the potential accommodation card is clicked', () => {});
+//   it('should allow the user to delete the potential accommodation card when the options button on the potential destination card is clicked', () => {});
+//   it('should allow the user to lock-in the potential accommodation when the options button on the potential destination card is clicked', () => {});
+// });
+
+// describe('Group trip - trip summary', () => {
+//   it('should show the chosen destination', () => {});
+//   it('should show the chosen accommodation', () => {});
+//   it('should show the group members', () => {});
+// });
+
+// describe('Group trip - navbar', () => {
+//   it('should show the trip members when the members icon is clicked', () => {});
+//   it('should allow the user to invite other members to the group trip when the share button in the members modal is clicked', () => {});
+//   it('should allow the user to navigate between destination, accommodation and trip summary when the settings icon is clicked', () => {});
+//   it("should navigate to the user's profile when the user's avatar is clicked", () => {});
+// });
+
+// describe('Clean up', () => {
+//   it('should allow the user to delete the group trip if the options button on the group trip card on their profile is clicked', () => {});
+//   it('should allow the user to delete their account if the settings button on their profile is clicked', () => {});
+// });
+
+// TEST ERROR HANDLING OF ALL ACTIONS
