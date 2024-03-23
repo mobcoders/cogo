@@ -1,5 +1,5 @@
 'use client';
-import React, { Key, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Autocomplete,
   AutocompleteItem,
@@ -7,7 +7,6 @@ import {
   Input,
 } from '@nextui-org/react';
 import { airbnbLocations } from '@/lib/airbnb-data';
-import { pexelsSearch } from '@/lib/pexels';
 import { createPotentialDestinationV2 } from '@/lib/action';
 
 export default function AutocompleteRequired({
@@ -39,7 +38,6 @@ export default function AutocompleteRequired({
       photoUrl,
       activities
     );
-    // console.log(pexelsSearch('New York'));
   }
 
   return (
@@ -70,6 +68,7 @@ export default function AutocompleteRequired({
       </Autocomplete>
 
       <Autocomplete
+        isDisabled={country && country !== null ? false : true}
         isRequired
         label="City"
         defaultItems={
