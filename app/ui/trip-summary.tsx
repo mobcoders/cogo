@@ -14,8 +14,12 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
 
   return (
     <>
-      <h3 className="text-pink-500">Airbnb:</h3>
-      <ChosenAccomCard accom={chosenAccom} />
+      {chosenAccom && (
+        <>
+          <h3 className="text-pink-500">Airbnb:</h3>
+          <ChosenAccomCard accom={chosenAccom} />
+        </>
+      )}
       <h3 className="text-pink-500 mb-5">Members:</h3>
       <div className="flex flex-row flex-wrap justify-center gap-5">
         {members.map((member) => (

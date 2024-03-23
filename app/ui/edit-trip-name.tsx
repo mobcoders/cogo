@@ -45,8 +45,8 @@ export default function EditTripName({ trip }: { trip: Trip }) {
         ) : (
           <div>
             <h1>{tripNameVal}</h1>
-            <h1 className="text-pink-500">{trip.city}</h1>
-            <h3>{trip.country}</h3>
+            <h1 className="text-pink-500 capitalize">{trip.city}</h1>
+            <h3 className="capitalize">{trip.country}</h3>
           </div>
         )}
 
