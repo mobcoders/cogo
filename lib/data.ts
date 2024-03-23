@@ -1,15 +1,19 @@
 import prisma from '@/lib/prisma';
 
 export async function fetchPotentialDests(tripId: string) {
-  const destinations = await prisma.potentialDestination.findMany({
-    where: {
-      tripId: tripId,
-    },
-    include: {
-      likedBy: true,
-    },
-  });
-  return destinations;
+  try {
+    const destinations = await prisma.potentialDestination.findMany({
+      where: {
+        tripId: tripId,
+      },
+      include: {
+        likedBy: true,
+      },
+    });
+    return destinations;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function fetchTrip(tripId: string) {

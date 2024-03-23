@@ -14,7 +14,7 @@ export default async function PotentialDestinations({
   user: User;
 }) {
   const destinations = await fetchPotentialDests(tripId);
-  const sortedDestinations = destinations.sort(
+  const sortedDestinations = destinations!.sort(
     (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
   );
 

@@ -62,14 +62,16 @@ function CredentialRegisterForm({
 }: {
   setSelected: Dispatch<SetStateAction<string>>;
 }) {
-  const [errorMessage, dispatch] = useFormState(credAuth, undefined);
+  const [errorMessage, dispatch] = useFormState(handleRegister, undefined);
 
-  function handleRegister(formData: FormData) {
-    createUser(formData);
-    credAuth(formData);
+  function handleRegister(prevState: string | undefined, formData: FormData) {
+    let res;
+    res = createUser(undefined, formData);
+    res = credAuth(undefined, formData);
+    return res;
   }
   return (
-    <form action={handleRegister} className="flex flex-col gap-4 h-[300px]">
+    <form action={dispatch} className="flex flex-col gap-4 h-[300px]">
       <Input
         isRequired
         label="Name"
@@ -107,8 +109,16 @@ function CredentialRegisterForm({
 }
 
 function GoogleForm({ children }: { children?: React.ReactNode }) {
+  const [errorMessage, dispatch] = useFormState(googleAuth, undefined);
+
   return (
-    <form className="my-5" action={googleAuth}>
+    <form className="my-5" action={dispatch}>
+      {errorMessage && (
+        <div className="flex">
+          <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+          <p className="text-sm text-red-500">{errorMessage}</p>
+        </div>
+      )}
       <Button type="submit" fullWidth color="primary">
         {children}
       </Button>

@@ -221,7 +221,10 @@ export async function googleAuth() {
   }
 }
 
-export async function createUser(formData: FormData) {
+export async function createUser(
+  prevState: string | undefined,
+  formData: FormData
+) {
   const user = Object.fromEntries(formData.entries());
   try {
     const exists = await prisma.user.findUnique({
