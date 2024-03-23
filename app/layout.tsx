@@ -6,6 +6,8 @@ import CogoLogo from './ui/cogo-logo';
 import { auth, signOut } from '@/auth';
 import { Button } from '@nextui-org/react';
 import Link from 'next/link';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -45,12 +47,20 @@ export default async function RootLayout({
             <SignOut />
           ) : (
             <Link href="/profile">
-              <Button>Sign in</Button>
+              <Button data-cy="login-button">Sign in</Button>
             </Link>
           )}
         </div>
 
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ToastContainer />
+        </Providers>
+
+        <footer className="text-center text-xs mt-10 text-light-grey">
+          <p>A MOBCODERS Creation.</p>
+          <p>© 2024 cogo. All rights reserved.</p>
+        </footer>
       </body>
     </html>
   );
