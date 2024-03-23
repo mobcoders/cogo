@@ -4,6 +4,8 @@ import { Avatar } from '@nextui-org/avatar';
 import EditUserPhoto from '@/app/ui/edit-user-photo';
 import ProfileDestinationCard from '@/app/ui/profile-dest-card';
 import DeleteButton from '@/app/ui/delete-user-button';
+import Link from 'next/link';
+import { Button } from '@nextui-org/button';
 
 export default async function Page() {
   const session = await auth();
@@ -23,6 +25,12 @@ export default async function Page() {
       <DeleteButton email={user.email!} />
 
       <h1 className="w-full text-start mb-5">My trips:</h1>
+      <Link href={'/newtrip'} className="w-full">
+        <Button className="w-full h-[50px] bg-pink-500 text-white mb-5">
+          Create a Group Trip
+        </Button>
+      </Link>
+
       {trips.map((trip) => (
         <ProfileDestinationCard key={trip.id} trip={trip} />
       ))}
