@@ -1,9 +1,9 @@
 'use client';
 
 import { CldUploadWidget } from 'next-cloudinary';
-import { PencilIcon } from '@heroicons/react/24/solid';
+import { CameraIcon } from '@heroicons/react/24/solid';
 import { updateUserPhoto } from '@/lib/action';
-import { auth } from '@/auth';
+import { Button } from '@nextui-org/button';
 
 export default function EditUserPhoto({ userId }: { userId: string }) {
   function handleSuccess(url: string) {
@@ -25,10 +25,13 @@ export default function EditUserPhoto({ userId }: { userId: string }) {
           open();
         }
         return (
-          <PencilIcon
+          <Button
+            className="bg-pink-500 text-white w-40"
+            startContent={<CameraIcon height={15} className="fill-white" />}
             onClick={handleOnClick}
-            className="h-5 w-5 fill-light-grey mb-5"
-          />
+          >
+            Update Photo
+          </Button>
         );
       }}
     </CldUploadWidget>
