@@ -1,11 +1,11 @@
 import { auth } from '@/auth';
 import { fetchUser } from '@/lib/data';
 import { Avatar } from '@nextui-org/avatar';
-import EditUserPhoto from '@/app/ui/edit-user-photo';
+// import EditUserPhoto from '@/app/ui/edit-user-photo';
 import ProfileDestinationCard from '@/app/ui/profile-dest-card';
-import DeleteButton from '@/app/ui/delete-user-button';
 import Link from 'next/link';
 import { Button } from '@nextui-org/button';
+import ProfileSettings from '@/app/ui/profile-settings';
 
 export default async function Page() {
   const session = await auth();
@@ -19,10 +19,9 @@ export default async function Page() {
         src={user.image!}
         className="w-[130px] h-[130px] bg-purple-600 text-white text-[48px] mb-5"
       />
-      <EditUserPhoto userId={user.id} />
+      <ProfileSettings userId={user.id} userEmail={user.email!} />
+      {/* <EditUserPhoto userId={user.id} /> */}
       <h1 className="text-pink-500 mb-5">{`${user.name}`}</h1>
-
-      <DeleteButton email={user.email!} />
 
       <h1 className="w-full text-start mb-5">My trips:</h1>
       <Link href={'/newtrip'} className="w-full">
