@@ -1,5 +1,5 @@
 'use server';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { fetchImgUrl_Description } from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
@@ -14,7 +14,7 @@ export async function deleteUser(email: string) {
       email: email,
     },
   });
-  redirect('/');
+  await signOut();
 }
 
 export async function toggleLike(
