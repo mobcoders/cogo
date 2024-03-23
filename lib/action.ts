@@ -246,6 +246,14 @@ export async function updateUserPhoto(userId: string, photoUrl: string) {
 }
 
 export async function createPotentialAccom(tripId: string, formData: FormData) {
+  if (
+    !formData
+      .get('airbnb-url')
+      ?.toString()
+      .startsWith('https://www.airbnb.co.uk/rooms/')
+  ) {
+    return 'Please enter a valid airbnb url';
+  }
   const imgUrl_VenueDescription = await fetchImgUrl_Description(
     formData.get('airbnb-url') as string
   );
