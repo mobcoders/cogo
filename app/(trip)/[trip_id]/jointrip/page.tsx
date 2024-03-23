@@ -1,6 +1,5 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import prisma from '@/lib/prisma';
 import { addMemberToTrip } from '@/lib/action';
 
 export default async function JoinTrip({
@@ -13,6 +12,9 @@ export default async function JoinTrip({
   let user_id = session?.user?.id!;
 
   // Usage
-  addMemberToTrip(tripId, user_id);
-  redirect(`/${tripId}`);
+  const error = await addMemberToTrip(tripId, user_id);
+
+  !error && redirect(`/${tripId}`);
+
+  return <div>{error && <p>{error}</p>}</div>;
 }

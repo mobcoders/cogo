@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { Prisma } from '@prisma/client';
+import { AuthError } from 'next-auth';
 
 export async function toggleLike(
   dest_or_accom_id: string,
@@ -23,44 +24,47 @@ export async function toggleLike(
     default:
       return;
   }
-
-  const record = await potentialModel.findFirst({
-    where: {
-      id: dest_or_accom_id,
-      likedBy: {
-        some: {
-          email: userEmail,
-        },
-      },
-    },
-  });
-
-  if (record) {
-    await potentialModel.update({
+  try {
+    const record = await potentialModel.findFirst({
       where: {
         id: dest_or_accom_id,
-      },
-      data: {
         likedBy: {
-          disconnect: {
+          some: {
             email: userEmail,
           },
         },
       },
     });
-  } else {
-    await potentialModel.update({
-      where: {
-        id: dest_or_accom_id,
-      },
-      data: {
-        likedBy: {
-          connect: {
-            email: userEmail,
+
+    if (record) {
+      await potentialModel.update({
+        where: {
+          id: dest_or_accom_id,
+        },
+        data: {
+          likedBy: {
+            disconnect: {
+              email: userEmail,
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      await potentialModel.update({
+        where: {
+          id: dest_or_accom_id,
+        },
+        data: {
+          likedBy: {
+            connect: {
+              email: userEmail,
+            },
+          },
+        },
+      });
+    }
+  } catch (error) {
+    return 'Something went wrong, please try again';
   }
   revalidatePath(`/${tripId}`);
 }
@@ -75,11 +79,11 @@ export async function fetchMembers(tripId: string) {
     },
   });
 
-  if (!trip) {
-    throw new Error(`Trip with id ${tripId} not found.`);
+  if (trip) {
+    return trip.members;
+  } else {
+    return [];
   }
-
-  return trip.members;
 }
 
 export async function fetchOrganiser(tripId: string) {
@@ -104,12 +108,17 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
     name: formData.get('tripName') as string,
     dates: formData.get('tripDate') as string,
   };
-  const updateTrip = await prisma.trip.update({
-    where: {
-      id: tripId,
-    },
-    data: rawFormData,
-  });
+  try {
+    const updateTrip = await prisma.trip.update({
+      where: {
+        id: tripId,
+      },
+      data: rawFormData,
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
 }
 
 export async function createPotentialDestination(
@@ -123,12 +132,34 @@ export async function createPotentialDestination(
     tripId: tripId,
     description: 'no description yet',
   };
-  await prisma.potentialDestination.create({
-    data: rawFormData,
-  });
+  try {
+    await prisma.potentialDestination.create({
+      data: rawFormData,
+    });
+  } catch (error) {
+    return 'Something went wrong';
+  }
   revalidatePath(`/${tripId}`);
 }
 
+export async function credAuth(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
 export async function createPotentialDestinationV2(
   tripId: string,
   city: string,
@@ -169,16 +200,21 @@ export async function createPotentialDestinationV2(
   revalidatePath(`/${tripId}`);
 }
 
-export async function credAuth(formData: FormData) {
-  const creds = Object.fromEntries(formData.entries());
-  await signIn('credentials', creds);
-}
-
 export async function googleAuth() {
-  await signIn('google');
+  try {
+    await signIn('google');
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return 'Something went wrong.';
+    }
+    throw error;
+  }
 }
 
-export async function createUser(formData: FormData) {
+export async function createUser(
+  prevState: string | undefined,
+  formData: FormData
+) {
   const user = Object.fromEntries(formData.entries());
   try {
     const exists = await prisma.user.findUnique({
@@ -194,14 +230,18 @@ export async function createUser(formData: FormData) {
 }
 
 export async function updateUserPhoto(userId: string, photoUrl: string) {
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      image: photoUrl,
-    },
-  });
+  try {
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        image: photoUrl,
+      },
+    });
+  } catch (error) {
+    return 'Something went wrong';
+  }
   revalidatePath('/profile');
 }
 
@@ -216,10 +256,14 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
     photoUrl: imgUrl_VenueDescription?.mainPhotoUrl as string,
     description: imgUrl_VenueDescription?.titleText as string,
   };
-
-  await prisma.potentialAccom.create({
-    data: rawFormData,
-  });
+  try {
+    await prisma.potentialAccom.create({
+      data: rawFormData,
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
 
   revalidatePath(`/${tripId}`);
 }
@@ -229,61 +273,76 @@ export async function lockInDestination(
   city: string,
   country: string
 ) {
-  const trip = await prisma.trip.findUnique({
-    where: { id: tripId },
-  });
+  try {
+    const trip = await prisma.trip.findUnique({
+      where: { id: tripId },
+    });
 
-  if (!trip) {
-    throw new Error('Trip not found');
+    if (!trip) {
+      throw new Error('Trip not found');
+    }
+
+    await prisma.trip.update({
+      where: { id: tripId },
+      data: {
+        city: city,
+        country: country,
+        votingStage: 'accom',
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
   }
-
-  await prisma.trip.update({
-    where: { id: tripId },
-    data: {
-      city: city,
-      country: country,
-      votingStage: 'accom',
-    },
-  });
 
   revalidatePath(`/${tripId}`);
 }
 
 export async function lockInAccommodation(tripId: string, id: string) {
-  const trip = await prisma.trip.findUnique({
-    where: { id: tripId },
-  });
+  try {
+    const trip = await prisma.trip.findUnique({
+      where: { id: tripId },
+    });
 
-  if (!trip) {
-    throw new Error('Trip not found');
+    if (!trip) {
+      throw new Error('Trip not found');
+    }
+
+    await prisma.trip.update({
+      where: { id: tripId },
+      data: {
+        airbnb: id,
+        votingStage: 'itinery',
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
   }
-
-  await prisma.trip.update({
-    where: { id: tripId },
-    data: {
-      airbnb: id,
-      votingStage: 'itinery',
-    },
-  });
 
   revalidatePath(`/${tripId}`);
 }
 
 export async function navigateVotingStage(tripId: string, selectStage: string) {
-  const trip = await prisma.trip.findUnique({
-    where: { id: tripId },
-  });
+  try {
+    const trip = await prisma.trip.findUnique({
+      where: { id: tripId },
+    });
 
-  if (!trip) {
-    throw new Error('Trip not found');
+    if (!trip) {
+      throw new Error('Trip not found');
+    }
+
+    await prisma.trip.update({
+      where: { id: tripId },
+      data: {
+        votingStage: selectStage,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
   }
-
-  await prisma.trip.update({
-    where: { id: tripId },
-    data: {
-      votingStage: selectStage,
-    },
-  });
 
   revalidatePath(`/${tripId}`);
 }
@@ -307,9 +366,7 @@ export async function addMemberToTrip(tripId: string, userId: string) {
     // Check if the user is already a member of the trip
     const isMember = trip.members.some((member) => member.id === userId);
     if (isMember) {
-      throw new Error(
-        `User with ID ${userId} is already a member of this trip`
-      );
+      throw new Error(`This member is already a member of this trip`);
     }
 
     // Add the user to the trip's list of members
@@ -329,6 +386,7 @@ export async function addMemberToTrip(tripId: string, userId: string) {
     console.log(`User with ID ${userId} added to trip ${updatedTrip.name}`);
   } catch (error) {
     console.error('Error adding member to trip:', error);
+    return `${error}`;
   }
 }
 
@@ -356,30 +414,44 @@ export async function updatePotentialDestination(
       rawFormData.photoUrl = photoUrlCheck;
       break;
   }
-
-  await prisma.potentialDestination.update({
-    where: {
-      id: id,
-    },
-    data: rawFormData,
-  });
+  try {
+    await prisma.potentialDestination.update({
+      where: {
+        id: id,
+      },
+      data: rawFormData,
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
   revalidatePath(`/${tripId}`);
 }
 
 export async function deletePotentialDestination(id: string, tripId: string) {
-  await prisma.potentialDestination.delete({
-    where: {
-      id: id,
-    },
-  });
+  try {
+    await prisma.potentialDestination.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
   revalidatePath(`/${tripId}`);
 }
 
 export async function deletePotentialAccom(id: string, tripId: string) {
-  await prisma.potentialAccom.delete({
-    where: {
-      id: id,
-    },
-  });
+  try {
+    await prisma.potentialAccom.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
   revalidatePath(`/${tripId}`);
 }
