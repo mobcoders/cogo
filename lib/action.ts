@@ -376,9 +376,7 @@ export async function addMemberToTrip(tripId: string, userId: string) {
     // Check if the user is already a member of the trip
     const isMember = trip.members.some((member) => member.id === userId);
     if (isMember) {
-      throw new Error(
-        `User with ID ${userId} is already a member of this trip`
-      );
+      throw new Error(`This member is already a member of this trip`);
     }
 
     // Add the user to the trip's list of members
@@ -398,7 +396,7 @@ export async function addMemberToTrip(tripId: string, userId: string) {
     console.log(`User with ID ${userId} added to trip ${updatedTrip.name}`);
   } catch (error) {
     console.error('Error adding member to trip:', error);
-    return 'Something went wrong, please try again';
+    return `${error}`;
   }
 }
 
