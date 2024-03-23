@@ -70,47 +70,37 @@ export async function toggleLike(
 }
 
 export async function fetchMembers(tripId: string) {
-  try {
-    const trip = await prisma.trip.findUnique({
-      where: {
-        id: tripId,
-      },
-      include: {
-        members: true, // Include the members of the trip
-      },
-    });
+  const trip = await prisma.trip.findUnique({
+    where: {
+      id: tripId,
+    },
+    include: {
+      members: true, // Include the members of the trip
+    },
+  });
 
-    if (!trip) {
-      throw new Error(`Trip with id ${tripId} not found.`);
-    }
-
+  if (trip) {
     return trip.members;
-  } catch (error) {
-    console.error(error);
-    return 'Something went wrong, please try again';
+  } else {
+    return [];
   }
 }
 
 export async function fetchOrganiser(tripId: string) {
-  try {
-    const trip = await prisma.trip.findUnique({
-      where: {
-        id: tripId,
-      },
-      include: {
-        organiser: true, // Include the members of the trip
-      },
-    });
+  const trip = await prisma.trip.findUnique({
+    where: {
+      id: tripId,
+    },
+    include: {
+      organiser: true, // Include the members of the trip
+    },
+  });
 
-    if (!trip) {
-      throw new Error(`Trip with id ${tripId} not found.`);
-    }
-
-    return trip.organiser ? trip.organiser : undefined;
-  } catch (error) {
-    console.error(error);
-    return 'Something went wrong, please try again';
+  if (!trip) {
+    throw new Error(`Trip with id ${tripId} not found.`);
   }
+
+  return trip.organiser ? trip.organiser : undefined;
 }
 
 export async function updateTripNameDate(tripId: string, formData: FormData) {
