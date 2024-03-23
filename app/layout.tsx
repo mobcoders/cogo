@@ -23,6 +23,7 @@ function SignOut({ children }: { children?: React.ReactNode }) {
         'use server';
         await signOut();
       }}
+      data-cy="profile sign out button"
     >
       <Button type="submit">Sign out</Button>
     </form>
@@ -47,7 +48,7 @@ export default async function RootLayout({
             <SignOut />
           ) : (
             <Link href="/profile">
-              <Button data-cy="login-button">Sign in</Button>
+              <Button data-cy="home sign in button">Sign in</Button>
             </Link>
           )}
         </div>

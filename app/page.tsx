@@ -16,7 +16,10 @@ export default async function Page() {
         <h1>Ready to go?</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <Link href={'/newtrip'}>
-          <Button className="w-full h-[50px] bg-pink-500 text-white mt-5">
+          <Button
+            className="w-full h-[50px] bg-pink-500 text-white mt-5"
+            data-cy="create group trip button"
+          >
             Create a Group Trip
           </Button>
         </Link>

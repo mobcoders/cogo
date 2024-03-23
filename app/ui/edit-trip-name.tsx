@@ -44,9 +44,11 @@ export default function EditTripName({ trip }: { trip: Trip }) {
           </div>
         ) : (
           <div>
-            <h1>{tripNameVal}</h1>
-            <h1 className="text-pink-500">{trip.city}</h1>
-            <h3>{trip.country}</h3>
+            <h1 data-cy="group trip name">{tripNameVal}</h1>
+            <h1 className="text-pink-500" data-cy="group trip city">
+              {trip.city}
+            </h1>
+            <h3 data-cy="group trip country">{trip.country}</h3>
           </div>
         )}
 

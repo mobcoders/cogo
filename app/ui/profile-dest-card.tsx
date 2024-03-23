@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function ProfileDestinationCard({ trip }: { trip: Trip }) {
   return (
-    <Link href={`/${trip.id}`} className="w-full">
+    <Link href={`/${trip.id}`} className="w-full" data-cy="group trip card">
       <Card className="drop-shadow-cogo mb-5" shadow="none">
         <CardBody>
           <h2>{trip.name}</h2>

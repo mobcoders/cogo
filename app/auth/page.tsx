@@ -28,6 +28,7 @@ function CredentialLoginForm({
         name="email"
         placeholder="Enter your email"
         type="email"
+        data-cy="sign in email"
       />
       <Input
         isRequired
@@ -35,6 +36,7 @@ function CredentialLoginForm({
         name="password"
         placeholder="Enter your password"
         type="password"
+        data-cy="sign in password"
       />
       {errorMessage && (
         <div className="flex">
@@ -49,7 +51,12 @@ function CredentialLoginForm({
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button type="submit" fullWidth color="primary">
+        <Button
+          type="submit"
+          fullWidth
+          color="primary"
+          data-cy="auth sign in button"
+        >
           Login
         </Button>
       </div>
