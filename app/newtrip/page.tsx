@@ -1,7 +1,6 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import prisma from '@/lib/prisma';
-import { load } from 'cheerio';
 
 export default async function createTrip() {
   let session = await auth();
