@@ -471,3 +471,17 @@ export async function deletePotentialAccom(id: string, tripId: string) {
   }
   revalidatePath(`/${tripId}`);
 }
+
+export async function deleteGroupTrip(tripId: string) {
+  try {
+    await prisma.trip.delete({
+      where: {
+        id: tripId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return 'Something went wrong, please try again';
+  }
+  revalidatePath(`/profile`);
+}
