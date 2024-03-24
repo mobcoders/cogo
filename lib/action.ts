@@ -1,6 +1,9 @@
 'use server';
 import { signIn, signOut } from '@/auth';
-import { fetchImgUrl_Description } from '@/lib/cheerio';
+import {
+  convertMobileAirbnbLink,
+  fetchImgUrl_Description,
+} from '@/lib/cheerio';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
@@ -175,14 +178,6 @@ export async function createPotentialDestinationV2(
   photoUrl: string | null,
   activities: Array<string>
 ) {
-  // console.log(tripId);
-  // console.log(city);
-  // console.log(country);
-  // console.log(photoUrl);
-  // console.log('activities', activities.split(','));
-  // console.log('activities', activities.length);
-  // let activitiesArr = activities.split(',');
-
   interface prismaData {
     tripId: string;
     city: string;
@@ -254,21 +249,18 @@ export async function updateUserPhoto(userId: string, photoUrl: string) {
 }
 
 export async function createPotentialAccom(tripId: string, formData: FormData) {
-  if (
-    !formData
-      .get('airbnb-url')
-      ?.toString()
-      .startsWith('https://www.airbnb.co.uk/rooms/')
-  ) {
+  let inputUrl = formData.get('airbnb-url')!.toString();
+
+  if (inputUrl.startsWith('https://abnb.me/')) {
+    inputUrl = await convertMobileAirbnbLink(inputUrl);
+  } else if (!inputUrl.startsWith('https://www.airbnb.co.uk/rooms/')) {
     return 'Please enter a valid airbnb url';
   }
-  const imgUrl_VenueDescription = await fetchImgUrl_Description(
-    formData.get('airbnb-url') as string
-  );
-
+  inputUrl = inputUrl.match(/https:\/\/www\.airbnb\.co\.uk\/rooms\/\d+/)![0];
+  const imgUrl_VenueDescription = await fetchImgUrl_Description(inputUrl);
   const rawFormData = {
     tripId: tripId,
-    airBnbUrl: formData.get('airbnb-url') as string,
+    airBnbUrl: inputUrl,
     photoUrl: imgUrl_VenueDescription?.mainPhotoUrl as string,
     description: imgUrl_VenueDescription?.titleText as string,
   };
