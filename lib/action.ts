@@ -173,7 +173,7 @@ export async function createPotentialDestinationV2(
   city: string,
   country: string,
   photoUrl: string | null,
-  activities: string
+  activities: Array<string>
 ) {
   // console.log(tripId);
   // console.log(city);
@@ -181,7 +181,7 @@ export async function createPotentialDestinationV2(
   // console.log(photoUrl);
   // console.log('activities', activities.split(','));
   // console.log('activities', activities.length);
-  let activitiesArr = activities.split(',');
+  // let activitiesArr = activities.split(',');
 
   interface prismaData {
     tripId: string;
@@ -200,7 +200,7 @@ export async function createPotentialDestinationV2(
 
   photoUrl ? (prismaData.photoUrl = photoUrl) : null;
 
-  activities.length > 0 ? (prismaData.activities = activitiesArr) : null;
+  activities.length > 0 ? (prismaData.activities = activities) : null;
   await prisma.potentialDestination.create({
     data: prismaData,
   });
