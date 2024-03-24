@@ -21,7 +21,7 @@ export default async function Page() {
       />
       <ProfileSettings userId={user.id} userEmail={user.email!} />
 
-      <h1 className="text-pink-500 mb-5">{`${user.name}`}</h1>
+      <h1 className="text-purple-600 mb-5">{`${user.name}`}</h1>
       <h1 className="w-full text-start mb-5">My trips:</h1>
       <Link href={'/newtrip'} className="w-full">
         <Button className="w-full h-[50px] bg-pink-500 text-white mb-5">
@@ -36,6 +36,10 @@ export default async function Page() {
           chosenDestination={trip.chosenDestination}
         />
       ))}
+      <footer className="text-center text-xs mt-10 text-light-grey">
+        <p>A MOBCODERS Creation.</p>
+        <p>© 2024 cogo. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
