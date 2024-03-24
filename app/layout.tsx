@@ -56,11 +56,6 @@ export default async function RootLayout({
           {children}
           <ToastContainer />
         </Providers>
-
-        <footer className="text-center text-xs mt-10 text-light-grey">
-          <p>A MOBCODERS Creation.</p>
-          <p>© 2024 cogo. All rights reserved.</p>
-        </footer>
       </body>
     </html>
   );
