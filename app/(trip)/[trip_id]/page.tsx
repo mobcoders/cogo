@@ -62,7 +62,7 @@ export default async function Page({
             })()}
           </div>
         </div>
-        <Navbar user={user!} />
+        <Navbar user={user!} trip={trip} />
       </div>
     </>
   );

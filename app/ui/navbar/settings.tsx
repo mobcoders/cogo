@@ -7,14 +7,17 @@ import {
   Tab,
   Tabs,
 } from '@nextui-org/react';
+import { Trip } from '@prisma/client';
 
 export default function SettingsModal({
   params,
+  trip,
 }: {
   params: { trip_id: string };
+  trip: Trip;
 }) {
   const tripId = params.trip_id;
-  const [selected, setSelected] = useState('accom');
+  const [selected, setSelected] = useState(trip.votingStage);
 
   useEffect(() => {
     async function fetch() {
@@ -34,11 +37,15 @@ export default function SettingsModal({
                 <p className="px-6 pb-10">
                   Use the buttons below to move between trip planning stages.
                 </p>
+                {/* We can shorten the setTimeout once we get the transition snappier. Atm this is set roughly just shorter than the load time on localhost */}
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
                   selectedKey={selected}
-                  onSelectionChange={(key) => setSelected(key as string)}
+                  onSelectionChange={(key) => {
+                    setSelected(key as string);
+                    setTimeout(() => onClose(), 1200);
+                  }}
                 >
                   <Tab key="dest" title="Destination"></Tab>
                   <Tab key="accom" title="Accommodation"></Tab>
