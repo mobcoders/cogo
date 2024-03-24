@@ -11,9 +11,9 @@ import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
 import SettingsModal from '@/app/ui/navbar/settings';
-import { User } from '@prisma/client';
+import { Trip, User } from '@prisma/client';
 
-export default function Navbar({ user }: { user: User }) {
+export default function Navbar({ user, trip }: { user: User; trip: Trip }) {
   const membersModal = useDisclosure();
   const settingsModal = useDisclosure();
   const params = useParams() as { trip_id: string };
@@ -61,7 +61,7 @@ export default function Navbar({ user }: { user: User }) {
         placement={'bottom-center'}
         onClose={settingsModal.onClose}
       >
-        <SettingsModal params={params} />
+        <SettingsModal params={params} trip={trip} />
       </Modal>
     </div>
   );
