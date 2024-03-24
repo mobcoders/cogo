@@ -284,11 +284,7 @@ export async function createPotentialAccom(tripId: string, formData: FormData) {
   revalidatePath(`/${tripId}`);
 }
 
-export async function lockInDestination(
-  tripId: string,
-  city: string,
-  country: string
-) {
+export async function lockInDestination(tripId: string, destinationId: string) {
   try {
     const trip = await prisma.trip.findUnique({
       where: { id: tripId },
@@ -301,8 +297,7 @@ export async function lockInDestination(
     await prisma.trip.update({
       where: { id: tripId },
       data: {
-        city: city,
-        country: country,
+        chosenDestinationId: destinationId,
         votingStage: 'accom',
       },
     });
@@ -327,7 +322,7 @@ export async function lockInAccommodation(tripId: string, id: string) {
     await prisma.trip.update({
       where: { id: tripId },
       data: {
-        airbnb: id,
+        chosenAccomodationId: id,
         votingStage: 'itinery',
       },
     });

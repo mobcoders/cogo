@@ -1,12 +1,13 @@
 import Navbar from '@/app/ui/navbar/navbar';
 import EditTripName from '@/app/ui/edit-trip-name';
-import { fetchTrip, fetchVotingStage } from '@/lib/data';
+import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-dest-and-accom/potential-destinations';
 import { auth, getUser } from '@/auth';
 import PotentialAccomodation from '@/app/ui/potential-dest-and-accom/potential-accomodation';
 import { pexelsSearch } from '@/lib/pexels';
 import TripSummary from '@/app/ui/trip-summary';
+import { PotentialDestination } from '@prisma/client';
 
 export default async function Page({
   params,
@@ -15,23 +16,23 @@ export default async function Page({
 }) {
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
+  const chosenDestination: PotentialDestination | null =
+    trip!.chosenDestination;
 
   if (!trip) {
     notFound();
   }
+
   let session = await auth();
   let email = session?.user?.email;
-
   let user = await getUser(email!);
-
-  // console.log(await pexelsSearch('New York'));
 
   return (
     <>
       <div className="flex flex-col">
         <div className="flex-grow flex flex-col gap-5">
           <div>
-            <EditTripName trip={trip} />
+            <EditTripName trip={trip} chosenDestination={chosenDestination} />
           </div>
           <div className="flex flex-col">
             {(() => {

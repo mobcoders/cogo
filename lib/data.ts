@@ -21,6 +21,10 @@ export async function fetchTrip(tripId: string) {
     where: {
       id: tripId,
     },
+    include: {
+      chosenDestination: true,
+      chosenAccomodation: true,
+    },
   });
   return trip;
 }
@@ -43,8 +47,18 @@ export async function fetchUser(email: string) {
       email: email,
     },
     include: {
-      organisedTrips: true,
-      memberOfTrips: true,
+      organisedTrips: {
+        include: {
+          chosenAccomodation: true,
+          chosenDestination: true,
+        },
+      },
+      memberOfTrips: {
+        include: {
+          chosenDestination: true,
+          chosenAccomodation: true,
+        },
+      },
     },
   });
 
@@ -66,13 +80,24 @@ export async function fetchVotingStage(tripId: string) {
   });
 }
 
-export async function fetchChosenAccom(airbnbId: string) {
-  if (airbnbId) {
-    const chosenAccom = await prisma.potentialAccom.findUnique({
-      where: {
-        id: airbnbId,
-      },
-    });
-    return chosenAccom;
-  }
-}
+// export async function fetchChosenAccom(airbnbId: string) {
+//   if (airbnbId) {
+//     const chosenAccom = await prisma.potentialAccom.findUnique({
+//       where: {
+//         id: airbnbId,
+//       },
+//     });
+//     return chosenAccom;
+//   }
+// }
+
+// export async function fetchChosenDest(destId: string) {
+//   if (destId) {
+//     const chosenDest = await prisma.potentialDestination.findUnique({
+//       where: {
+//         id: destId,
+//       },
+//     });
+//     return chosenDest;
+//   }
+// }
