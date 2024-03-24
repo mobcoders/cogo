@@ -54,6 +54,7 @@ export default function AutocompleteRequired({
 
   async function handleClick() {
     if (city !== '') {
+      console.log('city: ', city);
       const photoUrl = await callPexelsSearch(city);
       await createPotentialDestinationV2(
         tripId,
