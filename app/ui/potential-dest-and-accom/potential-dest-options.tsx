@@ -30,11 +30,11 @@ import {
 export default function PotentialDestOptions({
   city,
   country,
-  id,
+  destinationId,
 }: {
   city: string;
   country: string;
-  id: string;
+  destinationId: string;
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const params = useParams<{ trip_id: string }>();
@@ -52,7 +52,7 @@ export default function PotentialDestOptions({
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      lockInDestination(tripId, city, country);
+      lockInDestination(tripId, destinationId);
     }
   }
 

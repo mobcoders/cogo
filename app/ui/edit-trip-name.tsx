@@ -1,6 +1,6 @@
 'use client';
 
-import { Trip } from '@prisma/client/wasm';
+import { PotentialDestination, Trip } from '@prisma/client/wasm';
 import { useState } from 'react';
 import { updateTripNameDate } from '@/lib/action';
 import { Input } from '@nextui-org/react';
@@ -8,7 +8,13 @@ import { Button } from '@nextui-org/button';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
-export default function EditTripName({ trip }: { trip: Trip }) {
+export default function EditTripName({
+  trip,
+  chosenDestination,
+}: {
+  trip: Trip;
+  chosenDestination: PotentialDestination | null;
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [tripNameVal, setTripNameVal] = useState(trip.name);
   const [tripDateVal, setTripDateVal] = useState(trip.dates);
@@ -45,8 +51,14 @@ export default function EditTripName({ trip }: { trip: Trip }) {
         ) : (
           <div>
             <h1>{tripNameVal}</h1>
-            <h1 className="text-pink-500 capitalize">{trip.city}</h1>
-            <h3 className="capitalize">{trip.country}</h3>
+            {chosenDestination && (
+              <>
+                <h1 className="text-pink-500 capitalize">
+                  {chosenDestination.city}
+                </h1>
+                <h3 className="capitalize">{chosenDestination.country}</h3>
+              </>
+            )}
           </div>
         )}
 

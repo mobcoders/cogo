@@ -2,14 +2,15 @@
 
 import { useDisclosure, Button } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
-import { Cog6ToothIcon, UserGroupIcon } from '@heroicons/react/24/solid';
+import {
+  Cog8ToothIcon as SettingsIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/solid';
 import { Avatar } from '@nextui-org/avatar';
 import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
 import SettingsModal from '@/app/ui/navbar/settings';
-import { useEffect, useState } from 'react';
-import { fetchTrip } from '@/lib/data';
 import { User } from '@prisma/client';
 
 export default function Navbar({ user }: { user: User }) {
@@ -32,7 +33,7 @@ export default function Navbar({ user }: { user: User }) {
         isIconOnly
         className="bg-transparent"
       >
-        <Cog6ToothIcon className="h-8 w-8 fill-white" />
+        <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
 
       <Link href={'/profile'}>

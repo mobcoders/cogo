@@ -52,7 +52,7 @@ export default function PotentialDestinationCard({
               <PotentialDestOptions
                 city={destination.city}
                 country={destination.country}
-                id={destination.id}
+                destinationId={destination.id}
               />
             </div>
 

@@ -5,8 +5,7 @@ import { Avatar } from '@nextui-org/avatar';
 
 export default async function TripSummary({ tripId }: { tripId: string }) {
   const trip = await fetchTrip(tripId);
-  const airbnbId = trip!.airbnb;
-  const chosenAccom = await fetchChosenAccom(airbnbId!);
+  const chosenAccom = trip!.chosenAccomodation;
   const members = [
     ...(await fetchMembers(tripId)),
     await fetchOrganiser(tripId),
@@ -20,6 +19,7 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
           <ChosenAccomCard accom={chosenAccom} />
         </>
       )}
+
       <h3 className="text-pink-500 mb-5">Members:</h3>
       <div className="flex flex-row flex-wrap justify-center gap-5">
         {members.map((member) => (
@@ -33,6 +33,17 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
           </div>
         ))}
       </div>
+
+      <h3 className="text-pink-500 mb-5">Activities:</h3>
+      {/* {destination.activities.length && (
+        <ul className="text-sm font-medium mt-2 pl-3 marker:text-pink-500">
+          {destination.activities.map((activity, index) => (
+            <li key={index} className="list-disc">
+              {activity}
+            </li>
+          ))}
+        </ul>
+      )} */}
     </>
   );
 }
