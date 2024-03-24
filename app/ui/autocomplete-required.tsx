@@ -53,17 +53,16 @@ export default function AutocompleteRequired({
   };
 
   async function handleClick() {
-    console.log(country);
-    console.log(city);
-    const photoUrl = await callPexelsSearch(city);
-    console.log(photoUrl);
-    await createPotentialDestinationV2(
-      tripId,
-      city,
-      country,
-      photoUrl,
-      activities
-    );
+    if (city !== '') {
+      const photoUrl = await callPexelsSearch(city);
+      await createPotentialDestinationV2(
+        tripId,
+        city,
+        country,
+        photoUrl,
+        activities
+      );
+    }
   }
 
   return (
