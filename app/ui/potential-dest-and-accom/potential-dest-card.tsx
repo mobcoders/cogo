@@ -49,11 +49,7 @@ export default function PotentialDestinationCard({
                 </p>
               </div>
 
-              <PotentialDestOptions
-                city={destination.city}
-                country={destination.country}
-                destinationId={destination.id}
-              />
+              <PotentialDestOptions destinationId={destination.id} />
             </div>
 
             <div className="flex justify-between items-end">
