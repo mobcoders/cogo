@@ -1,4 +1,3 @@
-import { useDisclosure } from '@nextui-org/react';
 import {
   Dropdown,
   DropdownTrigger,
@@ -7,48 +6,21 @@ import {
 } from '@nextui-org/dropdown';
 import { Button } from '@nextui-org/button';
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from '@nextui-org/modal';
-import { Input } from '@nextui-org/input';
-import {
   EllipsisHorizontalCircleIcon as OptionsIcon,
-  PencilIcon,
   LockClosedIcon,
+  TrashIcon,
 } from '@heroicons/react/24/solid';
 import { lockInDestination } from '@/lib/action';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import {
-  updatePotentialDestination,
-  deletePotentialDestination,
-} from '@/lib/action';
+import { deletePotentialDestination } from '@/lib/action';
 
 export default function PotentialDestOptions({
-  city,
-  country,
   destinationId,
 }: {
-  city: string;
-  country: string;
   destinationId: string;
 }) {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const params = useParams<{ trip_id: string }>();
   const tripId = params.trip_id;
-
-  const [cityVal, setCityVal] = useState(city);
-  function handleCityChange(e: any) {
-    setCityVal(e.target.value);
-  }
-
-  const [countryVal, setCountryVal] = useState(country);
-  function handleCountryChange(e: any) {
-    setCountryVal(e.target.value);
-  }
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
@@ -56,14 +28,8 @@ export default function PotentialDestOptions({
     }
   }
 
-  function handleSubmit(formData: FormData) {
-    updatePotentialDestination(formData, destinationId, tripId);
-    onClose();
-  }
-
   function handleDelete() {
     deletePotentialDestination(destinationId, tripId);
-    onClose();
   }
 
   return (
@@ -100,62 +66,15 @@ export default function PotentialDestOptions({
           </DropdownItem>
           <DropdownItem key="edit" textValue="Edit" className="w-fit">
             <Button
-              onPress={onOpen}
+              onPress={handleDelete}
               className="bg-pink-500 text-white w-24"
-              startContent={<PencilIcon height={15} className="fill-white" />}
+              startContent={<TrashIcon height={15} className="fill-white" />}
             >
-              Edit
+              Delete
             </Button>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Edit Destination
-              </ModalHeader>
-              <form action={handleSubmit}>
-                <ModalBody>
-                  <Input
-                    autoFocus
-                    label="City"
-                    placeholder="Add city name"
-                    variant="bordered"
-                    defaultValue={cityVal}
-                    onChange={handleCityChange}
-                    name="city"
-                  />
-                  <Input
-                    label="Country"
-                    placeholder="Add country name"
-                    variant="bordered"
-                    defaultValue={countryVal}
-                    onChange={handleCountryChange}
-                    name="country"
-                  />
-                  <Input
-                    label="New Image"
-                    placeholder="Add new image URL"
-                    variant="bordered"
-                    name="url"
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="flat" onPress={handleDelete}>
-                    Delete
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Submit
-                  </Button>
-                </ModalFooter>
-              </form>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
     </>
   );
 }
