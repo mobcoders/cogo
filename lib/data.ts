@@ -47,8 +47,18 @@ export async function fetchUser(email: string) {
       email: email,
     },
     include: {
-      organisedTrips: true,
-      memberOfTrips: true,
+      organisedTrips: {
+        include: {
+          chosenAccomodation: true,
+          chosenDestination: true,
+        },
+      },
+      memberOfTrips: {
+        include: {
+          chosenDestination: true,
+          chosenAccomodation: true,
+        },
+      },
     },
   });
 

@@ -1,5 +1,5 @@
 import ChosenAccomCard from '@/app/ui/potential-dest-and-accom/chosen-accom-card';
-import { fetchChosenAccom, fetchTrip } from '@/lib/data';
+import { fetchTrip } from '@/lib/data';
 import { fetchMembers, fetchOrganiser } from '@/lib/action';
 import { Avatar } from '@nextui-org/avatar';
 

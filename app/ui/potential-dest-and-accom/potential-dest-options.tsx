@@ -57,12 +57,12 @@ export default function PotentialDestOptions({
   }
 
   function handleSubmit(formData: FormData) {
-    updatePotentialDestination(formData, id, tripId);
+    updatePotentialDestination(formData, destinationId, tripId);
     onClose();
   }
 
   function handleDelete() {
-    deletePotentialDestination(id, tripId);
+    deletePotentialDestination(destinationId, tripId);
     onClose();
   }
 

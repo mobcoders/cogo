@@ -30,7 +30,11 @@ export default async function Page() {
       </Link>
 
       {trips.map((trip) => (
-        <ProfileDestinationCard key={trip.id} trip={trip} />
+        <ProfileDestinationCard
+          key={trip.id}
+          trip={trip}
+          chosenDestination={trip.chosenDestination}
+        />
       ))}
     </div>
   );
