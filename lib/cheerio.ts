@@ -13,3 +13,12 @@ export async function fetchImgUrl_Description(listingUrl: string) {
     console.error('Error:', error);
   }
 }
+
+export async function convertMobileAirbnbLink(listingUrl: string) {
+  const response = await axios.get(listingUrl);
+
+  const document = response.data;
+
+  const match = document.match(/https:\/\/www\.airbnb\.co\.uk\/rooms\/\d+/);
+  return match[0];
+}
