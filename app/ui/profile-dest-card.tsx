@@ -1,9 +1,15 @@
 import { Card, CardBody } from '@nextui-org/card';
-import type { Trip } from '@prisma/client';
+import type { PotentialDestination, Trip } from '@prisma/client';
 import Link from 'next/link';
 import ProfileDestOptions from '@/app/ui/profile-dest-options';
 
-export default function ProfileDestinationCard({ trip }: { trip: Trip }) {
+export default function ProfileDestinationCard({
+  trip,
+  chosenDestination,
+}: {
+  trip: Trip;
+  chosenDestination: PotentialDestination | null;
+}) {
   return (
     <div className="relative w-full">
       <Link href={`/${trip.id}`} className="w-full">
@@ -12,10 +18,12 @@ export default function ProfileDestinationCard({ trip }: { trip: Trip }) {
             <div>
               <h2>{trip.name}</h2>
               <h3 className="text-light-grey">
-                {trip.city && trip.country && (
+                {chosenDestination && (
                   <>
-                    <p className="text-black capitalize">{trip.city}</p>
-                    <p className="capitalize">{trip.country}</p>
+                    <p className="text-black capitalize">
+                      {chosenDestination.city}
+                    </p>
+                    <p className="capitalize">{chosenDestination.country}</p>
                   </>
                 )}
               </h3>

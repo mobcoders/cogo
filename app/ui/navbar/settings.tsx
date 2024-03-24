@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
+import { navigateVotingStage } from '@/lib/action';
 import {
-  fetchMembers,
-  fetchOrganiser,
-  navigateVotingStage,
-} from '@/lib/action';
-import {
-  Button,
   ModalBody,
   ModalContent,
   ModalHeader,
   Tab,
   Tabs,
 } from '@nextui-org/react';
-import { fetchTrip } from '@/lib/data';
+
 export default function SettingsModal({
   params,
 }: {
@@ -37,9 +32,7 @@ export default function SettingsModal({
             <div className="flex justify-center items-center gap-5">
               <div className="flex flex-col items-center">
                 <p className="px-6 pb-10">
-                  Navigate between the three trip planning stages with the
-                  buttons below. We recommend doing this to go back to a
-                  previous stage when needed.
+                  Use the buttons below to move between trip planning stages.
                 </p>
                 <Tabs
                   disabledKeys={[]}

@@ -14,7 +14,6 @@ import {
 import { deleteUser } from '@/lib/action';
 import { CldUploadWidget } from 'next-cloudinary';
 import { updateUserPhoto } from '@/lib/action';
-import { useRef } from 'react';
 
 export default function ProfileSettings({
   userId,
@@ -31,7 +30,7 @@ export default function ProfileSettings({
     <div>
       <CldUploadWidget
         uploadPreset="cogo_cloudinary"
-        options={{ sources: ['local', 'url'] }}
+        options={{ sources: ['local', 'url', 'camera'] }}
         onSuccess={(result, { widget }) => {
           if (typeof result.info === 'object') {
             handleSuccess(result!.info!.secure_url);

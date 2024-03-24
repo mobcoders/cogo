@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -27,8 +28,6 @@ model Trip {
   dates                String?
   finalised            Boolean                @default(false)
   organiserId          String
-  city                 String?
-  country              String?
   votingStage          String                 @default("none")
   moodboardAccoms      PotentialAccom[]
   moodboardTrips       PotentialDestination[] @relation("MoodboardTrips")
@@ -36,9 +35,9 @@ model Trip {
   members              User[]                 @relation("MembersToTrip")
   chosenDestination    PotentialDestination?  @relation("ChosenDestination", fields: [chosenDestinationId], references: [id])
   chosenDestinationId  String?                @unique
-  PotentialDestination PotentialDestination[]
-  ChosenAccomodation   PotentialAccom?        @relation("ChosenAccomodation", fields: [ChosenAccomodationId], references: [id])
-  ChosenAccomodationId String?                @unique
+  potentialDestination PotentialDestination[]
+  chosenAccomodation   PotentialAccom?        @relation("ChosenAccomodation", fields: [chosenAccomodationId], references: [id])
+  chosenAccomodationId String?                @unique
 }
 
 model PotentialDestination {
