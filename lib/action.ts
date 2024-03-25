@@ -8,6 +8,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export async function deleteUser(email: string) {
   await prisma.user.delete({
@@ -16,6 +17,11 @@ export async function deleteUser(email: string) {
     },
   });
   await signOut();
+}
+
+export async function logOut() {
+  await signOut();
+  redirect('/');
 }
 
 export async function toggleLike(
