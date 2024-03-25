@@ -26,14 +26,17 @@ export const authConfig = {
           //check the user on your database and return true if is allowed to signIn
           let googleUser = await getUser(user.email as string);
           token.id = googleUser?.id;
+          token.image = googleUser?.image;
         } else {
           token.id = user.id; // Add the user ID to the JWT
+          token.image = user.image;
         }
       }
       return token;
     },
     session: async ({ session, token }) => {
       session.user.id = token.id as string;
+      session.user.image = token.image as string;
       return session;
     },
 

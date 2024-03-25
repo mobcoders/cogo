@@ -18,6 +18,10 @@ export async function deleteUser(email: string) {
   await signOut();
 }
 
+export async function logOut() {
+  await signOut();
+}
+
 export async function toggleLike(
   dest_or_accom_id: string,
   userEmail: string,
