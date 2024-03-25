@@ -6,5 +6,9 @@ import { SessionProvider } from 'next-auth/react';
 import { ToastContainer } from 'react-toastify';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <NextUIProvider>{children}</NextUIProvider>;
+  return (
+    <NextUIProvider>
+      <SessionProvider>{children}</SessionProvider>
+    </NextUIProvider>
+  );
 }
