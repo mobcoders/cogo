@@ -3,7 +3,6 @@ import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 import { pexelsSearch } from '@/lib/pexels';
-import { Input } from '@nextui-org/react';
 
 export default async function PotentialDestinations({
   tripId,

@@ -16,6 +16,7 @@ import {
 } from '@nextui-org/react';
 import { airbnbLocations } from '@/lib/airbnb-data';
 import { createPotentialDestinationV2 } from '@/lib/action';
+import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 export default function AddDestination({
   callPexelsSearch,
@@ -24,17 +25,11 @@ export default function AddDestination({
   callPexelsSearch: (query: string) => Promise<string | null>;
   tripId: string;
 }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [activities, setActivities] = useState<Array<string>>([]);
   const [activityInput, setActivityInput] = useState('');
-
-  function handleSelect() {
-    console.log('hello');
-    console.log(country);
-    console.log(city);
-  }
 
   function handleAddActivity() {
     setActivities((prevActivities: Array<string>) => [
@@ -55,7 +50,8 @@ export default function AddDestination({
 
   async function handleClick() {
     if (city !== '') {
-      console.log('city: ', city);
+      onClose();
+      setActivities([]);
       const photoUrl = await callPexelsSearch(city);
       await createPotentialDestinationV2(
         tripId,
@@ -69,20 +65,25 @@ export default function AddDestination({
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">
-        Add Destination
+      <Button onPress={onOpen} className="bg-pink-500 text-white">
+        Add a Potential Destination
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        className="p-3"
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalBody>
+              <ModalBody className="p-5">
                 <Autocomplete
                   isRequired
                   label="Country"
                   defaultItems={airbnbLocations}
                   placeholder="Search for a country"
-                  className="max-w-xs"
+                  className="w-full"
                   onSelectionChange={(activeCountry) =>
                     setCountry(activeCountry as string)
                   }
@@ -106,7 +107,7 @@ export default function AddDestination({
                       : airbnbLocations
                   }
                   placeholder="Search for a city"
-                  className="max-w-xs"
+                  className="w-full"
                   onSelectionChange={(activeCity) =>
                     setCity(activeCity as string)
                   }
@@ -118,16 +119,23 @@ export default function AddDestination({
                     </AutocompleteItem>
                   )}
                 </Autocomplete>
-                <div className="flex py-2 px-1 justify-between">
+                <div className="flex justify-between items-center gap-3">
                   <Input
                     type="activities"
                     label="Activities"
-                    placeholder="Add an activity..."
-                    className="max-w-xs"
+                    placeholder="Add an activity"
+                    className="w-full"
                     value={activityInput}
                     onValueChange={setActivityInput}
                   />
-                  <Button onClick={handleAddActivity}>Add activity</Button>
+                  <Button
+                    onClick={handleAddActivity}
+                    className="bg-transparent"
+                    isIconOnly
+                    disableRipple
+                  >
+                    <PlusCircleIcon className="fill-light-grey" />
+                  </Button>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -141,15 +149,14 @@ export default function AddDestination({
                     </Chip>
                   ))}
                 </div>
-
-                {/*  */}
               </ModalBody>
+
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={handleClick}>
-                  Add
+                <Button
+                  onPress={handleClick}
+                  className="bg-pink-500 text-white"
+                >
+                  Add Destination
                 </Button>
               </ModalFooter>
             </>
@@ -158,61 +165,4 @@ export default function AddDestination({
       </Modal>
     </>
   );
-}
-
-{
-  /* <div>
-      <Button
-        type="button"
-        onClick={handleClick}
-        className="bg-pink-500 text-white"
-      >
-        Add a destination
-      </Button>
-
-      <Autocomplete
-        isRequired
-        label="Country"
-        defaultItems={airbnbLocations}
-        placeholder="Search for a country"
-        className="max-w-xs"
-        onSelectionChange={(activeCountry) =>
-          setCountry(activeCountry as string)
-        }
-        onClose={handleSelect}
-        onClear={() => setCountry('')}
-      >
-        {(item) => (
-          <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
-        )}
-      </Autocomplete>
-
-      <Autocomplete
-        isDisabled={country && country !== null ? false : true}
-        isRequired
-        label="City"
-        defaultItems={
-          country && country.length > 0
-            ? airbnbLocations.find((obj) => obj.value === country)?.cities
-            : airbnbLocations
-        }
-        placeholder="Search for a city"
-        className="max-w-xs"
-        onSelectionChange={(activeCity) => setCity(activeCity as string)}
-        onClose={handleSelect}
-        onClear={() => setCity('')}
-      >
-        {(item) => (
-          <AutocompleteItem key={item.value}>{item.label}</AutocompleteItem>
-        )}
-      </Autocomplete>
-      <Input
-        type="activities"
-        label="Activities"
-        placeholder="Add some activities (comma separated!)"
-        className="max-w-xs"
-        value={activities}
-        onValueChange={setActivities}
-      />
-    </div> */
 }
