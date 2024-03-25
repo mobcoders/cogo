@@ -4,6 +4,7 @@ import IdeaDestinationCard from '@/app/ui/idea-dest-card';
 import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
 import { redirect } from 'next/navigation';
+import { airbnbLocations } from '@/lib/airbnb-data';
 
 export default async function Page() {
   let session = await auth();
@@ -39,7 +40,16 @@ export default async function Page() {
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        <IdeaDestinationCard />
+        {/*
+        MATH.RANDOM!!!
+        {airbnbLocations.map((location, index) => (
+          <IdeaDestinationCard
+            key={index}
+            city={location.cities[0].label}
+            country={location.label}
+          />
+        ))}
+        */}
       </div>
       <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12">
         <p>A MOBCODERS Creation.</p>
