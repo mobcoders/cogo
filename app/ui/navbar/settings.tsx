@@ -1,25 +1,23 @@
 import { useState, useEffect } from 'react';
+import { navigateVotingStage } from '@/lib/action';
 import {
-  fetchMembers,
-  fetchOrganiser,
-  navigateVotingStage,
-} from '@/lib/action';
-import {
-  Button,
   ModalBody,
   ModalContent,
   ModalHeader,
   Tab,
   Tabs,
 } from '@nextui-org/react';
-import { fetchTrip } from '@/lib/data';
+import { Trip } from '@prisma/client';
+
 export default function SettingsModal({
   params,
+  trip,
 }: {
   params: { trip_id: string };
+  trip: Trip;
 }) {
   const tripId = params.trip_id;
-  const [selected, setSelected] = useState('accom');
+  const [selected, setSelected] = useState(trip.votingStage);
 
   useEffect(() => {
     async function fetch() {
@@ -37,15 +35,17 @@ export default function SettingsModal({
             <div className="flex justify-center items-center gap-5">
               <div className="flex flex-col items-center">
                 <p className="px-6 pb-10">
-                  Navigate between the three trip planning stages with the
-                  buttons below. We recommend doing this to go back to a
-                  previous stage when needed.
+                  Use the buttons below to move between trip planning stages.
                 </p>
+                {/* We can shorten the setTimeout once we get the transition snappier. Atm this is set roughly just shorter than the load time on localhost */}
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
                   selectedKey={selected}
-                  onSelectionChange={(key) => setSelected(key as string)}
+                  onSelectionChange={(key) => {
+                    setSelected(key as string);
+                    setTimeout(() => onClose(), 1200);
+                  }}
                 >
                   <Tab key="dest" title="Destination"></Tab>
                   <Tab key="accom" title="Accommodation"></Tab>

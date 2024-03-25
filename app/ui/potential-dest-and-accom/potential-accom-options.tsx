@@ -14,15 +14,19 @@ import { lockInAccommodation } from '@/lib/action';
 import { useParams } from 'next/navigation';
 import { deletePotentialAccom } from '@/lib/action';
 
-export default function PotentialAccomOptions({ id }: { id: string }) {
+export default async function PotentialAccomOptions({
+  airbnbId,
+}: {
+  airbnbId: string;
+}) {
   const params = useParams<{ trip_id: string }>();
   const tripId = params.trip_id;
 
   function handleClick(dropdownItemKey: string) {
     if (dropdownItemKey === 'lock-in') {
-      lockInAccommodation(tripId, id);
+      lockInAccommodation(tripId, airbnbId);
     } else if (dropdownItemKey === 'delete') {
-      deletePotentialAccom(id, tripId);
+      deletePotentialAccom(airbnbId, tripId);
     }
   }
 

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -22,39 +23,44 @@ model User {
 }
 
 model Trip {
-  id              String                 @id @default(cuid())
-  name            String
-  airbnb          String?
-  dates           String?
-  finalised       Boolean                @default(false)
-  organiserId     String
-  city            String?
-  country         String?
-  votingStage     String                 @default("none")
-  moodboardAccoms PotentialAccom[]
-  moodboardTrips  PotentialDestination[]
-  organiser       User                   @relation("OrganiserToTrip", fields: [organiserId], references: [id], onDelete: Cascade)
-  members         User[]                 @relation("MembersToTrip")
+  id                   String                 @id @default(cuid())
+  name                 String
+  dates                String?
+  finalised            Boolean                @default(false)
+  organiserId          String
+  votingStage          String                 @default("none")
+  moodboardAccoms      PotentialAccom[]
+  moodboardTrips       PotentialDestination[] @relation("MoodboardTrips")
+  organiser            User                   @relation("OrganiserToTrip", fields: [organiserId], references: [id], onDelete: Cascade)
+  members              User[]                 @relation("MembersToTrip")
+  chosenDestination    PotentialDestination?  @relation("ChosenDestination", fields: [chosenDestinationId], references: [id])
+  chosenDestinationId  String?                @unique
+  potentialDestination PotentialDestination[]
+  chosenAccomodation   PotentialAccom?        @relation("ChosenAccomodation", fields: [chosenAccomodationId], references: [id])
+  chosenAccomodationId String?                @unique
 }
 
 model PotentialDestination {
-  id          String   @id @default(cuid())
-  tripId      String
-  city        String
-  country     String
-  photoUrl    String?
-  description String?
-  activities  String[]
-  trip        Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  likedBy     User[]   @relation("LikesDest")
+  id             String   @id @default(cuid())
+  tripId         String
+  city           String
+  country        String
+  photoUrl       String?
+  description    String?
+  activities     String[]
+  trip           Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  likedBy        User[]   @relation("LikesDest")
+  moodboardTrips Trip[]   @relation("MoodboardTrips")
+  chosenByTrip   Trip?    @relation("ChosenDestination")
 }
 
 model PotentialAccom {
-  id          String @id @default(cuid())
-  tripId      String
-  photoUrl    String
-  description String
-  airBnbUrl   String
-  trip        Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  likedBy     User[] @relation("LikesAccom")
+  id           String @id @default(cuid())
+  tripId       String
+  photoUrl     String
+  description  String
+  airBnbUrl    String
+  trip         Trip   @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  likedBy      User[] @relation("LikesAccom")
+  chosenByTrip Trip?  @relation("ChosenAccomodation")
 }

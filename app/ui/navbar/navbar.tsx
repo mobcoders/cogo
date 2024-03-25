@@ -2,21 +2,21 @@
 
 import { useDisclosure, Button } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
-import { Cog6ToothIcon, UserGroupIcon } from '@heroicons/react/24/solid';
+import {
+  Cog8ToothIcon as SettingsIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/solid';
 import { Avatar } from '@nextui-org/avatar';
 import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
 import SettingsModal from '@/app/ui/navbar/settings';
-import { useEffect, useState } from 'react';
-import { fetchTrip } from '@/lib/data';
-import { User } from '@prisma/client';
+import { Trip, User } from '@prisma/client';
 
-export default function Navbar({ user }: { user: User }) {
+export default function Navbar({ trip }: { trip: Trip }) {
   const membersModal = useDisclosure();
   const settingsModal = useDisclosure();
   const params = useParams() as { trip_id: string };
-  const userName = user.name;
 
   return (
     <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-purple-600 drop-shadow-cogo">
@@ -32,21 +32,10 @@ export default function Navbar({ user }: { user: User }) {
         isIconOnly
         className="bg-transparent"
       >
-        <Cog6ToothIcon className="h-8 w-8 fill-white" />
+        <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
 
-      <Link href={'/profile'}>
-        <Avatar
-          showFallback
-          name={
-            userName && userName.includes(' ')
-              ? userName.split(' ')[0][0] + userName.split(' ')[1][0]
-              : ''
-          }
-          src={user.image!}
-          className="bg-white text-base"
-        />
-      </Link>
+      {/* Idea bulb goes here */}
 
       <Modal
         isOpen={membersModal.isOpen}
@@ -60,7 +49,7 @@ export default function Navbar({ user }: { user: User }) {
         placement={'bottom-center'}
         onClose={settingsModal.onClose}
       >
-        <SettingsModal params={params} />
+        <SettingsModal params={params} trip={trip} />
       </Modal>
     </div>
   );
