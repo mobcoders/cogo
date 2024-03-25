@@ -136,27 +136,6 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
   }
 }
 
-export async function createPotentialDestination(
-  tripId: string,
-  formData: FormData
-) {
-  const rawFormData = {
-    city: formData.get('city') as string,
-    country: formData.get('country') as string,
-    photoUrl: formData.get('photoUrl') as string,
-    tripId: tripId,
-    description: 'no description yet',
-  };
-  try {
-    await prisma.potentialDestination.create({
-      data: rawFormData,
-    });
-  } catch (error) {
-    return 'Something went wrong';
-  }
-  revalidatePath(`/${tripId}`);
-}
-
 export async function credAuth(
   prevState: string | undefined,
   formData: FormData
@@ -175,7 +154,7 @@ export async function credAuth(
     throw error;
   }
 }
-export async function createPotentialDestinationV2(
+export async function createPotentialDestination(
   tripId: string,
   city: string,
   country: string,

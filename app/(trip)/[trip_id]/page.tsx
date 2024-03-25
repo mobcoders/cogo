@@ -8,6 +8,8 @@ import PotentialAccomodation from '@/app/ui/potential-dest-and-accom/potential-a
 import { pexelsSearch } from '@/lib/pexels';
 import TripSummary from '@/app/ui/trip-summary';
 import { PotentialDestination } from '@prisma/client';
+import { Suspense } from 'react';
+import { Spinner } from '@nextui-org/react';
 
 export default async function Page({
   params,
@@ -41,21 +43,27 @@ export default async function Page({
                   return (
                     <>
                       <h3 className="font-extrabold">Destination Options</h3>
-                      <PotentialDestinations tripId={tripId} user={user!} />
+                      <Suspense fallback={<Spinner />}>
+                        <PotentialDestinations tripId={tripId} user={user!} />
+                      </Suspense>
                     </>
                   );
                 case 'accom':
                   return (
                     <>
                       <h3 className="font-extrabold">Accommodation Options</h3>
-                      <PotentialAccomodation tripId={tripId} user={user!} />
+                      <Suspense fallback={<Spinner />}>
+                        <PotentialAccomodation tripId={tripId} user={user!} />
+                      </Suspense>
                     </>
                   );
                 default:
                   return (
                     <>
-                      <h3 className="font-extrabold mb-5">Trip Summary</h3>
-                      <TripSummary tripId={tripId}></TripSummary>
+                      <Suspense fallback={<Spinner />}>
+                        <h3 className="font-extrabold mb-5">Trip Summary</h3>
+                        <TripSummary tripId={tripId}></TripSummary>
+                      </Suspense>
                     </>
                   );
               }
