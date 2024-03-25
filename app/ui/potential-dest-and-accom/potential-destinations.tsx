@@ -2,7 +2,6 @@ import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potentia
 import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
-import AutocompleteRequired from '@/app/ui/autocomplete-required';
 import { pexelsSearch } from '@/lib/pexels';
 import { Input } from '@nextui-org/react';
 
@@ -32,10 +31,7 @@ export default async function PotentialDestinations({
       {/* <AddDestination tripId={tripId} /> */}
 
       <div className="flex flex-col gap-5">
-        <AutocompleteRequired
-          callPexelsSearch={callPexelsSearch}
-          tripId={tripId}
-        />
+        <AddDestination callPexelsSearch={callPexelsSearch} tripId={tripId} />
 
         {sortedDestinations.map((destination) => (
           <PotentialDestinationCard

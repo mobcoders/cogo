@@ -37,14 +37,13 @@ export default function SettingsModal({
                 <p className="px-6 pb-10">
                   Use the buttons below to move between trip planning stages.
                 </p>
-                {/* We can shorten the setTimeout once we get the transition snappier. Atm this is set roughly just shorter than the load time on localhost */}
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
                   selectedKey={selected}
                   onSelectionChange={(key) => {
                     setSelected(key as string);
-                    setTimeout(() => onClose(), 1200);
+                    onClose();
                   }}
                 >
                   <Tab key="dest" title="Destination"></Tab>
