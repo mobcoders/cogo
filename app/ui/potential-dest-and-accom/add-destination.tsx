@@ -15,7 +15,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { airbnbLocations } from '@/lib/airbnb-data';
-import { createPotentialDestinationV2 } from '@/lib/action';
+import { createPotentialDestination } from '@/lib/action';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 export default function AddDestination({
@@ -52,8 +52,9 @@ export default function AddDestination({
     if (city !== '') {
       onClose();
       setActivities([]);
-      const photoUrl = await callPexelsSearch(city);
-      await createPotentialDestinationV2(
+      // const photoUrl = await callPexelsSearch(city);
+      const photoUrl = '';
+      await createPotentialDestination(
         tripId,
         city,
         country,
