@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react';
 import IdeaDestinationCard from '@/app/ui/idea-dest-card';
 import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
+import { redirect } from 'next/navigation';
 
 export default async function Page() {
   let session = await auth();
@@ -11,6 +12,7 @@ export default async function Page() {
   let tripName = name.split(' ')[0] + "'s new group trip";
 
   async function createTrip() {
+    'use server';
     let newTrip = await prisma.trip.create({
       data: {
         name: tripName,
@@ -18,7 +20,7 @@ export default async function Page() {
         votingStage: 'dest',
       },
     });
-    return newTrip.id;
+    redirect(`/${newTrip.id}`);
   }
 
   return (
@@ -33,12 +35,7 @@ export default async function Page() {
       <div className="mb-5 md:col-start-7 col-span-6">
         <h1>Ready to go?</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <CreateTripButton />
-        {/* <Link href={'/newtrip'}>
-          <Button className="w-full h-[50px] bg-pink-500 text-white mt-5">
-            Create a Group Trip
-          </Button>
-        </Link> */}
+        <CreateTripButton createTrip={createTrip} />
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>

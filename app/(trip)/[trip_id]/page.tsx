@@ -43,27 +43,22 @@ export default async function Page({
                   return (
                     <>
                       <h3 className="font-extrabold">Destination Options</h3>
-                      <Suspense fallback={<Spinner />}>
-                        <PotentialDestinations tripId={tripId} user={user!} />
-                      </Suspense>
+
+                      <PotentialDestinations tripId={tripId} user={user!} />
                     </>
                   );
                 case 'accom':
                   return (
                     <>
                       <h3 className="font-extrabold">Accommodation Options</h3>
-                      <Suspense fallback={<Spinner />}>
-                        <PotentialAccomodation tripId={tripId} user={user!} />
-                      </Suspense>
+                      <PotentialAccomodation tripId={tripId} user={user!} />
                     </>
                   );
                 default:
                   return (
                     <>
-                      <Suspense fallback={<Spinner />}>
-                        <h3 className="font-extrabold mb-5">Trip Summary</h3>
-                        <TripSummary tripId={tripId}></TripSummary>
-                      </Suspense>
+                      <h3 className="font-extrabold mb-5">Trip Summary</h3>
+                      <TripSummary tripId={tripId}></TripSummary>
                     </>
                   );
               }

@@ -1,9 +1,6 @@
-import { Spinner } from '@nextui-org/react';
+'use client';
+import LoadingAnimation from '@/app/ui/loading-animation';
 
 export default function Loading() {
-  return (
-    <div className="w-full flex justify-center items-center">
-      <Spinner />
-    </div>
-  );
+  return <LoadingAnimation />;
 }
