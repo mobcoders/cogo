@@ -3,15 +3,14 @@
 import { useDisclosure, Button } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
 import {
-  Cog8ToothIcon as SettingsIcon,
   UserGroupIcon,
+  LightBulbIcon,
+  Cog8ToothIcon as SettingsIcon,
 } from '@heroicons/react/24/solid';
-import { Avatar } from '@nextui-org/avatar';
-import Link from 'next/link';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members';
 import SettingsModal from '@/app/ui/navbar/settings';
-import { Trip, User } from '@prisma/client';
+import { Trip } from '@prisma/client';
 
 export default function Navbar({ trip }: { trip: Trip }) {
   const membersModal = useDisclosure();
@@ -27,6 +26,9 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <UserGroupIcon className="h-8 w-8 fill-white" />
       </Button>
+
+      <LightBulbIcon className="h-8 w-8 fill-white" />
+
       <Button
         onPress={settingsModal.onOpen}
         isIconOnly
@@ -34,8 +36,6 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
-
-      {/* Idea bulb goes here */}
 
       <Modal
         isOpen={membersModal.isOpen}
