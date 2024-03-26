@@ -24,6 +24,25 @@ export default async function Page() {
     redirect(`/${newTrip.id}`);
   }
 
+  function getRandomIndex(usedIndexes, arrayLength) {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * arrayLength);
+    } while (usedIndexes.includes(randomIndex));
+    return randomIndex;
+  }
+
+  const usedIndexes = [];
+  const filteredLocations = [];
+
+  for (let i = 0; i < 3; i++) {
+    const randomIndex = getRandomIndex(usedIndexes, airbnbLocations.length);
+    filteredLocations.push(airbnbLocations[randomIndex]);
+    usedIndexes.push(randomIndex);
+  }
+
+  console.log(usedIndexes);
+
   return (
     <div className="flex flex-col md:grid grid-cols-12 gap-6">
       <div className="mb-5 md:col-start-1 col-span-6">
@@ -40,16 +59,17 @@ export default async function Page() {
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        {/*
-        MATH.RANDOM!!!
-        {airbnbLocations.map((location, index) => (
+        {filteredLocations.map((location, index) => (
           <IdeaDestinationCard
             key={index}
-            city={location.cities[0].label}
+            city={
+              location.cities[
+                Math.floor(Math.random() * location.cities.length)
+              ].label
+            }
             country={location.label}
           />
         ))}
-        */}
       </div>
       <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12">
         <p>A MOBCODERS Creation.</p>
