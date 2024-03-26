@@ -1,6 +1,5 @@
 import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
-import { redirect } from 'next/navigation';
 import GeneratedDestCards from '@/app/ui/generated-dest-cards';
 
 export default async function Page() {
@@ -9,34 +8,22 @@ export default async function Page() {
   let id = session?.user?.id!;
   let tripName = name.split(' ')[0] + "'s new group trip";
 
-  async function createTrip() {
-    'use server';
-    let newTrip = await prisma.trip.create({
-      data: {
-        name: tripName,
-        organiserId: id,
-        votingStage: 'dest',
-      },
-    });
-    redirect(`/${newTrip.id}`);
-  }
-
   return (
-    <div className="flex flex-col md:grid grid-cols-12 gap-6">
-      <div className="mb-1 md:col-start-1 col-span-6">
+    <div className="flex flex-col md:grid grid-cols-12 gap-5">
+      <div className="md:col-start-1 col-span-6">
         <h1>Hassle-free group travel.</h1>
         <p>
           Planning group trips is now a breeze and making large group payments
           is no longer awkward thanks to Cogo.
         </p>
       </div>
-      <div className="mb-1 md:col-start-7 col-span-6">
+      <div className="md:col-start-7 col-span-6">
         <h1>Ready to go?</h1>
-        <p>
+        <p className="mb-3">
           Create a group trip and invite your friends. Trip members can then
           propose and vote on potential destinations and accommodation.
         </p>
-        <CreateTripButton createTrip={createTrip} />
+        <CreateTripButton tripName={tripName} id={id} />
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>

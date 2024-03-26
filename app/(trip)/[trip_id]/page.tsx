@@ -22,6 +22,8 @@ export default async function Page({
   if (!trip) {
     notFound();
   }
+  const chosenDestination: PotentialDestination | null =
+    trip!.chosenDestination;
 
   const chosenDestination: PotentialDestination | null =
     trip!.chosenDestination;
