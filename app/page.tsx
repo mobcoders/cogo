@@ -24,7 +24,7 @@ export default async function Page() {
     redirect(`/${newTrip.id}`);
   }
 
-  function getRandomIndex(usedIndexes, arrayLength) {
+  function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
     let randomIndex;
     do {
       randomIndex = Math.floor(Math.random() * arrayLength);
@@ -41,20 +41,21 @@ export default async function Page() {
     usedIndexes.push(randomIndex);
   }
 
-  console.log(usedIndexes);
-
   return (
     <div className="flex flex-col md:grid grid-cols-12 gap-6">
-      <div className="mb-5 md:col-start-1 col-span-6">
+      <div className="mb-1 md:col-start-1 col-span-6">
         <h1>Hassle-free group travel.</h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Planning group trips is now a breeze and making large group payments
+          is no longer awkward thanks to Cogo.
         </p>
       </div>
-      <div className="mb-5 md:col-start-7 col-span-6">
+      <div className="mb-1 md:col-start-7 col-span-6">
         <h1>Ready to go?</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>
+          Create a group trip and invite your friends. Trip members can then
+          propose and vote on potential destinations and accommodation.
+        </p>
         <CreateTripButton createTrip={createTrip} />
       </div>
       <div className="md:col-span-12">
