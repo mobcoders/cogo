@@ -12,10 +12,4 @@ export default function Loading() {
     ></Player>
   );
 
-  // return (
-  //   <div className="w-full flex justify-center items-center">
-  //     {/* <Spinner /> */}
-
-  //   </div>
-  // );
 }
