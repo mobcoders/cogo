@@ -26,7 +26,7 @@ export default async function Page({
 
   return (
     <>
-      <h1>Trip Account</h1>
+      <h1>{trip.name}</h1>
       <Card className="h-[200px] max-w-[400px] my-5 bg-purple-700">
         <CardBody className="p-5">
           <div className="flex justify-between h-full">
@@ -60,7 +60,11 @@ export default async function Page({
       </Card>
 
       {user && user.cardDetails ? (
-        <ShowCard user={user} />
+        !user.cardDetails.state.destroyedReason ? (
+          <ShowCard user={user} tripId={tripId} />
+        ) : (
+          <h1 className="text-center max-w-[400px]">Card Destroyed</h1>
+        )
       ) : (
         <NoCard token={user.token} tripId={tripId} />
       )}

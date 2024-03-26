@@ -58,8 +58,9 @@ export async function getCardDetails(token: string, tripid: string) {
 
   try {
     const response = await weavr.get('/managed_cards', authBearerHeader);
-    const empty: any = [];
-    //return empty[0];
+    console.log(
+      response.data.cards.find((card: any) => card.friendlyName === tripid)
+    );
     return response.data.cards.find(
       (card: any) => card.friendlyName === tripid
     );
@@ -104,5 +105,24 @@ export async function createCard(token: string, tripid: string) {
   } catch (error) {
     console.error(error);
   }
-  revalidatePath('/pay/card-details');
+  revalidatePath(`/${tripid}/card-details`);
+}
+
+export async function deleteCard(token: string, tripid: string) {
+  const authBearerHeader = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const cardDetails = await getCardDetails(token, tripid);
+    await weavr.post(
+      `/managed_cards/${cardDetails.id}/remove`,
+      undefined,
+      authBearerHeader
+    );
+  } catch (error) {
+    console.error(error);
+  }
+  revalidatePath(`/${tripid}/card-details`);
 }
