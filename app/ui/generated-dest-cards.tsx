@@ -3,7 +3,7 @@ import { pexelsSearch } from '@/lib/pexels';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
-export default async function GeneratedDestCards() {
+export default function GeneratedDestCards() {
   // Helper function to get random indexes but unique from an array
   function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
     let randomIndex;
@@ -36,18 +36,17 @@ export default async function GeneratedDestCards() {
   // );
 
   return (
-    <>
+    <div className="flex flex-col gap-5 md:flex-row">
       {randomCountries.map((location, index) => (
-        <Card key={index} className="drop-shadow-cogo h-fit mb-5">
+        <Card key={index} className="drop-shadow-cogo h-fit w-full">
           <CardBody>
             <div className="flex gap-3 h-full">
               <Image
                 alt={`City photo`}
-                className="object-cover h-24"
+                className="object-cover h-24 w-24"
+                radius="md"
                 // src={location.photoUrl}
                 src="https://www.shutterstock.com/image-photo/untouched-tropical-beach-sri-lanka-600nw-109674992.jpg"
-                height={100}
-                width={100}
               />
 
               <div className="flex flex-col flex-1">
@@ -62,6 +61,6 @@ export default async function GeneratedDestCards() {
           </CardBody>
         </Card>
       ))}
-    </>
+    </div>
   );
 }
