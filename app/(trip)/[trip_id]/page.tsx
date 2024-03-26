@@ -18,9 +18,13 @@ export default async function Page({
 }) {
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
+  
   if (!trip) {
     notFound();
   }
+  const chosenDestination: PotentialDestination | null =
+    trip!.chosenDestination;
+
   const chosenDestination: PotentialDestination | null =
     trip!.chosenDestination;
 
