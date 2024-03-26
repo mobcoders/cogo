@@ -4,6 +4,7 @@ import IdeaDestinationCard from '@/app/ui/idea-dest-card';
 import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
 import { redirect } from 'next/navigation';
+import { airbnbLocations } from '@/lib/airbnb-data';
 
 export default async function Page() {
   let session = await auth();
@@ -23,23 +24,53 @@ export default async function Page() {
     redirect(`/${newTrip.id}`);
   }
 
+  function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * arrayLength);
+    } while (usedIndexes.includes(randomIndex));
+    return randomIndex;
+  }
+
+  const usedIndexes = [];
+  const filteredLocations = [];
+
+  for (let i = 0; i < 3; i++) {
+    const randomIndex = getRandomIndex(usedIndexes, airbnbLocations.length);
+    filteredLocations.push(airbnbLocations[randomIndex]);
+    usedIndexes.push(randomIndex);
+  }
+
   return (
     <div className="flex flex-col md:grid grid-cols-12 gap-6">
-      <div className="mb-5 md:col-start-1 col-span-6">
+      <div className="mb-1 md:col-start-1 col-span-6">
         <h1>Hassle-free group travel.</h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Planning group trips is now a breeze and making large group payments
+          is no longer awkward thanks to Cogo.
         </p>
       </div>
-      <div className="mb-5 md:col-start-7 col-span-6">
+      <div className="mb-1 md:col-start-7 col-span-6">
         <h1>Ready to go?</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>
+          Create a group trip and invite your friends. Trip members can then
+          propose and vote on potential destinations and accommodation.
+        </p>
         <CreateTripButton createTrip={createTrip} />
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        <IdeaDestinationCard />
+        {filteredLocations.map((location, index) => (
+          <IdeaDestinationCard
+            key={index}
+            city={
+              location.cities[
+                Math.floor(Math.random() * location.cities.length)
+              ].label
+            }
+            country={location.label}
+          />
+        ))}
       </div>
       <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12">
         <p>A MOBCODERS Creation.</p>
