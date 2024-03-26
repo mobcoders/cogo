@@ -9,6 +9,7 @@ export default function KYC() {
   function handleCreate() {
     setLoading(true);
     WeavrUserCreationFlow();
+    setLoading(false);
   }
 
   function handleKYC() {

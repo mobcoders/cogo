@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache';
 const weavr = axios.create({
   baseURL: 'https://sandbox.weavr.io/multi',
   headers: {
-    'api-key': `${process.env.WEAVR_API_KEY}`,
+    'api-key': 'Fu+L/syUYY0BjnbJwd8ARA==',
     'Content-Type': 'application/json',
   },
 });
@@ -15,7 +15,7 @@ const weavr = axios.create({
 const weavrSimulateApproval = axios.create({
   baseURL: 'https://sandbox.weavr.io/simulate',
   headers: {
-    'programme-key': `${process.env.WEAVR_API_KEY}`,
+    'programme-key': process.env.WEAVR_API_KEY,
     'Content-Type': 'application/json',
   },
 });
@@ -26,31 +26,36 @@ const weavrSimulateApproval = axios.create({
 // date of birth.
 
 export async function WeavrUserCreationFlow() {
-  const session = await auth();
-  const userCreationResp = await createWeavrConsumer(session);
-  // await assignPasswordWeavrConsumer(userCreationResp.id.id);
-  // await loginUser(session);
-  // await emailConsumerVerificationCode(session);
-  // await verifyConsumerEmailCode(session!.user!.email!, '123456');
+  // const session = await auth();
+  // console.log(process.env.WEAVR_API_KEY);
+  const userCreationResp = await createWeavrConsumer();
+  await assignPasswordWeavrConsumer(userCreationResp.id.id);
+  await loginUser();
+  await emailConsumerVerificationCode();
+  await verifyConsumerEmailCode('123456');
   // const accessTokenResp = await createAccessToken(userCreationResp.id.id);
   // const accessToken = accessTokenResp?.token;
 }
 
 export async function weavrKYCFlow() {
   const session = await auth();
-  const loginResp = await loginUser(session);
+  const loginResp = await loginUser();
   await startConsumerKYC();
   await simulateConsumerKYCApproval(loginResp.identity.id);
 }
 
-export async function createWeavrConsumer(session: Session | null) {
-  // const session = await auth();
+export async function createWeavrConsumer() {
+  const session = await auth();
+  // console.log(session!.user!.name!.split(' ')[0]);
+  // profileId: process.env.WEAVR_CONSUMERS_PROFILE_ID,
+
   try {
+    const splitName = session!.user!.name!.split(' ');
     const response = await weavr.post('/consumers', {
-      profileId: process.env.WEAVR_CONSUMERS_PROFILE_ID,
+      profileId: '112157649645469763',
       rootUser: {
-        name: session!.user!.name!.split(' ')[0],
-        surname: session!.user!.name!.split(' ')[1],
+        name: splitName[0],
+        surname: splitName[0],
         email: session!.user!.email!,
         mobile: {
           countryCode: '+44',
@@ -69,8 +74,8 @@ export async function createWeavrConsumer(session: Session | null) {
           postCode: 'TST 1234',
           state: 'State',
         },
-        ipAddress: '82.163.118.2',
       },
+      ipAddress: '82.163.118.2',
       acceptedTerms: true,
     });
     console.log(response.data);
@@ -81,6 +86,7 @@ export async function createWeavrConsumer(session: Session | null) {
 }
 
 // hard coded password.
+
 export async function assignPasswordWeavrConsumer(consumer_id: string) {
   try {
     const response = await weavr.post(`/passwords/${consumer_id}/create`, {
@@ -93,8 +99,8 @@ export async function assignPasswordWeavrConsumer(consumer_id: string) {
   }
 }
 
-export async function emailConsumerVerificationCode(session: Session | null) {
-  // const session = await auth();
+export async function emailConsumerVerificationCode() {
+  const session = await auth();
   try {
     const response = await weavr.post('/consumers/verification/email/send', {
       email: session?.user?.email,
@@ -106,13 +112,11 @@ export async function emailConsumerVerificationCode(session: Session | null) {
   }
 }
 
-export async function verifyConsumerEmailCode(
-  consumerEmail: string,
-  verificationCode: string
-) {
+export async function verifyConsumerEmailCode(verificationCode: string) {
+  const session = await auth();
   try {
     const response = await weavr.post('/consumers/verification/email/verify', {
-      email: consumerEmail,
+      email: session?.user?.email,
       verificationCode: verificationCode,
     });
   } catch (error) {
@@ -179,8 +183,8 @@ export async function simulateConsumerKYCApproval(consumer_id: string) {
 //   }
 // }
 
-export async function loginUser(session: Session | null) {
-  // const session = await auth();
+export async function loginUser() {
+  const session = await auth();
   try {
     //login with user password
     const response = await weavr.post('/login_with_password', {
