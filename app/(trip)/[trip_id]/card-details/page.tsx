@@ -7,6 +7,7 @@ import { Butterfly_Kids } from 'next/font/google';
 import NoCard from '@/app/(trip)/[trip_id]/card-details/no-card';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
+import KYC from '@/app/(trip)/[trip_id]/card-details/kyc';
 
 export default async function Page({
   params,
@@ -65,8 +66,10 @@ export default async function Page({
         ) : (
           <h1 className="text-center max-w-[400px]">Card Destroyed</h1>
         )
-      ) : (
+      ) : user ? (
         <NoCard token={user.token} tripId={tripId} />
+      ) : (
+        <KYC />
       )}
     </>
   );
