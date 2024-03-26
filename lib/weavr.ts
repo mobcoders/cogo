@@ -29,25 +29,33 @@ const weavrSimulateApproval = axios.create({
 // date of birth.
 
 export async function WeavrUserCreationFlow() {
-  // const session = await auth();
-  // console.log(process.env.WEAVR_API_KEY);
+  console.log('Starting Weavr Consumer Creation Flow...');
   const userCreationResp = await createWeavrConsumer();
-  await assignPasswordWeavrConsumer('112163441002741830');
-  // ==> await assignPasswordWeavrConsumer(userCreationResp.id.id);
-  console.log('starting now...');
+  console.log('Consumer created');
+  await assignPasswordWeavrConsumer(userCreationResp.id.id);
+  console.log('Password assigned');
   await emailConsumerVerificationCode();
+  console.log('Code emailed');
   await verifyConsumerEmailCode('123456');
-  await enrolUserPhoneOTP();
+  console.log('Email code verified');
   await loginUser();
-  // put this back in ==> await verifyConsumerRootUserSMSFactor();
+  console.log('User logged in & bearer token intercepted');
+  await enrolUserPhoneOTP();
+  console.log('User phone OTP enrolled');
+  await verifyConsumerRootUserSMSFactor();
+  console.log('Consumer Root user SMS verified');
   await stepUpChallengeOTP();
+  console.log('StepUp complete\nPlease now start KYC flow...');
 }
 
 export async function weavrKYCFlow() {
-  // const session = await auth();
+  console.log('KYC flow starting...');
   const loginResp = await loginUser();
+  console.log('User logged in & bearer token intercepted');
   await startConsumerKYC();
+  console.log('KYC started.');
   await simulateConsumerKYCApproval(loginResp.identity.id);
+  console.log('KYC approval simulation complete.');
 }
 
 export async function createWeavrConsumer() {
