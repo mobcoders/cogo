@@ -1,8 +1,11 @@
 'use server';
 import { auth } from '@/auth';
 import axios from 'axios';
-import { Session } from 'next-auth';
 import { revalidatePath } from 'next/cache';
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const weavr = axios.create({
   baseURL: 'https://sandbox.weavr.io/multi',
@@ -29,16 +32,19 @@ export async function WeavrUserCreationFlow() {
   // const session = await auth();
   // console.log(process.env.WEAVR_API_KEY);
   const userCreationResp = await createWeavrConsumer();
-  await assignPasswordWeavrConsumer(userCreationResp.id.id);
-  await loginUser();
+  await assignPasswordWeavrConsumer('112163441002741830');
+  // ==> await assignPasswordWeavrConsumer(userCreationResp.id.id);
+  console.log('starting now...');
   await emailConsumerVerificationCode();
   await verifyConsumerEmailCode('123456');
-  // const accessTokenResp = await createAccessToken(userCreationResp.id.id);
-  // const accessToken = accessTokenResp?.token;
+  await enrolUserPhoneOTP();
+  await loginUser();
+  // put this back in ==> await verifyConsumerRootUserSMSFactor();
+  await stepUpChallengeOTP();
 }
 
 export async function weavrKYCFlow() {
-  const session = await auth();
+  // const session = await auth();
   const loginResp = await loginUser();
   await startConsumerKYC();
   await simulateConsumerKYCApproval(loginResp.identity.id);
@@ -101,11 +107,12 @@ export async function assignPasswordWeavrConsumer(consumer_id: string) {
 
 export async function emailConsumerVerificationCode() {
   const session = await auth();
+  console.log(session?.user?.email);
   try {
     const response = await weavr.post('/consumers/verification/email/send', {
       email: session?.user?.email,
     });
-
+    console.log(response.status);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -119,6 +126,7 @@ export async function verifyConsumerEmailCode(verificationCode: string) {
       email: session?.user?.email,
       verificationCode: verificationCode,
     });
+    console.log('verifyEmailCode status:', response.status);
   } catch (error) {
     console.error(error);
   }
@@ -127,6 +135,7 @@ export async function verifyConsumerEmailCode(verificationCode: string) {
 export async function enrolUserPhoneOTP() {
   try {
     const response = await weavr.post('/authentication_factors/otp/sms');
+    console.log('Enrol OTP status:', response.status);
   } catch (error) {
     console.error(error);
   }
@@ -162,6 +171,7 @@ export async function verifyConsumerRootUserSMSFactor() {
 export async function startConsumerKYC() {
   try {
     const response = await weavr.post('/consumers/kyc');
+    console.log('start consumer kyc status:', response.status);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -169,10 +179,15 @@ export async function startConsumerKYC() {
 }
 
 export async function simulateConsumerKYCApproval(consumer_id: string) {
-  const response = await weavrSimulateApproval.post(
-    `/api/consumers/${consumer_id}/verify`
-  );
-  return response.data;
+  try {
+    const response = await weavrSimulateApproval.post(
+      `/api/consumers/${consumer_id}/verify`
+    );
+    console.log('KYC approval status:', response.status);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // export async function getConsumerKYC() {
@@ -188,11 +203,16 @@ export async function loginUser() {
   try {
     //login with user password
     const response = await weavr.post('/login_with_password', {
-      email: `${session?.user?.email}`,
+      email: session?.user?.email,
       password: {
         value: 'Pass1234!',
       },
     });
+    console.log('loginUser status', response.status);
+    await sleep(2000);
+
+    weavr.interceptors.request.clear();
+    await sleep(2000);
 
     weavr.interceptors.request.use(
       function (config) {
@@ -202,26 +222,30 @@ export async function loginUser() {
       null,
       { synchronous: true }
     );
-
-    // const authBearerHeader = {
-    //   headers: {
-    //     Authorization: `Bearer ${response.data.token}`,
-    //   },
-    // };
-
-    //OTP SMS step up
-    await weavr.post('/stepup/challenges/otp/SMS');
-    console.log('SMS sent...');
-
-    //OTP verify
-    await weavr.post('/stepup/challenges/otp/SMS/verify', {
-      verificationCode: '123456',
-    });
-
-    console.log('OTP verified');
     return response.data;
+
+    // //OTP SMS step up
+    // const SMS_StepUP = await weavr.post('/stepup/challenges/otp/SMS');
+    // console.log('SMS_StepUP status:', SMS_StepUP.status);
+
+    // //OTP verify
+    // await weavr.post('/stepup/challenges/otp/SMS/verify', {
+    //   verificationCode: '123456',
+    // });
+
+    // console.log('OTP verified');
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function stepUpChallengeOTP() {
+  try {
+    const response = await weavr.post('/stepup/challenges/otp/SMS', {});
+    console.log('stepUpChallengeOTP status:', response.status);
+    console.log('stepUpChallengeOTP response data:', response.data);
+  } catch (error) {
+    console.error(error);
   }
 }
 

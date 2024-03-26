@@ -16,16 +16,16 @@ export default async function Page({
   params: { trip_id: string };
 }) {
   const session = await auth();
-  const user = await loginUser(session);
+  // const user = await loginUser();
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
 
   if (!trip) {
     notFound();
   }
-  if (user) {
-    user.cardDetails = await getCardDetails(tripId);
-  }
+  // if (user) {
+  //   user.cardDetails = await getCardDetails(tripId);
+  // }
 
   return (
     <>
@@ -62,7 +62,7 @@ export default async function Page({
         </CardBody>
       </Card>
 
-      {user && user.cardDetails ? (
+      {/* {user && user.cardDetails ? (
         !user.cardDetails.state.destroyedReason ? (
           <ShowCard user={user} tripId={tripId} />
         ) : (
@@ -72,7 +72,9 @@ export default async function Page({
         <NoCard token={user.token} tripId={tripId} />
       ) : (
         <KYC />
-      )}
+      )} */}
+
+      <KYC />
     </>
   );
 }
