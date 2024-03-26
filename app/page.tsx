@@ -1,10 +1,7 @@
-import Link from 'next/link';
-import { Button } from '@nextui-org/react';
-import IdeaDestinationCard from '@/app/ui/idea-dest-card';
 import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
 import { redirect } from 'next/navigation';
-import { airbnbLocations } from '@/lib/airbnb-data';
+import GeneratedDestCards from '@/app/ui/generated-dest-cards';
 
 export default async function Page() {
   let session = await auth();
@@ -22,23 +19,6 @@ export default async function Page() {
       },
     });
     redirect(`/${newTrip.id}`);
-  }
-
-  function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * arrayLength);
-    } while (usedIndexes.includes(randomIndex));
-    return randomIndex;
-  }
-
-  const usedIndexes = [];
-  const filteredLocations = [];
-
-  for (let i = 0; i < 3; i++) {
-    const randomIndex = getRandomIndex(usedIndexes, airbnbLocations.length);
-    filteredLocations.push(airbnbLocations[randomIndex]);
-    usedIndexes.push(randomIndex);
   }
 
   return (
@@ -60,17 +40,7 @@ export default async function Page() {
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        {filteredLocations.map((location, index) => (
-          <IdeaDestinationCard
-            key={index}
-            city={
-              location.cities[
-                Math.floor(Math.random() * location.cities.length)
-              ].label
-            }
-            country={location.label}
-          />
-        ))}
+        <GeneratedDestCards />
       </div>
       <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12">
         <p>A MOBCODERS Creation.</p>
