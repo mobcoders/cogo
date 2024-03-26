@@ -1,12 +1,28 @@
-import { Card, CardBody } from '@nextui-org/react';
+import { Button, Card, CardBody } from '@nextui-org/react';
 
 import Image from 'next/image';
-import ShowCard from '@/app/pay/card-details/show-card';
+import ShowCard from '@/app/(trip)/[trip_id]/card-details/show-card';
 import { getCardDetails, loginUser } from '@/lib/weavr';
+import { Butterfly_Kids } from 'next/font/google';
+import NoCard from '@/app/(trip)/[trip_id]/card-details/no-card';
+import { fetchTrip } from '@/lib/data';
+import { notFound } from 'next/navigation';
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: { trip_id: string };
+}) {
   const user = await loginUser();
-  user.cardDetails = await getCardDetails(user.token);
+  const tripId = params.trip_id;
+  const trip = await fetchTrip(tripId);
+
+  if (!trip) {
+    notFound();
+  }
+  if (user) {
+    user.cardDetails = await getCardDetails(user.token, tripId);
+  }
 
   return (
     <>
@@ -43,7 +59,11 @@ export default async function Page() {
         </CardBody>
       </Card>
 
-      <ShowCard user={user} />
+      {user && user.cardDetails ? (
+        <ShowCard user={user} />
+      ) : (
+        <NoCard token={user.token} tripId={tripId} />
+      )}
     </>
   );
 }
