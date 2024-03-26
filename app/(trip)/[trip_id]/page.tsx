@@ -25,9 +25,6 @@ export default async function Page({
   const chosenDestination: PotentialDestination | null =
     trip!.chosenDestination;
 
-  const chosenDestination: PotentialDestination | null =
-    trip!.chosenDestination;
-
   let session = await auth();
   let email = session?.user?.email;
   let user = await getUser(email!);
