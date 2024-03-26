@@ -8,8 +8,7 @@ export default function IdeasModal() {
         <>
           <ModalBody className="flex flex-col gap-5 pb-10">
             <ModalHeader>Need some inspiration?</ModalHeader>
-            {/* Not working - look into... */}
-            {/* <GeneratedDestCards /> */}
+            <GeneratedDestCards />
           </ModalBody>
         </>
       )}

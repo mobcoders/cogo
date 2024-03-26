@@ -23,11 +23,10 @@ export default async function PotentialDestinations({
 
   return (
     <>
-      <p className="mb-5">
+      <p className="mb-5 md:max-w-[640px] md:m-auto">
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>
-      {/* <AddDestination tripId={tripId} /> */}
 
       <div className="flex flex-col gap-5">
         <AddDestination callPexelsSearch={callPexelsSearch} tripId={tripId} />
