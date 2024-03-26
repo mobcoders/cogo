@@ -1,4 +1,5 @@
 'use client';
+import { WeavrUserCreationFlow, weavrKYCFlow } from '@/lib/weavr';
 import { Button, Spinner } from '@nextui-org/react';
 import { useState } from 'react';
 
@@ -7,16 +8,26 @@ export default function KYC() {
 
   function handleCreate() {
     setLoading(true);
-    //createUser();
+    WeavrUserCreationFlow();
+  }
+
+  function handleKYC() {
+    setLoading(true);
+    weavrKYCFlow();
   }
   return (
     <div className="max-w-[400px]">
       {loading ? (
         <Spinner className="w-full" />
       ) : (
-        <Button onClick={handleCreate} className="w-full">
-          Simulate KYC
-        </Button>
+        <>
+          <Button onClick={handleCreate} className="w-full">
+            Create consumer, assign password, login
+          </Button>
+          <Button onClick={handleKYC} className="w-full">
+            Simulate KYC
+          </Button>
+        </>
       )}
     </div>
   );

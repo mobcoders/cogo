@@ -8,13 +8,15 @@ import NoCard from '@/app/(trip)/[trip_id]/card-details/no-card';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import KYC from '@/app/(trip)/[trip_id]/card-details/kyc';
+import { auth } from '@/auth';
 
 export default async function Page({
   params,
 }: {
   params: { trip_id: string };
 }) {
-  const user = await loginUser();
+  const session = await auth();
+  const user = await loginUser(session);
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
 
@@ -22,7 +24,7 @@ export default async function Page({
     notFound();
   }
   if (user) {
-    user.cardDetails = await getCardDetails(user.token, tripId);
+    user.cardDetails = await getCardDetails(tripId);
   }
 
   return (
