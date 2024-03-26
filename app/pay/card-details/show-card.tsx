@@ -6,20 +6,10 @@ import { Button, Card, CardBody, CardHeader, Divider } from '@nextui-org/react';
 import Script from 'next/script';
 import { FaRegSnowflake } from 'react-icons/fa';
 
-interface window {
-  OpcUxSecureClient?: {
-    init: (apiKey: string) => void;
-    associate: (
-      token: string,
-      successCallback: () => void,
-      errorCallback: (error: any) => void
-    ) => void;
-    span: (
-      component: string,
-      value: string
-    ) => { mount: (element: HTMLElement | null) => void };
-    // Add more methods if needed
-  };
+declare global {
+  interface Window {
+    OpcUxSecureClient: any; // Replace 'any' with the appropriate type if available
+  }
 }
 
 export default function ShowCard({ user }: { user: any }) {
@@ -57,7 +47,7 @@ export default function ShowCard({ user }: { user: any }) {
       },
 
       // Handle errors
-      function (e) {
+      function (e: any) {
         console.error('associate failed ' + e);
       }
     );
