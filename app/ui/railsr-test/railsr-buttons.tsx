@@ -1,6 +1,7 @@
 'use client';
 import {
   createBeneficiary,
+  createCard,
   createEndUser,
   createLedger,
   listAllEndusers,
@@ -40,6 +41,13 @@ export default function RailsrButtons() {
         }}
       >
         Create Ledger
+      </Button>
+      <Button
+        onClick={async () => {
+          await createCard();
+        }}
+      >
+        Create Card
       </Button>
     </>
   );

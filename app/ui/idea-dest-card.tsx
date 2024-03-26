@@ -26,6 +26,7 @@ export default function IdeaDestinationCard() {
                 'https://www.portugal.net/en/wp-content/uploads/sites/107/algar-de-benagil.jpg'
               }
               width="100%"
+              fetchPriority="high"
             />
           </div>
 

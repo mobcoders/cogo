@@ -126,16 +126,32 @@ export async function listAllEndusers() {
 // => For some reason partner_product "PayrNet-GBP-2" is invalid. However, "PayrNet-GBP-2" works just fine.
 
 // I'm having issues logging error data. Better to get the input data sorted in Postman and then slot in here. Below works as intended now.
+// => We need at least one of the Railsbank-Debit-* partner products enabled for Railsr card functionality. Now scrapping PayrNet.
 export async function createLedger() {
   const response = await railsrApi.post('/v1/customer/ledgers', {
     ledger_primary_use_types: ['ledger-primary-use-types-payments'],
     ledger_who_owns_assets: 'ledger-assets-owned-by-me',
     holder_id: '660087f5-1365-4cc9-986e-d002cbc6f65a',
     ledger_t_and_cs_country_of_jurisdiction: 'GBR',
-    partner_product: 'PayrNet-GBP-2',
+    partner_product: 'Railsbank-Debit-Card-3',
     asset_type: 'gbp',
     asset_class: 'currency',
     ledger_type: 'ledger-type-single-user',
+  });
+
+  console.log(await response.data);
+  return await response.data;
+}
+
+// Working as intended.
+// Ledger id: '660087f5-1365-4cc9-986e-d002cbc6f65a'
+//
+export async function createCard() {
+  const response = await railsrApi.post('/v1/customer/cards', {
+    ledger_id: '660087f5-1365-4cc9-986e-d002cbc6f65a',
+    card_programme: 'short',
+    card_delivery_name: 'Theo Railsr-Test',
+    card_type: 'virtual',
   });
 
   console.log(await response.data);
