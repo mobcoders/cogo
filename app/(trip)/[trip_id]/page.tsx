@@ -18,12 +18,11 @@ export default async function Page({
 }) {
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
-  const chosenDestination: PotentialDestination | null =
-    trip!.chosenDestination;
-
   if (!trip) {
     notFound();
   }
+  const chosenDestination: PotentialDestination | null =
+    trip!.chosenDestination;
 
   let session = await auth();
   let email = session?.user?.email;

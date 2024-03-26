@@ -8,6 +8,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export async function deleteUser(email: string) {
   await prisma.user.delete({
@@ -454,4 +455,16 @@ export async function deleteGroupTrip(tripId: string) {
     return 'Something went wrong, please try again';
   }
   revalidatePath(`/profile`);
+}
+
+export async function createTrip(tripName: string, id: string) {
+  'use server';
+  let newTrip = await prisma.trip.create({
+    data: {
+      name: tripName,
+      organiserId: id,
+      votingStage: 'dest',
+    },
+  });
+  redirect(`/${newTrip.id}`);
 }
