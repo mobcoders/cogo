@@ -15,7 +15,7 @@ export default function ProfileDestinationCard({
       <Link href={`/${trip.id}`} className="w-full">
         <Card className="drop-shadow-cogo mb-5" shadow="none">
           <CardBody>
-            <div>
+            <div className="pr-5">
               <h2>{trip.name}</h2>
               <h3 className="text-light-grey">
                 {chosenDestination && (
