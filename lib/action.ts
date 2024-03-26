@@ -269,7 +269,6 @@ export async function lockInDestination(tripId: string, destinationId: string) {
     if (!trip) {
       throw new Error('Trip not found');
     }
-
     await prisma.trip.update({
       where: { id: tripId },
       data: {
@@ -281,8 +280,7 @@ export async function lockInDestination(tripId: string, destinationId: string) {
     console.error(error);
     return 'Something went wrong, please try again';
   }
-
-  revalidatePath(`/${tripId}`);
+  redirect(`/${tripId}/accommodation`);
 }
 
 export async function lockInAccommodation(tripId: string, id: string) {
@@ -307,7 +305,7 @@ export async function lockInAccommodation(tripId: string, id: string) {
     return 'Something went wrong, please try again';
   }
 
-  revalidatePath(`/${tripId}`);
+  redirect(`/${tripId}/trip-summary`);
 }
 
 export async function navigateVotingStage(tripId: string, selectStage: string) {
@@ -458,7 +456,6 @@ export async function deleteGroupTrip(tripId: string) {
 }
 
 export async function createTrip(tripName: string, id: string) {
-  'use server';
   let newTrip = await prisma.trip.create({
     data: {
       name: tripName,
@@ -466,5 +463,5 @@ export async function createTrip(tripName: string, id: string) {
       votingStage: 'dest',
     },
   });
-  redirect(`/${newTrip.id}`);
+  redirect(`/${newTrip.id}/destinations`);
 }
