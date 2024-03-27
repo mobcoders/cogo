@@ -82,13 +82,19 @@ export default function ShowCard({
       ></Script>
 
       <div className="flex gap-5 max-w-[400px] justify-between">
-        <Button onClick={handleClick} className="w-full h-[70px] bg-pink-500">
+        <Button
+          onClick={handleClick}
+          className="w-full h-[70px] bg-primary-500"
+        >
           <div className="flex flex-col items-center">
             <LockClosedIcon height={17} className="fill-white" />
             <p className="text-white">Reveal details</p>
           </div>
         </Button>
-        <Button onClick={handleDelete} className="w-full h-[70px] bg-pink-500">
+        <Button
+          onClick={handleDelete}
+          className="w-full h-[70px] bg-primary-500"
+        >
           {loading ? (
             <Spinner />
           ) : (

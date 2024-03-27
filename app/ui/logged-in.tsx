@@ -1,4 +1,5 @@
 'use client';
+
 import { Avatar, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -8,6 +9,7 @@ import { logOut } from '@/lib/action';
 function SignOut() {
   return (
     <Button
+      className="bg-primary-500 text-white"
       onClick={async () => {
         await logOut();
       }}
@@ -37,7 +39,9 @@ export default function LoggedIn() {
   } else if (!path.includes('/auth')) {
     return (
       <Link href="/profile">
-        <Button data-cy="login-button">Sign in</Button>
+        <Button className="bg-primary-500 text-white" data-cy="login-button">
+          Sign in
+        </Button>
       </Link>
     );
   } else {

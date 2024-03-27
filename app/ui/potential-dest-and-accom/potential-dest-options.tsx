@@ -56,7 +56,7 @@ export default function PotentialDestOptions({
         >
           <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
             <Button
-              className="bg-pink-500 text-white w-24"
+              className="bg-primary-500 text-white w-24"
               startContent={
                 <LockClosedIcon height={15} className="fill-white" />
               }
@@ -67,7 +67,7 @@ export default function PotentialDestOptions({
           <DropdownItem key="edit" textValue="Edit" className="w-fit">
             <Button
               onPress={handleDelete}
-              className="bg-pink-500 text-white w-24"
+              className="bg-primary-500 text-white w-24"
               startContent={<TrashIcon height={15} className="fill-white" />}
             >
               Delete

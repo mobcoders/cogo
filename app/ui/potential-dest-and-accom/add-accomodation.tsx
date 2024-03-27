@@ -31,7 +31,7 @@ export default function AddAccomodation({ tripId }: { tripId: string }) {
           {errorMessage && (
             <p className="text-sm text-pink-500">{errorMessage}</p>
           )}
-          <Button type="submit" className="bg-pink-500 text-white mb-5">
+          <Button type="submit" className="bg-primary-500 text-white mb-5">
             Add
           </Button>
         </div>

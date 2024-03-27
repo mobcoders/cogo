@@ -16,7 +16,7 @@ export default function KYC({ tripId }: { tripId: string }) {
       {loading ? (
         <Spinner className="w-full" />
       ) : (
-        <Button onClick={handleCreate} className="w-full">
+        <Button onClick={handleCreate} className="w-full bg-primary-500">
           Please click to generate banking account and KYC
         </Button>
       )}

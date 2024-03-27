@@ -67,7 +67,7 @@ export default function AddDestination({
     <>
       <Button
         onPress={onOpen}
-        className="bg-pink-500 text-white md:w-72 md:mx-auto"
+        className="bg-primary-500 text-white md:w-72 md:mx-auto"
       >
         Add a Potential Destination
       </Button>
@@ -157,7 +157,7 @@ export default function AddDestination({
               <ModalFooter>
                 <Button
                   onPress={handleClick}
-                  className="bg-pink-500 text-white"
+                  className="bg-primary-500 text-white"
                 >
                   Add Destination
                 </Button>

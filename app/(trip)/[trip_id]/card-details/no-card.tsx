@@ -21,7 +21,7 @@ export default function NoCard({
       {loading ? (
         <Spinner className="w-full" />
       ) : (
-        <Button onClick={handleCreate} className="w-full">
+        <Button onClick={handleCreate} className="w-full bg-primary-500">
           Generate virtual card
         </Button>
       )}

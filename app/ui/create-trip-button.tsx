@@ -27,7 +27,7 @@ export default function CreateTripButton() {
   return (
     <Button
       onClick={handleClick}
-      className="w-full h-[50px] bg-pink-500 text-white"
+      className="w-full h-[50px] bg-primary-500 text-white"
     >
       {!loading ? <>Create a group trip</> : <Spinner color="default" />}
     </Button>

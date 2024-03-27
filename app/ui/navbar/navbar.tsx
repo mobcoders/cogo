@@ -20,7 +20,7 @@ export default function Navbar({ trip }: { trip: Trip }) {
   const params = useParams() as { trip_id: string };
 
   return (
-    <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-purple-600 drop-shadow-cogo sm:w-[640px] sm:left-1/2 sm:-translate-x-1/2">
+    <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-secondary-500 drop-shadow-cogo sm:w-[640px] sm:left-1/2 sm:-translate-x-1/2">
       <Button
         onPress={membersModal.onOpen}
         isIconOnly
