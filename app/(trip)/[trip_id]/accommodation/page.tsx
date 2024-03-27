@@ -15,7 +15,9 @@ export default async function Page({
 
   return (
     <Suspense fallback={<DestAccomSkeleton />}>
-      <h3 className="font-extrabold">Accommodation Options</h3>
+      <h3 className="font-extrabold md:max-w-[640px] md:m-auto md:w-full">
+        Accommodation Options
+      </h3>
       <PotentialAccomodation tripId={tripId} user={user!} />
     </Suspense>
   );

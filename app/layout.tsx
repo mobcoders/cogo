@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} antialiased min-h-screen px-10 pt-12 pb-32`}
+        className={`${manrope.className} antialiased min-h-screen px-10 py-12`}
       >
         <Providers>
           <div className="max-w-[1440px] m-auto">

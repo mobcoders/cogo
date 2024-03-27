@@ -18,7 +18,7 @@ export default async function PotentialAccomodation({
 
   return (
     <>
-      <p className="mb-5">
+      <p className="mb-5 md:max-w-[640px] md:m-auto">
         Add potential Airbnb options, vote for where you want to stay and when
         ready lock-in the final choice.
       </p>
@@ -31,7 +31,6 @@ export default async function PotentialAccomodation({
             user={user}
             tripId={tripId}
           />
-          // There is possibly an issue with each accom not taking an empty likedBy array.
         ))}
       </div>
     </>
