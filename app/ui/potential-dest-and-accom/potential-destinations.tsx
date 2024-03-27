@@ -23,7 +23,7 @@ export default async function PotentialDestinations({
 
   return (
     <>
-      <p className="mb-5 md:max-w-[640px] md:m-auto">
+      <p className="mb-5 md:w-[640px] md:m-auto">
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>

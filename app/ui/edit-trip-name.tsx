@@ -36,7 +36,7 @@ export default function EditTripName({
 
   return (
     <form action={handlePress}>
-      <div className="flex justify-between gap-5 md:max-w-[640px] md:m-auto">
+      <div className="flex justify-between gap-5 md:w-[640px] md:m-auto">
         {isEditing ? (
           <div className="w-full">
             <Input
@@ -73,7 +73,7 @@ export default function EditTripName({
         </div>
       </div>
 
-      <div className="md:max-w-[640px] md:m-auto">
+      <div className="md:w-[640px] md:m-auto">
         {isEditing ? (
           <Input
             name="tripDate"
