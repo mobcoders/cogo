@@ -1,12 +1,12 @@
-import { Button, Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody } from '@nextui-org/react';
 
 import Image from 'next/image';
 import ShowCard from '@/app/(trip)/[trip_id]/card-details/show-card';
-import { getCardDetails, loginUser } from '@/lib/weavr';
-import { Butterfly_Kids } from 'next/font/google';
 import NoCard from '@/app/(trip)/[trip_id]/card-details/no-card';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
+import KYC from '@/app/(trip)/[trip_id]/card-details/kyc';
+import { getCardDetails, loginUser } from '@/lib/weavr-user';
 
 export default async function Page({
   params,
@@ -14,6 +14,7 @@ export default async function Page({
   params: { trip_id: string };
 }) {
   const user = await loginUser();
+  console.log(user);
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
 
@@ -21,12 +22,13 @@ export default async function Page({
     notFound();
   }
   if (user) {
+    console.log('user exists, get card details now...');
     user.cardDetails = await getCardDetails(user.token, tripId);
   }
 
   return (
     <>
-      <h1>Trip Account</h1>
+      <h1>{trip.name}</h1>
       <Card className="h-[200px] max-w-[400px] my-5 bg-purple-700">
         <CardBody className="p-5">
           <div className="flex justify-between h-full">
@@ -60,9 +62,15 @@ export default async function Page({
       </Card>
 
       {user && user.cardDetails ? (
-        <ShowCard user={user} />
-      ) : (
+        !user.cardDetails.state.destroyedReason ? (
+          <ShowCard user={user} tripId={tripId} />
+        ) : (
+          <h1 className="text-center max-w-[400px]">Card Destroyed</h1>
+        )
+      ) : user ? (
         <NoCard token={user.token} tripId={tripId} />
+      ) : (
+        <KYC tripId={tripId} />
       )}
     </>
   );

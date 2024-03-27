@@ -1,9 +1,18 @@
 'use client';
 
+import { deleteCard } from '@/lib/weavr-user';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
-import { Button, Card, CardBody, CardHeader, Divider } from '@nextui-org/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Spinner,
+} from '@nextui-org/react';
 import Script from 'next/script';
+import { useState } from 'react';
 import { FaRegSnowflake } from 'react-icons/fa';
 
 declare global {
@@ -12,7 +21,14 @@ declare global {
   }
 }
 
-export default function ShowCard({ user }: { user: any }) {
+export default function ShowCard({
+  user,
+  tripId,
+}: {
+  user: any;
+  tripId: string;
+}) {
+  const [loading, setLoading] = useState(false);
   function initClient() {
     //UI KEY NOT API KEY
     window.OpcUxSecureClient.init('R3n2Q+qlVv0BjnbJwdsARA==');
@@ -53,6 +69,11 @@ export default function ShowCard({ user }: { user: any }) {
     );
   }
 
+  function handleDelete() {
+    setLoading(true);
+    deleteCard(user.token, tripId);
+  }
+
   return (
     <>
       <Script
@@ -67,11 +88,15 @@ export default function ShowCard({ user }: { user: any }) {
             <p className="text-white">Reveal details</p>
           </div>
         </Button>
-        <Button className="w-full h-[70px] bg-pink-500">
-          <div className="flex flex-col items-center">
-            <FaRegSnowflake size={17} className="fill-white" />
-            <p className="text-white">Freeze card</p>
-          </div>
+        <Button onClick={handleDelete} className="w-full h-[70px] bg-pink-500">
+          {loading ? (
+            <Spinner />
+          ) : (
+            <div className="flex flex-col items-center">
+              <FaRegSnowflake size={17} className="fill-white" />
+              <p className="text-white">Destroy card</p>
+            </div>
+          )}
         </Button>
       </div>
 
