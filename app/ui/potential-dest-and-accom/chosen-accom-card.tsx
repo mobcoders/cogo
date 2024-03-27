@@ -8,7 +8,7 @@ export default function ChosenAccomCard({
   accom: PotentialAccom | null;
 }) {
   return (
-    <Card className="drop-shadow-cogo h-fit md:w-[640px] md:m-auto">
+    <Card className="drop-shadow-cogo h-fit md:w-[640px] md:mx-auto">
       <CardBody>
         <a href={accom?.airBnbUrl} target="_blank" rel="noopener noreferrer">
           <div className="flex gap-3 h-full">

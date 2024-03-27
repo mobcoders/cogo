@@ -22,11 +22,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${manrope.className} antialiased min-h-screen px-10 py-12`}
-      >
+      <body className={`${manrope.className} antialiased px-10 py-12`}>
         <Providers>
-          <div className="max-w-[1440px] m-auto">
+          <div className="max-w-[1440px] mx-auto">
             <div className="flex flex-row justify-between">
               <CogoLogo />
               <LoggedIn />

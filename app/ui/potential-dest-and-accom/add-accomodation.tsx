@@ -25,9 +25,9 @@ export default function AddAccomodation({ tripId }: { tripId: string }) {
           placeholder="Paste an Airbnb URL..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="md:w-[640px] md:m-auto"
+          className="md:w-[640px] md:mx-auto"
         />
-        <div className="flex justify-end gap-3 md:w-[640px] md:m-auto">
+        <div className="flex justify-end gap-3 md:w-[640px] md:mx-auto">
           {errorMessage && (
             <p className="text-sm text-pink-500">{errorMessage}</p>
           )}

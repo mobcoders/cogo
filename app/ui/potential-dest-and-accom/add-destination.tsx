@@ -67,7 +67,7 @@ export default function AddDestination({
     <>
       <Button
         onPress={onOpen}
-        className="bg-pink-500 text-white md:w-72 md:m-auto"
+        className="bg-pink-500 text-white md:w-72 md:mx-auto"
       >
         Add a Potential Destination
       </Button>

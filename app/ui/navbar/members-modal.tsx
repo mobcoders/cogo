@@ -30,7 +30,7 @@ export default function MembersModal({
     <ModalContent>
       {(onClose) => (
         <>
-          <ModalBody className="flex flex-col gap-5 pb-10">
+          <ModalBody className="flex flex-col gap-3 pb-10">
             <ModalHeader>Trip Organiser</ModalHeader>
             <div className="flex justify-center items-center gap-5">
               <div className="flex flex-col items-center">
@@ -57,6 +57,9 @@ export default function MembersModal({
             </div>
             <ModalHeader>Trip Members</ModalHeader>
             <div className="flex flex-row flex-wrap justify-center gap-5">
+              {members.length === 0 && (
+                <p>This group trip has no other members yet...</p>
+              )}
               {members.map((member) => (
                 <div key={member.id} className="flex flex-col items-center">
                   <Avatar

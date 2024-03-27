@@ -17,7 +17,7 @@ export default async function Page() {
   let tripName = name.split(' ')[0] + "'s new group trip";
 
   return (
-    <div className="flex flex-col items-center max-w-[500px] m-auto">
+    <div className="flex flex-col items-center max-w-[500px] mx-auto">
       <Avatar
         showFallback
         src={user.image!}
