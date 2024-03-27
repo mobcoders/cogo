@@ -55,6 +55,11 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
+      <Link href={`/${trip.id}/card-details`}>
+        <Button isIconOnly className="bg-transparent">
+          <CreditCardIcon className="h-8 w-8 fill-white" />
+        </Button>
+      </Link>
 
       <Modal
         isOpen={membersModal.isOpen}
