@@ -105,7 +105,7 @@ export default function ShowCard({
         </Button>
       </div>
 
-      <div div className="pb-16">
+      <div className="pb-16">
         <Card className="max-w-[640px] mt-5 mb-32 md:m-auto md:w-full">
           <CardHeader className="pb-0">
             <div className="flex justify-between w-full font-bold">
