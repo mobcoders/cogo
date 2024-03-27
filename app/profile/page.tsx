@@ -20,7 +20,7 @@ export default async function Page() {
       />
       <ProfileSettings userId={user.id} userEmail={user.email!} />
 
-      <h1 className="text-purple-600 mb-5">{`${user.name}`}</h1>
+      <h1 className="text-secondary-500 mb-5">{`${user.name}`}</h1>
       <h1 className="w-full text-start mb-5">My trips:</h1>
       <CreateTripButton />
 

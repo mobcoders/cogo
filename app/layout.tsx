@@ -27,7 +27,7 @@ export default async function RootLayout({
           <div className="max-w-[1440px] mx-auto">
             <div className="flex flex-row justify-between items-start">
               <CogoLogo />
-              <div className="flex items-center">
+              <div className="flex justify-start items-center gap-3">
                 <ThemeSwitcher />
                 <LoggedIn />
               </div>
