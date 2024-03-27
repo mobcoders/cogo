@@ -5,13 +5,15 @@ import { useParams } from 'next/navigation';
 import {
   UserGroupIcon,
   LightBulbIcon,
-  Cog8ToothIcon as SettingsIcon,
+  ArrowsRightLeftIcon as SettingsIcon,
+  CreditCardIcon,
 } from '@heroicons/react/24/solid';
 import { Modal } from '@nextui-org/modal';
 import MembersModalBody from '@/app/ui/navbar/members-modal';
 import IdeasModal from '@/app/ui/navbar/ideas-modal';
 import SettingsModal from '@/app/ui/navbar/settings-modal';
 import { Trip } from '@prisma/client';
+import Link from 'next/link';
 
 export default function Navbar({ trip }: { trip: Trip }) {
   const membersModal = useDisclosure();
@@ -40,6 +42,11 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
+      <Link href={`/${trip.id}/card-details`}>
+        <Button isIconOnly className="bg-transparent">
+          <CreditCardIcon className="h-8 w-8 fill-white" />
+        </Button>
+      </Link>
 
       <Modal
         isOpen={membersModal.isOpen}
@@ -48,6 +55,7 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <MembersModalBody params={params} />
       </Modal>
+
       <Modal
         isOpen={ideasModal.isOpen}
         placement={'bottom-center'}
@@ -55,6 +63,7 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <IdeasModal />
       </Modal>
+
       <Modal
         isOpen={settingsModal.isOpen}
         placement={'bottom-center'}

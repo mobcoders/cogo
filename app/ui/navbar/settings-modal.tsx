@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { navigateVotingStage } from '@/lib/action';
 import {
   ModalBody,
   ModalContent,
@@ -7,8 +5,7 @@ import {
   Tab,
   Tabs,
 } from '@nextui-org/react';
-import { Trip } from '@prisma/client';
-import Link from 'next/link';
+
 import { usePathname } from 'next/navigation';
 
 export default function SettingsModal({
@@ -56,6 +53,11 @@ export default function SettingsModal({
                     href={`/${tripId}/trip-summary`}
                     key="trip-summary"
                     title="Itinerary"
+                  ></Tab>
+                  <Tab
+                    href={`/${tripId}/card-details`}
+                    key="card-details"
+                    title="CogoPay"
                   ></Tab>
                 </Tabs>
               </div>
