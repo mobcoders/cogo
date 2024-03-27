@@ -1,29 +1,25 @@
 'use client';
-import { WeavrUserCreationFlow, weavrKYCFlow } from '@/lib/weavr';
+import { WeavrUserCreationFlow } from '@/lib/weavr-create-user';
 import { Button, Spinner } from '@nextui-org/react';
 import { useState } from 'react';
 
-export default function KYC() {
-  // const [loading, setLoading] = useState(false);
+export default function KYC({ tripId }: { tripId: string }) {
+  const [loading, setLoading] = useState(false);
 
   function handleCreate() {
-    // setLoading(true);
-    WeavrUserCreationFlow();
-    // setLoading(false);
+    setLoading(true);
+    WeavrUserCreationFlow(tripId);
   }
 
-  function handleKYC() {
-    // setLoading(true);
-    weavrKYCFlow();
-  }
   return (
     <div className="max-w-[400px]">
-      <Button onClick={handleCreate} className="w-full">
-        Create consumer, assign password, login
-      </Button>
-      <Button onClick={handleKYC} className="w-full">
-        KYC flow
-      </Button>
+      {loading ? (
+        <Spinner className="w-full" />
+      ) : (
+        <Button onClick={handleCreate} className="w-full">
+          Please click to generate banking account and KYC
+        </Button>
+      )}
     </div>
   );
 }

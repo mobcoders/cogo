@@ -1,7 +1,6 @@
 'use client';
-import { createCard } from '@/lib/weavr';
+import { createCard } from '@/lib/weavr-user';
 import { Button, Spinner } from '@nextui-org/react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function NoCard({

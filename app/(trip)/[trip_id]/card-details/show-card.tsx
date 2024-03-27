@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteCard } from '@/lib/weavr';
+import { deleteCard } from '@/lib/weavr-user';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import {

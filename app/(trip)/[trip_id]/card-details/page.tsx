@@ -1,22 +1,19 @@
-import { Button, Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody } from '@nextui-org/react';
 
 import Image from 'next/image';
 import ShowCard from '@/app/(trip)/[trip_id]/card-details/show-card';
-import { getCardDetails, InitialLogin, loginUser } from '@/lib/weavr';
-import { Butterfly_Kids } from 'next/font/google';
 import NoCard from '@/app/(trip)/[trip_id]/card-details/no-card';
 import { fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import KYC from '@/app/(trip)/[trip_id]/card-details/kyc';
-import { auth } from '@/auth';
+import { getCardDetails, loginUser } from '@/lib/weavr-user';
 
 export default async function Page({
   params,
 }: {
   params: { trip_id: string };
 }) {
-  const session = await auth();
-  const user = await InitialLogin();
+  const user = await loginUser();
   console.log(user);
   const tripId = params.trip_id;
   const trip = await fetchTrip(tripId);
@@ -26,7 +23,7 @@ export default async function Page({
   }
   if (user) {
     console.log('user exists, get card details now...');
-    user.cardDetails = await getCardDetails(tripId);
+    user.cardDetails = await getCardDetails(user.token, tripId);
   }
 
   return (
@@ -73,7 +70,7 @@ export default async function Page({
       ) : user ? (
         <NoCard token={user.token} tripId={tripId} />
       ) : (
-        <KYC />
+        <KYC tripId={tripId} />
       )}
     </>
   );
