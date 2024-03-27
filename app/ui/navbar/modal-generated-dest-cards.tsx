@@ -3,7 +3,7 @@ import { pexelsSearch } from '@/lib/pexels';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
-export default function GeneratedDestCards() {
+export default function ModalGeneratedDestCards() {
   // Helper function to get random indexes but unique from an array
   function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
     let randomIndex;
@@ -36,7 +36,7 @@ export default function GeneratedDestCards() {
   // );
 
   return (
-    <div className="flex flex-col gap-5 md:flex-row">
+    <div className="flex flex-col gap-5">
       {randomCountries.map((location, index) => (
         <Card key={index} className="drop-shadow-cogo h-fit w-full">
           <CardBody>
