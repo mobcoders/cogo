@@ -1,6 +1,5 @@
-import { auth } from '@/auth';
 import CreateTripButton from '@/app/ui/create-trip-button';
-import GeneratedDestCards from '@/app/ui/generated-dest-cards';
+import HomeGeneratedDestCards from '@/app/ui/home-generated-dest-cards';
 
 export default async function Page() {
   return (
@@ -22,7 +21,7 @@ export default async function Page() {
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
-        <GeneratedDestCards />
+        <HomeGeneratedDestCards />
       </div>
       <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12 md:absolute md:bottom-12 md:left-0 md:right-0">
         <p>A MOBCODERS Creation.</p>

@@ -65,7 +65,7 @@ export default function ProfileSettings({
                   className="w-fit"
                 >
                   <Button
-                    className="bg-pink-500 text-white w-40"
+                    className="bg-primary-500 text-white w-40"
                     startContent={
                       <CameraIcon height={15} className="fill-white" />
                     }
@@ -76,7 +76,7 @@ export default function ProfileSettings({
                 </DropdownItem>
                 <DropdownItem key="delete" textValue="Delete" className="w-fit">
                   <Button
-                    className="bg-pink-500 text-white w-40"
+                    className="bg-primary-500 text-white w-40"
                     startContent={
                       <TrashIcon height={15} className="fill-white" />
                     }

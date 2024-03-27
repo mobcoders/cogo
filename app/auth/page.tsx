@@ -49,8 +49,8 @@ function CredentialLoginForm({
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button type="submit" fullWidth color="primary">
-          Login
+        <Button type="submit" fullWidth className="bg-primary-500">
+          Sign in
         </Button>
       </div>
     </form>
@@ -100,7 +100,7 @@ function CredentialRegisterForm({
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button type="submit" fullWidth color="primary">
+        <Button type="submit" fullWidth className="bg-primary-500">
           Sign up
         </Button>
       </div>
@@ -119,7 +119,7 @@ function GoogleForm({ children }: { children?: React.ReactNode }) {
           <p className="text-sm text-red-500">{errorMessage}</p>
         </div>
       )}
-      <Button type="submit" fullWidth color="primary">
+      <Button type="submit" fullWidth className="bg-primary-500">
         {children}
       </Button>
     </form>
