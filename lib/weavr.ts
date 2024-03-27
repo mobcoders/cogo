@@ -58,6 +58,22 @@ export async function weavrKYCFlow() {
   console.log('KYC approval simulation complete.');
 }
 
+export async function InitialLogin() {
+  try {
+    const response = await loginUser();
+    console.log('User logged in & bearer token intercepted');
+    if (response) {
+      await stepUpChallengeOTP();
+      console.log('StepUp message sent');
+      await verifyConsumerRootUserSMSFactor();
+      console.log('Consumer Root user SMS verified');
+      return response;
+    }
+  } catch (error) {
+    console.log('Login error:', error);
+  }
+}
+
 export async function createWeavrConsumer() {
   const session = await auth();
   // console.log(session!.user!.name!.split(' ')[0]);
@@ -217,10 +233,10 @@ export async function loginUser() {
       },
     });
     console.log('loginUser status', response.status);
-    await sleep(2000);
+    // await sleep(2000);
 
     weavr.interceptors.request.clear();
-    await sleep(2000);
+    // await sleep(2000);
 
     weavr.interceptors.request.use(
       function (config) {
