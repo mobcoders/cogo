@@ -6,7 +6,6 @@ import type { PotentialDestination, User } from '@prisma/client';
 import HeartButton from '@/app/ui/potential-dest-and-accom/heart-button';
 import { useState } from 'react';
 import PotentialDestOptions from '@/app/ui/potential-dest-and-accom/potential-dest-options';
-import { divider } from '@nextui-org/react';
 
 export interface SingleDest extends PotentialDestination {
   likedBy: Array<User>;
