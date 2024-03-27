@@ -14,33 +14,43 @@ export default function KYC({ tripId }: { tripId: string }) {
 
   return (
     <div className="max-w-[640px] md:m-auto md:w-full">
-      <strong>Welcome to CogoPay.</strong>
-      <br />
-      This feature allows you to create virtual cards for each trip you
-      organise, and allow for easy spend management when booking travel and
-      paying for things whilst on the trip. <br /> To get started, you must
-      upgrade your account to become compliant for banking. Then you will be
-      able to create cards easily for any trip.
-      <br />
-      <strong>
-        If you do not wish to use this feature, you can return to your trip
-        details.
-      </strong>
-      <Link href={`/${tripId}`}>
-        <Button className="w-full bg-primary-500 text-white my-5">
-          Go back to trip
-        </Button>
-      </Link>
-      {loading ? (
-        <Spinner className="w-full" />
-      ) : (
-        <Button
-          onClick={handleCreate}
-          className="w-full bg-primary-500 text-white"
-        >
-          Please click to generate banking account and KYC
-        </Button>
-      )}
+      <div className="mb-3">
+        <h2 className="text-pink-500 dark:text-[#ECEDEE]">
+          Welcome to CogoPay.
+        </h2>
+      </div>
+      <p className="mb-3">
+        Fed up of splitting payments with your friends? Us too.
+      </p>
+      <p className="mb-3">
+        Create a virtual card with CogoPay for your group trip which can be used
+        for all your group payments such as booking flights.
+      </p>
+      <p className="mb-3">
+        To get started, upgrade your account to become compliant for banking.
+        You can then easily create cards for any trip.
+      </p>
+      <p className="mb-5">
+        Click the button below to get started with compliance checks and
+        generate your CogoPay bank account…
+      </p>
+      <div className="w-full flex justify-between gap-5">
+        <Link href={`/${tripId}`} className="w-full">
+          <Button className="border-[1.5px] border-primary-500 bg-transparent w-full dark:text-white">
+            Go Back
+          </Button>
+        </Link>
+        {loading ? (
+          <Spinner className="w-full" />
+        ) : (
+          <Button
+            onClick={handleCreate}
+            className="bg-primary-500 text-white w-full"
+          >
+            Start Compliance Checks
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

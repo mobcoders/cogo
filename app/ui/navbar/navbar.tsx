@@ -27,26 +27,34 @@ export default function Navbar({ trip }: { trip: Trip }) {
         onPress={membersModal.onOpen}
         isIconOnly
         className="bg-transparent"
+        disableRipple
       >
         <UserGroupIcon className="h-8 w-8 fill-white" />
       </Button>
 
-      <Button onPress={ideasModal.onOpen} isIconOnly className="bg-transparent">
+      <Button
+        onPress={ideasModal.onOpen}
+        isIconOnly
+        className="bg-transparent"
+        disableRipple
+      >
         <LightBulbIcon className="h-8 w-8 fill-white" />
       </Button>
+
+      <Link href={`/${trip.id}/card-details`}>
+        <Button isIconOnly className="bg-transparent" disableRipple>
+          <CreditCardIcon className="h-8 w-8 fill-white" />
+        </Button>
+      </Link>
 
       <Button
         onPress={settingsModal.onOpen}
         isIconOnly
         className="bg-transparent"
+        disableRipple
       >
         <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
-      <Link href={`/${trip.id}/card-details`}>
-        <Button isIconOnly className="bg-transparent">
-          <CreditCardIcon className="h-8 w-8 fill-white" />
-        </Button>
-      </Link>
 
       <Modal
         isOpen={membersModal.isOpen}

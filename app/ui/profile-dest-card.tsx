@@ -20,7 +20,7 @@ export default function ProfileDestinationCard({
               <h3 className="text-light-grey">
                 {chosenDestination && (
                   <>
-                    <p className="text-black capitalize">
+                    <p className="text-black capitalize dark:text-[#B6B6B6]">
                       {chosenDestination.city}
                     </p>
                     <p className="capitalize">{chosenDestination.country}</p>

@@ -1,27 +1,10 @@
 'use client';
 
-import React, { startTransition, useOptimistic, useState } from 'react';
-import {
-  Autocomplete,
-  AutocompleteItem,
-  Button,
-  Chip,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from '@nextui-org/react';
-import { airbnbLocations } from '@/lib/airbnb-data';
-import { createPotentialDestination } from '@/lib/action';
-import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import React, { useOptimistic } from 'react';
 import PotentialDestinationCard, {
   SingleDest,
 } from '@/app/ui/potential-dest-and-accom/potential-dest-card';
 import { User } from '@prisma/client';
-import { pexelsSearch } from '@/lib/pexels';
 import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 
 export default function PotentialDestinations({
