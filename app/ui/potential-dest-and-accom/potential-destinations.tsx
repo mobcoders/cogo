@@ -41,7 +41,7 @@ export default function PotentialDestinations({
     { ...newDestination, id: 'optimistic-id', likedBy: [] },
   ]);
 
-  const sortedDestinations = destinations!.sort(
+  destinations!.sort(
     (tripA: any, tripB: any) => tripB.likedBy.length - tripA.likedBy.length
   );
 
