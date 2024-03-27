@@ -29,7 +29,6 @@
     "pexels": "^1.4.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.0.1",
     "react-toastify": "^10.0.5",
     "react-web-share": "^2.0.2"
   },

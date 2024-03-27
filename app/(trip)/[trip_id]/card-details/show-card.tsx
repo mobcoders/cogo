@@ -2,7 +2,7 @@
 
 import { deleteCard } from '@/lib/weavr-user';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { LockClosedIcon } from '@heroicons/react/24/solid';
+import { LockClosedIcon, TrashIcon } from '@heroicons/react/24/solid';
 import {
   Button,
   Card,
@@ -13,7 +13,6 @@ import {
 } from '@nextui-org/react';
 import Script from 'next/script';
 import { useState } from 'react';
-import { FaRegSnowflake } from 'react-icons/fa';
 
 declare global {
   interface Window {
@@ -81,7 +80,7 @@ export default function ShowCard({
         onLoad={initClient}
       ></Script>
 
-      <div className="flex gap-5 max-w-[640px] justify-between  md:m-auto md:w-full">
+      <div className="flex gap-5 max-w-[640px] justify-between md:m-auto md:w-full">
         <Button
           onClick={handleClick}
           className="w-full h-[70px] bg-primary-500"
@@ -99,59 +98,61 @@ export default function ShowCard({
             <Spinner />
           ) : (
             <div className="flex flex-col items-center">
-              <FaRegSnowflake size={17} className="fill-white" />
+              <TrashIcon height={17} className="fill-white" />
               <p className="text-white">Destroy card</p>
             </div>
           )}
         </Button>
       </div>
 
-      <Card className="max-w-[640px] my-5 md:m-auto md:w-full">
-        <CardHeader className="pb-0">
-          <div className="flex justify-between w-full font-bold">
-            <p>Card Details</p>
-          </div>
-        </CardHeader>
-        <CardBody className="pt-2">
-          <div className="flex w-full justify-between my-3">
-            <p>Name on card</p>
-            <p>{user.cardDetails.nameOnCard}</p>
-          </div>
-          <Divider />
-
-          <div className="flex justify-between w-full my-3">
-            <p>Card Number</p>
-            <div className="w-[137px] text-right">
-              <span id="cardNumber">
-                **** **** **** {user.cardDetails.cardNumberLastFour}
-              </span>
+      <div div className="pb-16">
+        <Card className="max-w-[640px] mt-5 mb-32 md:m-auto md:w-full">
+          <CardHeader className="pb-0">
+            <div className="flex justify-between w-full font-bold">
+              <p>Card Details</p>
             </div>
-          </div>
-          <Divider />
-
-          <div className="flex w-full justify-between my-3">
-            <p>Expiry</p>
-            <p>
-              {user.cardDetails.expiryMmyy.slice(0, 2)}/
-              {user.cardDetails.expiryMmyy.slice(2, 4)}
-            </p>
-          </div>
-          <Divider />
-
-          <div className="flex w-full justify-between my-3">
-            <p>CVV</p>
-            <div className="w-[25px] text-right">
-              <span id="cvv">***</span>
+          </CardHeader>
+          <CardBody className="pt-2">
+            <div className="flex w-full justify-between my-3">
+              <p>Name on card</p>
+              <p>{user.cardDetails.nameOnCard}</p>
             </div>
-          </div>
-          <Divider />
+            <Divider />
 
-          <div className="flex w-full justify-between my-3">
-            <p>Billing Address</p>
-            <ChevronRightIcon height={17} className="my-auto" />
-          </div>
-        </CardBody>
-      </Card>
+            <div className="flex justify-between w-full my-3">
+              <p>Card Number</p>
+              <div className="w-[137px] text-right">
+                <span id="cardNumber">
+                  **** **** **** {user.cardDetails.cardNumberLastFour}
+                </span>
+              </div>
+            </div>
+            <Divider />
+
+            <div className="flex w-full justify-between my-3">
+              <p>Expiry</p>
+              <p>
+                {user.cardDetails.expiryMmyy.slice(0, 2)}/
+                {user.cardDetails.expiryMmyy.slice(2, 4)}
+              </p>
+            </div>
+            <Divider />
+
+            <div className="flex w-full justify-between my-3">
+              <p>CVV</p>
+              <div className="w-[25px] text-right">
+                <span id="cvv">***</span>
+              </div>
+            </div>
+            <Divider />
+
+            <div className="flex w-full justify-between my-3">
+              <p>Billing Address</p>
+              <ChevronRightIcon height={17} className="my-auto" />
+            </div>
+          </CardBody>
+        </Card>
+      </div>
     </>
   );
 }
