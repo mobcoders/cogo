@@ -8,23 +8,18 @@ import {
   Tabs,
 } from '@nextui-org/react';
 import { Trip } from '@prisma/client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function SettingsModal({
   params,
-  trip,
 }: {
   params: { trip_id: string };
-  trip: Trip;
 }) {
-  const tripId = params.trip_id;
-  const [selected, setSelected] = useState(trip.votingStage);
+  const pathname = usePathname();
+  const current = pathname.split('/')[2];
 
-  useEffect(() => {
-    async function fetch() {
-      navigateVotingStage(tripId, selected);
-    }
-    fetch();
-  }, [selected, tripId]);
+  const tripId = params.trip_id;
 
   return (
     <ModalContent>
@@ -40,15 +35,28 @@ export default function SettingsModal({
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
-                  selectedKey={selected}
+                  selectedKey={current}
                   onSelectionChange={(key) => {
-                    setSelected(key as string);
                     onClose();
                   }}
                 >
-                  <Tab key="dest" title="Destination"></Tab>
-                  <Tab key="accom" title="Accommodation"></Tab>
-                  <Tab key="itinerary" title="Itinerary"></Tab>
+                  <Tab
+                    href={`/${tripId}/destinations`}
+                    key="destinations"
+                    title="Destination"
+                  ></Tab>
+
+                  <Tab
+                    href={`/${tripId}/accommodation`}
+                    key="accommodation"
+                    title="Accommodation"
+                  ></Tab>
+
+                  <Tab
+                    href={`/${tripId}/trip-summary`}
+                    key="trip-summary"
+                    title="Itinerary"
+                  ></Tab>
                 </Tabs>
               </div>
             </div>

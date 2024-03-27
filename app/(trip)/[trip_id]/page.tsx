@@ -27,7 +27,7 @@ export default async function Page({
   if (trip!.votingStage === 'dest') {
     redirect(`/${tripId}/destinations`);
   } else if (trip!.votingStage === 'accom') {
-    redirect(`/${tripId}/accomodation`);
+    redirect(`/${tripId}/accommodation`);
   } else {
     redirect(`/${tripId}/trip-summary`);
   }
