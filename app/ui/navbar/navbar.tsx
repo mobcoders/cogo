@@ -41,6 +41,12 @@ export default function Navbar({ trip }: { trip: Trip }) {
         <LightBulbIcon className="h-8 w-8 fill-white" />
       </Button>
 
+      <Link href={`/${trip.id}/card-details`}>
+        <Button isIconOnly className="bg-transparent" disableRipple>
+          <CreditCardIcon className="h-8 w-8 fill-white" />
+        </Button>
+      </Link>
+
       <Button
         onPress={settingsModal.onOpen}
         isIconOnly
@@ -49,11 +55,6 @@ export default function Navbar({ trip }: { trip: Trip }) {
       >
         <SettingsIcon className="h-8 w-8 fill-white" />
       </Button>
-      <Link href={`/${trip.id}/card-details`}>
-        <Button isIconOnly className="bg-transparent" disableRipple>
-          <CreditCardIcon className="h-8 w-8 fill-white" />
-        </Button>
-      </Link>
 
       <Modal
         isOpen={membersModal.isOpen}
