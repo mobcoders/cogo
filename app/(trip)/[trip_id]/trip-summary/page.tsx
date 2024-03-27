@@ -11,7 +11,7 @@ export default async function Page({
 
   return (
     <Suspense fallback={<TripSummarySkeleton />}>
-      <h3 className="font-extrabold">Trip Summary</h3>
+      <h3 className="font-extrabold md:w-[640px] md:m-auto">Trip Summary</h3>
       <TripSummary tripId={tripId}></TripSummary>
     </Suspense>
   );

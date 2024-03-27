@@ -17,15 +17,18 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
     <>
       {chosenAccom && (
         <>
-          <h3 className="text-pink-500">Airbnb:</h3>
+          <h3 className="text-pink-500 md:w-[640px] md:m-auto">Airbnb:</h3>
           <ChosenAccomCard accom={chosenAccom} />
         </>
       )}
 
-      <h3 className="text-pink-500">Members:</h3>
+      <h3 className="text-pink-500 md:w-[640px] md:m-auto">Members:</h3>
       <div className="flex flex-row flex-wrap justify-center gap-5">
         {members.map((member) => (
-          <Card className="drop-shadow-cogo h-fit w-full" key={member?.id}>
+          <Card
+            className="drop-shadow-cogo h-fit w-full md:w-[640px] md:m-auto"
+            key={member?.id}
+          >
             <CardBody>
               <div className="flex flex-col items-center">
                 <Avatar
@@ -40,13 +43,15 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
         ))}
       </div>
 
-      {chosenDest?.activities && (
+      {chosenDest && chosenDest.activities.length > 0 && (
         <>
-          <h3 className="text-pink-500 mb-1">Activities:</h3>
-          <Card className="drop-shadow-cogo h-fit w-full mb-5">
+          <h3 className="text-pink-500 mb-1 md:w-[640px] md:m-auto">
+            Activities:
+          </h3>
+          <Card className="drop-shadow-cogo h-fit w-full mb-5 md:w-[640px] md:m-auto">
             <CardBody>
               <ul className="text-base font-medium pl-3 marker:text-pink-500">
-                {chosenDest.activities.map((activity, index) => (
+                {chosenDest!.activities.map((activity, index) => (
                   <li key={index} className="list-disc">
                     {activity}
                   </li>
