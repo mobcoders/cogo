@@ -29,7 +29,7 @@ export default async function Page() {
         <h1 className="mb-3">Need some inspiration?</h1>
         <GeneratedDestCards />
       </div>
-      <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12">
+      <footer className="text-center text-xs mt-5 text-light-grey md:col-span-12 md:absolute md:bottom-12 md:left-0 md:right-0">
         <p>A MOBCODERS Creation.</p>
         <p>© 2024 cogo. All rights reserved.</p>
       </footer>
