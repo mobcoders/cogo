@@ -17,7 +17,6 @@ import {
 import { airbnbLocations } from '@/lib/airbnb-data';
 import { createPotentialDestination } from '@/lib/action';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
-
 import { pexelsSearch } from '@/lib/pexels';
 
 export default function AddDestination({
@@ -65,7 +64,7 @@ export default function AddDestination({
       startTransition(() => {
         addOptimisticDestination(newDestination);
       });
-      const photoUrl = await pexelsSearch(city);
+      const photoUrl = await pexelsSearch(`${country} ${city} travel`);
       await createPotentialDestination(
         tripId,
         city,
