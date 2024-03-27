@@ -52,8 +52,7 @@ export default function AddDestination({
     if (city !== '') {
       onClose();
       setActivities([]);
-      // const photoUrl = await callPexelsSearch(city);
-      const photoUrl = '';
+      const photoUrl = await callPexelsSearch(city);
       await createPotentialDestination(
         tripId,
         city,
@@ -66,7 +65,10 @@ export default function AddDestination({
 
   return (
     <>
-      <Button onPress={onOpen} className="bg-pink-500 text-white">
+      <Button
+        onPress={onOpen}
+        className="bg-pink-500 text-white md:w-72 md:m-auto"
+      >
         Add a Potential Destination
       </Button>
       <Modal

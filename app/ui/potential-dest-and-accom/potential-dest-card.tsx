@@ -27,7 +27,7 @@ export default function PotentialDestinationCard({
   }
 
   return (
-    <Card className="drop-shadow-cogo h-fit">
+    <Card className="drop-shadow-cogo h-fit md:w-[640px] md:m-auto">
       <CardBody>
         <div className="flex gap-3 h-full">
           <Image

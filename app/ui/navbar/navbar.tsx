@@ -8,17 +8,19 @@ import {
   Cog8ToothIcon as SettingsIcon,
 } from '@heroicons/react/24/solid';
 import { Modal } from '@nextui-org/modal';
-import MembersModalBody from '@/app/ui/navbar/members';
-import SettingsModal from '@/app/ui/navbar/settings';
+import MembersModalBody from '@/app/ui/navbar/members-modal';
+import IdeasModal from '@/app/ui/navbar/ideas-modal';
+import SettingsModal from '@/app/ui/navbar/settings-modal';
 import { Trip } from '@prisma/client';
 
 export default function Navbar({ trip }: { trip: Trip }) {
   const membersModal = useDisclosure();
+  const ideasModal = useDisclosure();
   const settingsModal = useDisclosure();
   const params = useParams() as { trip_id: string };
 
   return (
-    <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-purple-600 drop-shadow-cogo">
+    <div className="flex gap-10 justify-center items-center h-[70px] w-[calc(100%-80px)] rounded-full mb-5 fixed bottom-0 left-10 bg-purple-600 drop-shadow-cogo sm:w-[640px] sm:left-1/2 sm:-translate-x-1/2">
       <Button
         onPress={membersModal.onOpen}
         isIconOnly
@@ -27,7 +29,9 @@ export default function Navbar({ trip }: { trip: Trip }) {
         <UserGroupIcon className="h-8 w-8 fill-white" />
       </Button>
 
-      <LightBulbIcon className="h-8 w-8 fill-white" />
+      <Button onPress={ideasModal.onOpen} isIconOnly className="bg-transparent">
+        <LightBulbIcon className="h-8 w-8 fill-white" />
+      </Button>
 
       <Button
         onPress={settingsModal.onOpen}
@@ -43,6 +47,13 @@ export default function Navbar({ trip }: { trip: Trip }) {
         onClose={membersModal.onClose}
       >
         <MembersModalBody params={params} />
+      </Modal>
+      <Modal
+        isOpen={ideasModal.isOpen}
+        placement={'bottom-center'}
+        onClose={ideasModal.onClose}
+      >
+        <IdeasModal />
       </Modal>
       <Modal
         isOpen={settingsModal.isOpen}

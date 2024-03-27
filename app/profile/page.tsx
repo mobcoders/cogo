@@ -17,7 +17,7 @@ export default async function Page() {
   let tripName = name.split(' ')[0] + "'s new group trip";
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center max-w-[500px] m-auto">
       <Avatar
         showFallback
         src={user.image!}
@@ -27,7 +27,7 @@ export default async function Page() {
 
       <h1 className="text-purple-600 mb-5">{`${user.name}`}</h1>
       <h1 className="w-full text-start mb-5">My trips:</h1>
-      <CreateTripButton tripName={tripName} id={id} />
+      <CreateTripButton />
 
       <div className="w-full mt-5">
         {trips.map((trip) => (

@@ -17,15 +17,15 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
     <>
       {chosenAccom && (
         <>
-          <h3 className="text-pink-500 mb-1">Airbnb:</h3>
+          <h3 className="text-pink-500">Airbnb:</h3>
           <ChosenAccomCard accom={chosenAccom} />
         </>
       )}
 
-      <h3 className="text-pink-500 mb-5">Members:</h3>
+      <h3 className="text-pink-500">Members:</h3>
       <div className="flex flex-row flex-wrap justify-center gap-5">
         {members.map((member) => (
-          <Card className="drop-shadow-cogo h-fit w-full mb-5" key={member?.id}>
+          <Card className="drop-shadow-cogo h-fit w-full" key={member?.id}>
             <CardBody>
               <div className="flex flex-col items-center">
                 <Avatar

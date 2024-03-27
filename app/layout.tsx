@@ -23,16 +23,18 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} antialiased min-h-screen px-10 py-12`}
+        className={`${manrope.className} antialiased min-h-screen px-10 pt-12 pb-32`}
       >
         <Providers>
-          <div className="flex flex-row justify-between">
-            <CogoLogo />
-            <LoggedIn />
-          </div>
+          <div className="max-w-[1440px] m-auto">
+            <div className="flex flex-row justify-between">
+              <CogoLogo />
+              <LoggedIn />
+            </div>
 
-          {children}
-          <ToastContainer />
+            {children}
+            <ToastContainer />
+          </div>
         </Providers>
       </body>
     </html>

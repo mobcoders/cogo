@@ -39,7 +39,7 @@ const config: Config = {
         },
 
         'dark-grey': '#2C2D32',
-        'light-grey': '#878787',
+        'light-grey': '#B6B6B6',
         white: '#FFFFFF',
         black: '#1E1E1E',
       },
