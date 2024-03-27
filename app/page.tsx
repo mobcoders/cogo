@@ -3,11 +3,6 @@ import CreateTripButton from '@/app/ui/create-trip-button';
 import GeneratedDestCards from '@/app/ui/generated-dest-cards';
 
 export default async function Page() {
-  let session = await auth();
-  let name = session!.user!.name!;
-  let id = session?.user?.id!;
-  let tripName = name.split(' ')[0] + "'s new group trip";
-
   return (
     <div className="flex flex-col md:grid grid-cols-12 gap-5">
       <div className="md:col-start-1 col-span-6">
@@ -23,7 +18,7 @@ export default async function Page() {
           Create a group trip and invite your friends. Trip members can then
           propose and vote on potential destinations and accommodation.
         </p>
-        <CreateTripButton tripName={tripName} id={id} />
+        <CreateTripButton />
       </div>
       <div className="md:col-span-12">
         <h1 className="mb-3">Need some inspiration?</h1>
