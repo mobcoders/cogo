@@ -44,8 +44,9 @@ export async function WeavrUserCreationFlow() {
   console.log('User phone OTP enrolled');
   await verifyConsumerRootUserSMSFactor();
   console.log('Consumer Root user SMS verified');
-  await stepUpChallengeOTP();
-  console.log('StepUp complete\nPlease now start KYC flow...');
+  // await stepUpChallengeOTP();
+  // console.log('StepUp complete\nPlease now start KYC flow...');
+  console.log('Please now start KYC flow...');
 }
 
 export async function weavrKYCFlow() {
@@ -65,8 +66,10 @@ export async function InitialLogin() {
     if (response) {
       await stepUpChallengeOTP();
       console.log('StepUp message sent');
-      await verifyConsumerRootUserSMSFactor();
-      console.log('Consumer Root user SMS verified');
+      await stepUpChallengeVerifyOTP();
+      console.log('stepUp challenge verified');
+      // await verifyConsumerRootUserSMSFactor();
+      // console.log('Consumer Root user SMS verified');
       return response;
     }
   } catch (error) {
