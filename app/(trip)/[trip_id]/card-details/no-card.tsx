@@ -1,5 +1,5 @@
 'use client';
-import { createCard } from '@/lib/weavr';
+import { createCard, weavrCreateCardFlow } from '@/lib/weavr';
 import { Button, Spinner } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -15,7 +15,8 @@ export default function NoCard({
 
   function handleCreate() {
     setLoading(true);
-    createCard(token, tripId);
+    weavrCreateCardFlow(tripId);
+    // createCard(tripId);
   }
   return (
     <div className="max-w-[400px]">

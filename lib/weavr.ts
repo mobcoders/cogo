@@ -74,6 +74,16 @@ export async function InitialLogin() {
   }
 }
 
+export async function weavrCreateCardFlow(tripid: string) {
+  try {
+    await stepUpChallengeOTP();
+    await stepUpChallengeVerifyOTP();
+    await createCard(tripid);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function createWeavrConsumer() {
   const session = await auth();
   // console.log(session!.user!.name!.split(' ')[0]);
@@ -273,6 +283,18 @@ export async function stepUpChallengeOTP() {
   }
 }
 
+export async function stepUpChallengeVerifyOTP() {
+  try {
+    const response = await weavr.post('/stepup/challenges/otp/SMS/verify', {
+      verificationCode: '123456',
+    });
+    console.log('verifyOTPStepup status: ', response.status);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getCardDetails(tripid: string) {
   // const authBearerHeader = {
   //   headers: {
@@ -297,11 +319,6 @@ export async function getCardStatement() {}
 
 export async function createCard(tripid: string) {
   const session = await auth();
-  // const authBearerHeader = {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // };
   try {
     console.log('creating card...');
     const response = await weavr.post('/managed_cards', {
