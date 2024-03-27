@@ -15,22 +15,32 @@ export function ThemeSwitcher() {
 
   if (!mounted) return null;
 
+  function handleThemeChange() {
+    switch (theme) {
+      case 'light':
+        setTheme('dark');
+        break;
+      case 'dark':
+        setTheme('light');
+        break;
+    }
+  }
+
   return (
     <div>
       <Switch
         defaultSelected
         size="lg"
         color="default"
+        onValueChange={handleThemeChange}
         thumbIcon={({ isSelected, className }) =>
           isSelected ? (
             <>
-              {setTheme('light')}
-              <SunIcon height={20} className={className} />
+              <MoonIcon height={17} className={className} />
             </>
           ) : (
             <>
-              {setTheme('dark')}
-              <MoonIcon height={17} className={className} />
+              <SunIcon height={20} className={className} />
             </>
           )
         }
