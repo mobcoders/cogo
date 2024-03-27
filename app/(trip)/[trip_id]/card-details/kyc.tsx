@@ -12,7 +12,7 @@ export default function KYC({ tripId }: { tripId: string }) {
   }
 
   return (
-    <div className="max-w-[400px]">
+    <div className="max-w-[640px] md:m-auto md:w-full">
       {loading ? (
         <Spinner className="w-full" />
       ) : (
