@@ -465,3 +465,7 @@ export async function createTrip(tripName: string, id: string) {
   });
   redirect(`/${newTrip.id}/destinations`);
 }
+
+export async function navigateProfile() {
+  redirect('/profile');
+}
