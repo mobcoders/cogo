@@ -60,7 +60,7 @@ export default function Navbar({ trip }: { trip: Trip }) {
         placement={'bottom-center'}
         onClose={settingsModal.onClose}
       >
-        <SettingsModal params={params} trip={trip} />
+        <SettingsModal params={params} />
       </Modal>
     </div>
   );
