@@ -16,7 +16,9 @@ export function PotentialDestSkeleton() {
 
 export function PotentialAccomSkeleton() {
   return (
-    <div className={`${shimmer} flex flex-col gap-5 md:w-[640px] md:mx-auto`}>
+    <div
+      className={`${shimmer} relative overflow-hidden flex flex-col gap-5 md:w-[640px] md:mx-auto`}
+    >
       <div className="h-7 w-full bg-gray-200 rounded-lg dark:bg-primary-500"></div>
       <div className="h-14 w-full bg-gray-200 rounded-lg md:h-12 dark:bg-primary-500"></div>
       <div className="h-12 w-full bg-gray-200 rounded-lg dark:bg-primary-500"></div>
@@ -27,7 +29,9 @@ export function PotentialAccomSkeleton() {
 
 export function TripSummarySkeleton() {
   return (
-    <div className={`${shimmer} flex flex-col gap-5 md:w-[640px] md:mx-auto`}>
+    <div
+      className={`${shimmer} relative overflow-hidden flex flex-col gap-5 md:w-[640px] md:mx-auto`}
+    >
       <div className="h-7 w-full bg-gray-200 rounded-lg dark:bg-primary-500"></div>
       <div className="h-7 w-full bg-gray-200 rounded-lg dark:bg-primary-500"></div>
       <div className="h-24 w-full bg-gray-200 rounded-lg dark:bg-primary-500"></div>
