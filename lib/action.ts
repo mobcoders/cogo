@@ -458,7 +458,6 @@ export async function deleteGroupTrip(tripId: string) {
 }
 
 export async function createTrip(tripName: string, id: string) {
-  'use server';
   let newTrip = await prisma.trip.create({
     data: {
       name: tripName,

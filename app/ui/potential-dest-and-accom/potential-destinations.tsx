@@ -1,25 +1,58 @@
-import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potential-dest-card';
-import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
+'use client';
+import PotentialDestinationCard, {
+  SingleDest,
+} from '@/app/ui/potential-dest-and-accom/potential-dest-card';
+import AddDestination, {
+  OptimisticDest,
+} from '@/app/ui/potential-dest-and-accom/add-destination';
 import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 import { pexelsSearch } from '@/lib/pexels';
+import { useEffect, useOptimistic, useState } from 'react';
 
-export default async function PotentialDestinations({
+// export interface Destination {
+//   id?: string;
+//   country: string;
+//   city: string;
+//   activities: Array<string>;
+//   photoUrl?: string | null;
+//   likedBy?: Array<User>;
+//   tripId?: string;
+//   description?: string;
+// }
+
+export default function PotentialDestinations({
   tripId,
   user,
+  initialDestinations,
 }: {
   tripId: string;
   user: User;
+  initialDestinations: SingleDest[];
 }) {
-  const destinations = await fetchPotentialDests(tripId);
-  const sortedDestinations = destinations!.sort(
-    (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
+  const [destinations, setDestinations] =
+    useState<SingleDest[]>(initialDestinations);
+
+  const [optimisticDestinations, addOptimisticDestination] = useOptimistic<
+    SingleDest[],
+    SingleDest
+  >(destinations, (state, newDestination) => [
+    ...state,
+    { ...newDestination, id: 'optimistic-id', likedBy: [] },
+  ]);
+
+  let sortedDestinations = optimisticDestinations!.sort(
+    (tripA, tripB) => tripB.likedBy!.length - tripA.likedBy!.length
   );
 
-  async function callPexelsSearch(query: string) {
-    'use server';
-    return await pexelsSearch(query);
-  }
+  // useEffect(() => {
+  //   const updateDestinations = async () => {
+  //     const updatedDestinations = await fetchPotentialDests(tripId);
+  //     setDestinations(updatedDestinations || []);
+  //   };
+
+  //   updateDestinations();
+  // }, [tripId]);
 
   return (
     <>
@@ -27,14 +60,16 @@ export default async function PotentialDestinations({
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>
-      {/* <AddDestination tripId={tripId} /> */}
 
       <div className="flex flex-col gap-5">
-        <AddDestination callPexelsSearch={callPexelsSearch} tripId={tripId} />
+        <AddDestination
+          tripId={tripId}
+          addOptimisticDestination={addOptimisticDestination}
+        />
 
-        {sortedDestinations.map((destination) => (
+        {sortedDestinations.map((destination, index) => (
           <PotentialDestinationCard
-            key={destination.id}
+            key={index}
             destination={destination}
             user={user}
             tripId={tripId}

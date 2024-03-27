@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { startTransition, useOptimistic, useState } from 'react';
 import {
   Autocomplete,
   AutocompleteItem,
@@ -17,13 +17,17 @@ import {
 import { airbnbLocations } from '@/lib/airbnb-data';
 import { createPotentialDestination } from '@/lib/action';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import { SingleDest } from '@/app/ui/potential-dest-and-accom/potential-dest-card';
+import { pexelsSearch } from '@/lib/pexels';
+
+export interface OptimisticDest {}
 
 export default function AddDestination({
-  callPexelsSearch,
   tripId,
+  addOptimisticDestination,
 }: {
-  callPexelsSearch: (query: string) => Promise<string | null>;
   tripId: string;
+  addOptimisticDestination: (destination: SingleDest) => void;
 }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [country, setCountry] = useState('');
@@ -51,9 +55,21 @@ export default function AddDestination({
   async function handleClick() {
     if (city !== '') {
       onClose();
-      setActivities([]);
-      // const photoUrl = await callPexelsSearch(city);
-      const photoUrl = '';
+      // setActivities([]);
+      // const photoUrl =
+      // const photoUrl = '';
+      const photoUrl = await pexelsSearch(`${country} ${city} view`);
+      const newDestination = {
+        tripId,
+        country,
+        city,
+        activities,
+        photoUrl,
+      };
+      startTransition(() => {
+        addOptimisticDestination(newDestination);
+      });
+
       await createPotentialDestination(
         tripId,
         city,

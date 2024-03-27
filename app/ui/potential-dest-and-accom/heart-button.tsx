@@ -1,5 +1,6 @@
 import type { SingleAccom } from '@/app/ui/potential-dest-and-accom/potential-accom-card';
 import type { SingleDest } from '@/app/ui/potential-dest-and-accom/potential-dest-card';
+import { Destination } from '@/app/ui/potential-dest-and-accom/potential-destinations';
 import { toggleLike } from '@/lib/action';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { Badge, Button } from '@nextui-org/react';
@@ -12,7 +13,7 @@ export default function HeartButton({
   tripId,
   parentCard,
 }: {
-  votingTopic: SingleDest | SingleAccom;
+  votingTopic: SingleDest | SingleAccom | Destination;
   user: User;
   tripId: string;
   parentCard: string;
@@ -20,20 +21,20 @@ export default function HeartButton({
   const [isPending, startTransition] = useTransition();
   const [optimisticLikes, setOptimisticLikes] = useState(votingTopic.likedBy);
 
-  const isLiked: boolean = optimisticLikes.some(
+  const isLiked: boolean = optimisticLikes!.some(
     (obj) => obj.email === user.email
   );
 
   async function handleLike() {
     const updatedLikes = isLiked
-      ? optimisticLikes.filter((obj) => obj.email !== user.email)
-      : [...optimisticLikes, user];
+      ? optimisticLikes!.filter((obj) => obj.email !== user.email)
+      : [...optimisticLikes!, user];
 
     setOptimisticLikes(updatedLikes);
 
     startTransition(async () => {
       try {
-        await toggleLike(votingTopic.id, user.email!, parentCard, tripId);
+        await toggleLike(votingTopic.id!, user.email!, parentCard, tripId);
       } catch (error) {
         setOptimisticLikes(votingTopic.likedBy);
       }
@@ -42,7 +43,7 @@ export default function HeartButton({
 
   return (
     <div className="mr-2 translate-y-[10px]">
-      <Badge content={optimisticLikes.length} color="primary">
+      <Badge content={optimisticLikes!.length} color="primary">
         <Button
           isIconOnly
           radius="full"

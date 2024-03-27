@@ -1,6 +1,6 @@
 import Navbar from '@/app/ui/navbar/navbar';
 import EditTripName from '@/app/ui/edit-trip-name';
-import { fetchTrip } from '@/lib/data';
+import { fetchPotentialDests, fetchTrip } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PotentialDestinations from '@/app/ui/potential-dest-and-accom/potential-destinations';
 import { auth, getUser } from '@/auth';
@@ -29,6 +29,8 @@ export default async function Page({
   let email = session?.user?.email;
   let user = await getUser(email!);
 
+  const destinations = await fetchPotentialDests(tripId);
+
   return (
     <>
       <div className="flex flex-col">
@@ -44,7 +46,11 @@ export default async function Page({
                     <>
                       <h3 className="font-extrabold">Destination Options</h3>
 
-                      <PotentialDestinations tripId={tripId} user={user!} />
+                      <PotentialDestinations
+                        tripId={tripId}
+                        user={user!}
+                        initialDestinations={destinations || []}
+                      />
                     </>
                   );
                 case 'accom':
