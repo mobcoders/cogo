@@ -3,8 +3,6 @@ import { fetchUser } from '@/lib/data';
 import { Avatar } from '@nextui-org/avatar';
 // import EditUserPhoto from '@/app/ui/edit-user-photo';
 import ProfileDestinationCard from '@/app/ui/profile-dest-card';
-import Link from 'next/link';
-import { Button } from '@nextui-org/button';
 import ProfileSettings from '@/app/ui/profile-settings';
 import CreateTripButton from '@/app/ui/create-trip-button';
 
@@ -12,9 +10,6 @@ export default async function Page() {
   const session = await auth();
   const user = await fetchUser(session!.user!.email!);
   const trips = [...user.memberOfTrips, ...user.organisedTrips];
-  let name = session!.user!.name!;
-  let id = session?.user?.id!;
-  let tripName = name.split(' ')[0] + "'s new group trip";
 
   return (
     <div className="flex flex-col items-center max-w-[500px] mx-auto">

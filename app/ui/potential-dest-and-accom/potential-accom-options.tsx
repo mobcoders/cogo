@@ -53,7 +53,7 @@ export default async function PotentialAccomOptions({
       >
         <DropdownItem key="lock-in" textValue="Lock In" className="w-fit">
           <Button
-            className="bg-pink-500 text-white w-24"
+            className="bg-primary-500 text-white w-24"
             startContent={<LockClosedIcon height={15} className="fill-white" />}
           >
             Lock In
@@ -61,7 +61,7 @@ export default async function PotentialAccomOptions({
         </DropdownItem>
         <DropdownItem key="delete" textValue="Delete" className="w-fit">
           <Button
-            className="bg-pink-500 text-white w-24"
+            className="bg-primary-500 text-white w-24"
             startContent={<TrashIcon height={15} className="fill-white" />}
           >
             Delete

@@ -43,7 +43,7 @@ export default function ProfileDestOptions({ tripId }: { tripId: string }) {
         >
           <DropdownItem key="delete" textValue="Delete" className="w-fit">
             <Button
-              className="bg-pink-500 text-white w-24"
+              className="bg-primary-500 text-white w-24"
               startContent={<TrashIcon height={15} className="fill-white" />}
             >
               Delete

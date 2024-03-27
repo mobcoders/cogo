@@ -28,7 +28,7 @@ export default async function Page({
 
   return (
     <>
-      <Card className="h-[200px] max-w-[340px] min-w-[300px] bg-purple-700 mx-auto md:my-10 md:w-full">
+      <Card className="h-[200px] max-w-[340px] min-w-[300px] bg-secondary-500 mx-auto md:my-10 md:w-full">
         <CardBody className="p-5">
           <div className="flex justify-between h-full">
             <div className="flex flex-row items-center h-full ml-5">

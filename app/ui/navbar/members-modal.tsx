@@ -50,7 +50,7 @@ export default function MembersModal({
                 sites={['whatsapp', 'facebook', 'mail', 'copy']}
                 onClick={() => console.log('shared successfully!')}
               >
-                <Button className="bg-pink-500 text-white">
+                <Button className="bg-primary-500 text-white">
                   Invite Members
                 </Button>
               </RWebShare>

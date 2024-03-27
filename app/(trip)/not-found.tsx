@@ -14,7 +14,7 @@ export default function NotFound() {
       <h2 className="text-xl font-semibold">404 Not Found</h2>
       <p>Could not find the trip</p>
 
-      <Button>
+      <Button className="bg-primary-500">
         <Link href="/">Go home</Link>
       </Button>
     </main>

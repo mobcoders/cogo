@@ -1,5 +1,5 @@
 import { ModalBody, ModalContent, ModalHeader } from '@nextui-org/react';
-import GeneratedDestCards from '@/app/ui/generated-dest-cards';
+import ModalGeneratedDestCards from '@/app/ui/navbar/modal-generated-dest-cards';
 
 export default function IdeasModal() {
   return (
@@ -8,7 +8,7 @@ export default function IdeasModal() {
         <>
           <ModalBody className="flex flex-col gap-5 pb-10">
             <ModalHeader>Need some inspiration?</ModalHeader>
-            <GeneratedDestCards />
+            <ModalGeneratedDestCards />
           </ModalBody>
         </>
       )}
