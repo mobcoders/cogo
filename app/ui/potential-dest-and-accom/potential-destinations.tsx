@@ -1,25 +1,49 @@
-import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potential-dest-card';
-import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
-import { fetchPotentialDests } from '@/lib/data';
+'use client';
+
+import React, { startTransition, useOptimistic, useState } from 'react';
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  Chip,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
+import { airbnbLocations } from '@/lib/airbnb-data';
+import { createPotentialDestination } from '@/lib/action';
+import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import PotentialDestinationCard, {
+  SingleDest,
+} from '@/app/ui/potential-dest-and-accom/potential-dest-card';
 import { User } from '@prisma/client';
 import { pexelsSearch } from '@/lib/pexels';
+import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
 
-export default async function PotentialDestinations({
+export default function PotentialDestinations({
   tripId,
   user,
+  destinations,
 }: {
   tripId: string;
   user: User;
+  destinations: any;
 }) {
-  const destinations = await fetchPotentialDests(tripId);
-  const sortedDestinations = destinations!.sort(
-    (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
-  );
+  const [optimisticDestinations, addOptimisticDestination] = useOptimistic<
+    SingleDest[],
+    SingleDest
+  >(destinations, (state, newDestination) => [
+    ...state,
+    { ...newDestination, id: 'optimistic-id', likedBy: [] },
+  ]);
 
-  async function callPexelsSearch(query: string) {
-    'use server';
-    return await pexelsSearch(query);
-  }
+  destinations!.sort(
+    (tripA: any, tripB: any) => tripB.likedBy.length - tripA.likedBy.length
+  );
 
   return (
     <div className="pb-16">
@@ -29,9 +53,11 @@ export default async function PotentialDestinations({
       </p>
 
       <div className="flex flex-col gap-5">
-        <AddDestination callPexelsSearch={callPexelsSearch} tripId={tripId} />
-
-        {sortedDestinations.map((destination) => (
+        <AddDestination
+          tripId={tripId}
+          addOptimisticDestination={addOptimisticDestination}
+        />
+        {optimisticDestinations.map((destination: any) => (
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
