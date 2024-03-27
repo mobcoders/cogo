@@ -66,13 +66,14 @@ const config: Config = {
         },
         dark: {
           colors: {
-            background: '#000000',
+            background: '#121212',
             foreground: '#ECEDEE',
             primary: {
-              500: '#18181B',
+              500: '#3f3f46',
             },
             secondary: {
-              500: '#18181B',
+              500: '#3f3f46',
+              // 500: '#27272a',
             },
           },
           // ... rest of the colors
