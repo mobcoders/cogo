@@ -1,30 +1,32 @@
 'use client';
 import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potential-dest-card';
 import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
+import { fetchPotentialDests } from '@/lib/data';
 import { User } from '@prisma/client';
 import { pexelsSearch } from '@/lib/pexels';
-import type { PotentialDestination } from '@prisma/client';
 import { useOptimistic } from 'react';
 
-// import { useOptimistic } from 'react';
-
-export default function PotentialDestinations({
+export default async function PotentialDestinations({
   tripId,
   user,
-  destinations,
 }: {
   tripId: string;
   user: User;
-  destinations: PotentialDestination[];
 }) {
-  const [optimisticDestinations, addOptimisticDestination] = useOptimistic<
-    PotentialDestination[],
-    PotentialDestination
-  >(destinations, (state, newDestination) => [...state, newDestination]);
+  const destinations = await fetchPotentialDests(tripId);
+  const [optimisticDestinations, addOptimisticDestination] = useOptimistic(
+    destinations,
+    (state, newDestination) => [...state, newDestination]
+  );
 
-  const sortedDestinations = destinations!.sort(
+  const sortedDestinations = optimisticDestinations!.sort(
     (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
   );
+
+  async function callPexelsSearch(query: string) {
+    'use server';
+    return await pexelsSearch(query);
+  }
 
   return (
     <div className="pb-16">
@@ -34,10 +36,7 @@ export default function PotentialDestinations({
       </p>
 
       <div className="flex flex-col gap-5">
-        <AddDestination
-          tripId={tripId}
-          addOptimisticDestination={addOptimisticDestination}
-        />
+        <AddDestination callPexelsSearch={callPexelsSearch} tripId={tripId} />
 
         {sortedDestinations.map((destination) => (
           <PotentialDestinationCard
@@ -51,8 +50,3 @@ export default function PotentialDestinations({
     </div>
   );
 }
-
-//  async function callPexelsSearch(query: string) {
-//    'use server';
-//    return await pexelsSearch(query);
-//  }
