@@ -28,8 +28,7 @@ export default async function Page({
 
   return (
     <>
-      <h1>{trip.name}</h1>
-      <Card className="h-[200px] max-w-[400px] my-5 bg-purple-700">
+      <Card className="h-[200px] max-w-[340px] min-w-[300px] bg-purple-700 mx-auto md:my-10 md:w-full">
         <CardBody className="p-5">
           <div className="flex justify-between h-full">
             <div className="flex flex-row items-center h-full ml-5">
@@ -65,7 +64,7 @@ export default async function Page({
         !user.cardDetails.state.destroyedReason ? (
           <ShowCard user={user} tripId={tripId} />
         ) : (
-          <h1 className="text-center max-w-[400px]">Card Destroyed</h1>
+          <h1 className="text-center max-w-[640px]">Card Destroyed</h1>
         )
       ) : user ? (
         <NoCard token={user.token} tripId={tripId} />
