@@ -73,7 +73,6 @@ const config: Config = {
             },
             secondary: {
               500: '#3f3f46',
-              // 500: '#27272a',
             },
           },
           // ... rest of the colors
