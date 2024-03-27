@@ -1,7 +1,6 @@
 import { auth } from '@/auth';
 import { fetchUser } from '@/lib/data';
 import { Avatar } from '@nextui-org/avatar';
-// import EditUserPhoto from '@/app/ui/edit-user-photo';
 import ProfileDestinationCard from '@/app/ui/profile-dest-card';
 import ProfileSettings from '@/app/ui/profile-settings';
 import CreateTripButton from '@/app/ui/create-trip-button';
