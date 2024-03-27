@@ -81,7 +81,7 @@ export default function ShowCard({
         onLoad={initClient}
       ></Script>
 
-      <div className="flex gap-5 max-w-[400px] justify-between">
+      <div className="flex gap-5 max-w-[640px] justify-between  md:m-auto md:w-full">
         <Button
           onClick={handleClick}
           className="w-full h-[70px] bg-primary-500"
@@ -106,7 +106,7 @@ export default function ShowCard({
         </Button>
       </div>
 
-      <Card className="max-w-[400px] my-5">
+      <Card className="max-w-[640px] my-5 md:m-auto md:w-full">
         <CardHeader className="pb-0">
           <div className="flex justify-between w-full font-bold">
             <p>Card Details</p>
