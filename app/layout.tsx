@@ -6,7 +6,7 @@ import CogoLogo from './ui/cogo-logo';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoggedIn from '@/app/ui/logged-in';
-import Script from 'next/script';
+import { ThemeSwitcher } from '@/app/ui/theme-switcher';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -25,9 +25,12 @@ export default async function RootLayout({
       <body className={`${manrope.className} antialiased px-10 py-12`}>
         <Providers>
           <div className="max-w-[1440px] mx-auto">
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between items-start">
               <CogoLogo />
-              <LoggedIn />
+              <div className="flex items-center">
+                <ThemeSwitcher />
+                <LoggedIn />
+              </div>
             </div>
 
             {children}

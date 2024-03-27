@@ -29,7 +29,7 @@ export default function LoggedIn() {
           <Avatar
             showFallback
             src={session.user!.image!}
-            className="w-[60px] h-[60px] bg-purple-600 text-white text-[48px] mb-5"
+            className="w-[60px] h-[60px] bg-purple-600 text-white text-[48px]"
           />
         </Link>
       );
