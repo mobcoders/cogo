@@ -1,5 +1,5 @@
 import PotentialDestinations from '@/app/ui/potential-dest-and-accom/potential-destinations';
-import { DestAccomSkeleton } from '@/app/ui/skeletons';
+import { PotentialDestSkeleton } from '@/app/ui/skeletons';
 import { auth, getUser } from '@/auth';
 import { Suspense } from 'react';
 
@@ -14,8 +14,8 @@ export default async function Page({
   let user = await getUser(email!);
 
   return (
-    <Suspense fallback={<DestAccomSkeleton />}>
-      <h3 className="font-extrabold md:max-w-[640px] md:m-auto md:w-full">
+    <Suspense fallback={<PotentialDestSkeleton />}>
+      <h3 className="font-extrabold md:w-[640px] md:mx-auto">
         Destination Options
       </h3>
       <PotentialDestinations tripId={tripId} user={user!} />

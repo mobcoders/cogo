@@ -22,8 +22,8 @@ export default function PotentialAccomCard({
   const [liked, setLiked] = useState(false);
 
   return (
-    <Card className="drop-shadow-cogo h-fit cursor-pointer">
-      <CardBody className="mb-5">
+    <Card className="drop-shadow-cogo h-fit md:w-[640px] md:mx-auto">
+      <CardBody className="">
         <a href={accom.airBnbUrl} target="_blank" rel="noopener noreferrer">
           <div className="flex gap-3 h-full">
             <Image

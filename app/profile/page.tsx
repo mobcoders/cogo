@@ -17,7 +17,7 @@ export default async function Page() {
   let tripName = name.split(' ')[0] + "'s new group trip";
 
   return (
-    <div className="flex flex-col items-center max-w-[500px] m-auto">
+    <div className="flex flex-col items-center max-w-[500px] mx-auto">
       <Avatar
         showFallback
         src={user.image!}
@@ -38,10 +38,6 @@ export default async function Page() {
           />
         ))}
       </div>
-      <footer className="text-center text-xs mt-10 text-light-grey">
-        <p>A MOBCODERS Creation.</p>
-        <p>© 2024 cogo. All rights reserved.</p>
-      </footer>
     </div>
   );
 }

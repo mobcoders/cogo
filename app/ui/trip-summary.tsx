@@ -14,39 +14,45 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
   ];
 
   return (
-    <>
+    <div className="pb-16">
       {chosenAccom && (
-        <>
-          <h3 className="text-pink-500">Airbnb:</h3>
+        <div className="mb-5">
+          <h3 className="text-pink-500 mb-3 md:w-[640px] md:mx-auto">
+            Airbnb:
+          </h3>
           <ChosenAccomCard accom={chosenAccom} />
-        </>
+        </div>
       )}
 
-      <h3 className="text-pink-500">Members:</h3>
+      <h3 className="text-pink-500 mb-3 md:w-[640px] md:mx-auto">Members:</h3>
       <div className="flex flex-row flex-wrap justify-center gap-5">
-        {members.map((member) => (
-          <Card className="drop-shadow-cogo h-fit w-full" key={member?.id}>
-            <CardBody>
-              <div className="flex flex-col items-center">
-                <Avatar
-                  showFallback
-                  src={member?.image as string}
-                  className="w-20 h-20 bg-purple-600 text-white text-2xl"
-                />
-                {member?.name && <p>{member?.name.split(' ')[0]}</p>}
-              </div>
-            </CardBody>
-          </Card>
-        ))}
+        <Card className="drop-shadow-cogo h-fit w-full mb-5 md:w-[640px] md:mx-auto">
+          <CardBody>
+            <div className="flex justify-center gap-5 flex-wrap">
+              {members.map((member) => (
+                <div key={member?.id} className="flex flex-col items-center">
+                  <Avatar
+                    showFallback
+                    src={member?.image as string}
+                    className="w-20 h-20 bg-purple-600 text-white text-2xl"
+                  />
+                  {member?.name && <p>{member?.name.split(' ')[0]}</p>}
+                </div>
+              ))}
+            </div>
+          </CardBody>
+        </Card>
       </div>
 
-      {chosenDest?.activities && (
-        <>
-          <h3 className="text-pink-500 mb-1">Activities:</h3>
-          <Card className="drop-shadow-cogo h-fit w-full mb-5">
+      {chosenDest && chosenDest.activities.length > 0 && (
+        <div className="h-fit">
+          <h3 className="text-pink-500 mb-3 md:w-[640px] md:mx-auto">
+            Activities:
+          </h3>
+          <Card className="drop-shadow-cogo h-fit w-full mb-5 md:w-[640px] md:mx-auto">
             <CardBody>
               <ul className="text-base font-medium pl-3 marker:text-pink-500">
-                {chosenDest.activities.map((activity, index) => (
+                {chosenDest!.activities.map((activity, index) => (
                   <li key={index} className="list-disc">
                     {activity}
                   </li>
@@ -54,8 +60,8 @@ export default async function TripSummary({ tripId }: { tripId: string }) {
               </ul>
             </CardBody>
           </Card>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }

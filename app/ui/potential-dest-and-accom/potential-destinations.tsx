@@ -22,8 +22,8 @@ export default async function PotentialDestinations({
   }
 
   return (
-    <>
-      <p className="mb-5 md:max-w-[640px] md:m-auto">
+    <div className="pb-16">
+      <p className="mb-5 md:w-[640px] md:mx-auto">
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>
@@ -40,6 +40,6 @@ export default async function PotentialDestinations({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

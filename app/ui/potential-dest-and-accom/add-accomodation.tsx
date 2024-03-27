@@ -18,20 +18,22 @@ export default function AddAccomodation({ tripId }: { tripId: string }) {
 
   return (
     <>
-      <form action={dispatch} className="flex flex-col gap-5">
+      <form action={dispatch} className="flex flex-col gap-3">
         <Input
           name="airbnb-url"
           id="airbnb-url"
           placeholder="Paste an Airbnb URL..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          className="md:w-[640px] md:mx-auto"
         />
-
-        <div className="flex justify-end gap-5">
+        <div className="flex justify-end gap-3 md:w-[640px] md:mx-auto">
+          {errorMessage && (
+            <p className="text-sm text-pink-500">{errorMessage}</p>
+          )}
           <Button type="submit" className="bg-pink-500 text-white mb-5">
             Add
           </Button>
-          {errorMessage && <p>{errorMessage}</p>}
         </div>
       </form>
     </>
