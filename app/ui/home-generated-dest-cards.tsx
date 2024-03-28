@@ -3,7 +3,7 @@ import { pexelsSearch } from '@/lib/pexels';
 import { Card, CardBody } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
-export default function HomeGeneratedDestCards() {
+export default async function HomeGeneratedDestCards() {
   // Helper function to get random indexes but unique from an array
   function getRandomIndex(usedIndexes: number[], arrayLength: number): number {
     let randomIndex;
@@ -23,17 +23,17 @@ export default function HomeGeneratedDestCards() {
   }
 
   // Add Pexels URL to each country
-  // await Promise.all(
-  //   randomCountries.map(async (country) => {
-  //     const randomIndex = Math.floor(Math.random() * country.cities!.length);
-  //     const photoUrl = await pexelsSearch(
-  //       `${country.label} ${country.cities![randomIndex].label} holiday`
-  //     );
-  //     if (photoUrl) {
-  //       country.photoUrl = photoUrl;
-  //     }
-  //   })
-  // );
+  await Promise.all(
+    randomCountries.map(async (country) => {
+      const randomIndex = Math.floor(Math.random() * country.cities!.length);
+      const photoUrl = await pexelsSearch(
+        `${country.label} ${country.cities![randomIndex].label} holiday`
+      );
+      if (photoUrl) {
+        country.photoUrl = photoUrl;
+      }
+    })
+  );
 
   return (
     <div className="flex flex-col gap-5 md:flex-row">
@@ -45,8 +45,8 @@ export default function HomeGeneratedDestCards() {
                 alt={`City photo`}
                 className="object-cover h-24 w-24"
                 radius="md"
-                // src={location.photoUrl}
-                src="https://www.shutterstock.com/image-photo/untouched-tropical-beach-sri-lanka-600nw-109674992.jpg"
+                src={location.photoUrl}
+                // src="https://www.shutterstock.com/image-photo/untouched-tropical-beach-sri-lanka-600nw-109674992.jpg"
               />
 
               <div className="flex flex-col flex-1">
