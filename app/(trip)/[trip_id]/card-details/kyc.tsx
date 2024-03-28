@@ -13,7 +13,7 @@ export default function KYC({ tripId }: { tripId: string }) {
   }
 
   return (
-    <div className="max-w-[640px] md:m-auto md:w-full">
+    <div className="max-w-[640px] pb-16 md:m-auto md:w-full">
       <div className="mb-3">
         <h2 className="text-pink-500 dark:text-[#ECEDEE]">
           Welcome to CogoPay.
