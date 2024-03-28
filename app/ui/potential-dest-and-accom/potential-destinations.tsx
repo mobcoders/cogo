@@ -1,43 +1,46 @@
-import PotentialDestinationCard from '@/app/ui/potential-dest-and-accom/potential-dest-card';
-import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
-import { fetchPotentialDests } from '@/lib/data';
-import { User } from '@prisma/client';
-import AutocompleteRequired from '@/app/ui/autocomplete-required';
-import { pexelsSearch } from '@/lib/pexels';
-import { Input } from '@nextui-org/react';
+'use client';
 
-export default async function PotentialDestinations({
+import React, { useOptimistic } from 'react';
+import PotentialDestinationCard, {
+  SingleDest,
+} from '@/app/ui/potential-dest-and-accom/potential-dest-card';
+import { User } from '@prisma/client';
+import AddDestination from '@/app/ui/potential-dest-and-accom/add-destination';
+
+export default function PotentialDestinations({
   tripId,
   user,
+  destinations,
 }: {
   tripId: string;
   user: User;
+  destinations: any;
 }) {
-  const destinations = await fetchPotentialDests(tripId);
-  const sortedDestinations = destinations!.sort(
-    (tripA, tripB) => tripB.likedBy.length - tripA.likedBy.length
+  const [optimisticDestinations, addOptimisticDestination] = useOptimistic<
+    SingleDest[],
+    SingleDest
+  >(destinations, (state, newDestination) => [
+    ...state,
+    { ...newDestination, id: 'optimistic-id', likedBy: [] },
+  ]);
+
+  destinations!.sort(
+    (tripA: any, tripB: any) => tripB.likedBy.length - tripA.likedBy.length
   );
 
-  async function callPexelsSearch(query: string) {
-    'use server';
-    return await pexelsSearch(query);
-  }
-
   return (
-    <>
-      <p className="mb-5">
+    <div className="pb-16">
+      <p className="mb-5 md:w-[640px] md:mx-auto">
         Add potential destinations, vote for where you want to go and when ready
         lock-in the final choice.
       </p>
-      {/* <AddDestination tripId={tripId} /> */}
 
       <div className="flex flex-col gap-5">
-        <AutocompleteRequired
-          callPexelsSearch={callPexelsSearch}
+        <AddDestination
           tripId={tripId}
+          addOptimisticDestination={addOptimisticDestination}
         />
-
-        {sortedDestinations.map((destination) => (
+        {optimisticDestinations.map((destination: any) => (
           <PotentialDestinationCard
             key={destination.id}
             destination={destination}
@@ -46,6 +49,6 @@ export default async function PotentialDestinations({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

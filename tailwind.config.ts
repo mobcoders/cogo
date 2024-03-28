@@ -39,7 +39,7 @@ const config: Config = {
         },
 
         'dark-grey': '#2C2D32',
-        'light-grey': '#878787',
+        'light-grey': '#B6B6B6',
         white: '#FFFFFF',
         black: '#1E1E1E',
       },
@@ -49,6 +49,36 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            background: '#FFFFFF',
+            foreground: '#11181C',
+            primary: {
+              500: '#ed5453',
+            },
+            secondary: {
+              500: '#5a4dff',
+            },
+          },
+        },
+        dark: {
+          colors: {
+            background: '#121212',
+            foreground: '#ECEDEE',
+            primary: {
+              500: '#3f3f46',
+            },
+            secondary: {
+              500: '#3f3f46',
+            },
+          },
+          // ... rest of the colors
+        },
+      },
+    }),
+  ],
 };
 export default config;

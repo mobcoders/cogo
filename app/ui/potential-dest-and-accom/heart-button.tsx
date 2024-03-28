@@ -55,7 +55,7 @@ export default function HeartButton({
         >
           <HeartIcon
             className={isLiked ? '[&>path]:stroke-transparent' : ''}
-            fill={isLiked ? '#ED5453' : '#878787'}
+            fill={isLiked ? '#ED5453' : '#B6B6B6'}
             strokeWidth={0}
             width={25}
           />

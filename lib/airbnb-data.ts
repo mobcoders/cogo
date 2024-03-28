@@ -1,4 +1,11 @@
-export const airbnbLocations = [
+interface locations {
+  label: string;
+  value: string;
+  cities?: locations[];
+  photoUrl?: string;
+}
+
+export const airbnbLocations: locations[] = [
   {
     label: 'Argentina',
     value: 'argentina',

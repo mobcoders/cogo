@@ -27,7 +27,7 @@ export default function PotentialDestinationCard({
   }
 
   return (
-    <Card className="drop-shadow-cogo h-fit">
+    <Card className="drop-shadow-cogo h-fit md:w-[640px] md:mx-auto">
       <CardBody>
         <div className="flex gap-3 h-full">
           <Image
@@ -53,18 +53,22 @@ export default function PotentialDestinationCard({
             </div>
 
             <div className="flex justify-between items-end">
-              {open ? (
-                <ChevronDownIcon
-                  width={30}
-                  onClick={handleClick}
-                  className="stroke-light-grey -translate-y-[-5px] -translate-x-[5px]"
-                />
+              {destination.activities.length > 0 ? (
+                open ? (
+                  <ChevronDownIcon
+                    width={30}
+                    onClick={handleClick}
+                    className="stroke-light-grey -translate-y-[-5px] -translate-x-[5px]"
+                  />
+                ) : (
+                  <ChevronRightIcon
+                    width={30}
+                    onClick={handleClick}
+                    className="stroke-light-grey -translate-y-[-5px] -translate-x-[10px]"
+                  />
+                )
               ) : (
-                <ChevronRightIcon
-                  width={30}
-                  onClick={handleClick}
-                  className="stroke-light-grey -translate-y-[-5px] -translate-x-[10px]"
-                />
+                <div></div>
               )}
               <HeartButton
                 votingTopic={destination}

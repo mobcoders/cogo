@@ -36,9 +36,9 @@ export default function EditTripName({
 
   return (
     <form action={handlePress}>
-      <div className="flex justify-between gap-5">
+      <div className="flex justify-between gap-5 md:w-[640px] md:mx-auto">
         {isEditing ? (
-          <div className="w-[80%]">
+          <div className="w-full">
             <Input
               name="tripName"
               className="mb-2"
@@ -62,7 +62,7 @@ export default function EditTripName({
           </div>
         )}
 
-        <div className="">
+        <div>
           <Button isIconOnly type="submit" className="bg-transparent">
             {isEditing ? (
               <CheckCircleIcon className="h-10 w-10 fill-pink-500" />
@@ -73,18 +73,20 @@ export default function EditTripName({
         </div>
       </div>
 
-      {isEditing ? (
-        <Input
-          name="tripDate"
-          className="w-[80%]"
-          value={tripDateVal as string}
-          defaultValue={tripDateVal as string}
-          onChange={handleDateChange}
-          placeholder="Add trip dates"
-        />
-      ) : (
-        <h3 className="text-light-grey">{tripDateVal}</h3>
-      )}
+      <div className="md:w-[640px] md:mx-auto">
+        {isEditing ? (
+          <Input
+            name="tripDate"
+            className="w-full"
+            value={tripDateVal as string}
+            defaultValue={tripDateVal as string}
+            onChange={handleDateChange}
+            placeholder="Add trip dates"
+          />
+        ) : (
+          <h3 className="text-light-grey">{tripDateVal}</h3>
+        )}
+      </div>
     </form>
   );
 }

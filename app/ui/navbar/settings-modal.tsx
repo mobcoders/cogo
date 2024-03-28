@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { navigateVotingStage } from '@/lib/action';
 import {
   ModalBody,
   ModalContent,
@@ -7,24 +5,18 @@ import {
   Tab,
   Tabs,
 } from '@nextui-org/react';
-import { Trip } from '@prisma/client';
+
+import { usePathname } from 'next/navigation';
 
 export default function SettingsModal({
   params,
-  trip,
 }: {
   params: { trip_id: string };
-  trip: Trip;
 }) {
-  const tripId = params.trip_id;
-  const [selected, setSelected] = useState(trip.votingStage);
+  const pathname = usePathname();
+  const current = pathname.split('/')[2];
 
-  useEffect(() => {
-    async function fetch() {
-      navigateVotingStage(tripId, selected);
-    }
-    fetch();
-  }, [selected, tripId]);
+  const tripId = params.trip_id;
 
   return (
     <ModalContent>
@@ -37,19 +29,36 @@ export default function SettingsModal({
                 <p className="px-6 pb-10">
                   Use the buttons below to move between trip planning stages.
                 </p>
-                {/* We can shorten the setTimeout once we get the transition snappier. Atm this is set roughly just shorter than the load time on localhost */}
                 <Tabs
                   disabledKeys={[]}
                   aria-label="Disabled Options"
-                  selectedKey={selected}
+                  selectedKey={current}
                   onSelectionChange={(key) => {
-                    setSelected(key as string);
-                    setTimeout(() => onClose(), 1200);
+                    onClose();
                   }}
                 >
-                  <Tab key="dest" title="Destination"></Tab>
-                  <Tab key="accom" title="Accommodation"></Tab>
-                  <Tab key="itinerary" title="Itinerary"></Tab>
+                  <Tab
+                    href={`/${tripId}/destinations`}
+                    key="destinations"
+                    title="Destination"
+                  ></Tab>
+
+                  <Tab
+                    href={`/${tripId}/accommodation`}
+                    key="accommodation"
+                    title="Accommodation"
+                  ></Tab>
+
+                  <Tab
+                    href={`/${tripId}/trip-summary`}
+                    key="trip-summary"
+                    title="Itinerary"
+                  ></Tab>
+                  <Tab
+                    href={`/${tripId}/card-details`}
+                    key="card-details"
+                    title="CogoPay"
+                  ></Tab>
                 </Tabs>
               </div>
             </div>

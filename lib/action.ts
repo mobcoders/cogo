@@ -8,6 +8,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
 export async function deleteUser(email: string) {
   await prisma.user.delete({
@@ -136,27 +137,6 @@ export async function updateTripNameDate(tripId: string, formData: FormData) {
   }
 }
 
-export async function createPotentialDestination(
-  tripId: string,
-  formData: FormData
-) {
-  const rawFormData = {
-    city: formData.get('city') as string,
-    country: formData.get('country') as string,
-    photoUrl: formData.get('photoUrl') as string,
-    tripId: tripId,
-    description: 'no description yet',
-  };
-  try {
-    await prisma.potentialDestination.create({
-      data: rawFormData,
-    });
-  } catch (error) {
-    return 'Something went wrong';
-  }
-  revalidatePath(`/${tripId}`);
-}
-
 export async function credAuth(
   prevState: string | undefined,
   formData: FormData
@@ -175,7 +155,7 @@ export async function credAuth(
     throw error;
   }
 }
-export async function createPotentialDestinationV2(
+export async function createPotentialDestination(
   tripId: string,
   city: string,
   country: string,
@@ -289,7 +269,6 @@ export async function lockInDestination(tripId: string, destinationId: string) {
     if (!trip) {
       throw new Error('Trip not found');
     }
-
     await prisma.trip.update({
       where: { id: tripId },
       data: {
@@ -301,8 +280,7 @@ export async function lockInDestination(tripId: string, destinationId: string) {
     console.error(error);
     return 'Something went wrong, please try again';
   }
-
-  revalidatePath(`/${tripId}`);
+  redirect(`/${tripId}/accommodation`);
 }
 
 export async function lockInAccommodation(tripId: string, id: string) {
@@ -327,7 +305,7 @@ export async function lockInAccommodation(tripId: string, id: string) {
     return 'Something went wrong, please try again';
   }
 
-  revalidatePath(`/${tripId}`);
+  redirect(`/${tripId}/trip-summary`);
 }
 
 export async function navigateVotingStage(tripId: string, selectStage: string) {
@@ -475,4 +453,19 @@ export async function deleteGroupTrip(tripId: string) {
     return 'Something went wrong, please try again';
   }
   revalidatePath(`/profile`);
+}
+
+export async function createTrip(tripName: string, id: string) {
+  let newTrip = await prisma.trip.create({
+    data: {
+      name: tripName,
+      organiserId: id,
+      votingStage: 'dest',
+    },
+  });
+  redirect(`/${newTrip.id}/destinations`);
+}
+
+export async function navigateProfile() {
+  redirect('/profile');
 }
