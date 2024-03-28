@@ -40,8 +40,8 @@ export async function WeavrUserCreationFlow(tripid: string) {
   console.log('User phone OTP enrolled');
   await verifyConsumerRootUserSMSFactor();
   console.log('Consumer Root user SMS verified');
-  await stepUpChallengeOTP();
-  console.log('StepUp complete.');
+  // await stepUpChallengeOTP();
+  // console.log('StepUp complete.');
   console.log('KYC flow starting...');
   const loginResp = await loginNewUser();
   console.log('User logged in & bearer token intercepted');
